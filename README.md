@@ -1,29 +1,16 @@
 # project2-sec-2-welovereact
 
-This template should help get you started developing with Vue 3 in Vite.
+## Member
 
-## Recommended IDE Setup
+- 65130500067 : [Monthon Mukkun](https://github.com/carrynong2) 😎
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+- 65130500078 : [Saksit Tatitrisakul](https://github.com/Tiskas02)💵
 
-## Customize configuration
+- 65130500082 : [Soranut Sangroongruang](https://github.com/c3b22) 😊
 
-See [Vite Configuration Reference](https://vitejs.dev/config/).
+- 65130500099 : [Chaimongkon Sokgampang](https://github.com/Xsmitylnwza)😉
 
-## Project Setup
+- 65130500118 : [Saksaran Akramethawong](https://github.com/saksaran)😀
 
-```sh
-npm install
-```
 
-### Compile and Hot-Reload for Development
 
-```sh
-npm run dev
-```
-
-### Compile and Minify for Production
-
-```sh
-npm run build
-```
