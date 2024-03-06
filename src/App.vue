@@ -15,10 +15,9 @@ import data from '/data/db.json'
     </template>
 
     <template v-slot:moviePage>
-      <MoviePage />
-      <MoviePage />
-      <MoviePage />
-
+      <template v-for="movie in data">
+        <MoviePage :poster="movie.Poster" :title="movie.Title" />
+      </template>
     </template>
   </Homepage>
   <div class="w-[100vh] h-[100vh]"></div>
