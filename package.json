@@ -11,11 +11,14 @@
   },
   "dependencies": {
     "json-server": "^1.0.0-alpha.23",
-    "vue": "^3.4.15"
+    "vue": "^3.4.15",
+    "vue-carousel": "^0.18.0",
+    "vue3-carousel": "^0.3.1"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^5.0.3",
     "autoprefixer": "^10.4.17",
+    "daisyui": "^4.7.2",
     "postcss": "^8.4.35",
     "tailwindcss": "^3.4.1",
     "vite": "^5.0.11"
