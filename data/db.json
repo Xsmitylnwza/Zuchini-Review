@@ -1,82 +1,112 @@
-[
-  {
-    "Title": "The Avengers",
-    "Year": "2012",
-    "Rated": "PG-13",
-    "Released": "04 May 2012",
-    "Runtime": "143 min",
-    "Genre": "Action, Sci-Fi",
-    "Director": "Joss Whedon",
-    "Writer": "Joss Whedon, Zak Penn",
-    "Actors": "Robert Downey Jr., Chris Evans, Scarlett Johansson",
-    "Plot": "Earth's mightiest heroes must come together and learn to fight as a team if they are going to stop the mischievous Loki and his alien army from enslaving humanity.",
-    "Language": "English, Russian",
-    "Country": "United States",
-    "Awards": "Nominated for 1 Oscar. 38 wins & 81 nominations total",
-    "Poster": "https://m.media-amazon.com/images/M/MV5BNDYxNjQyMjAtNTdiOS00NGYwLWFmNTAtNThmYjU5ZGI2YTI1XkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_SX300.jpg",
-    "Ratings": [
-      {
-        "Source": "Internet Movie Database",
-        "Value": "8.0/10"
-      },
-      {
-        "Source": "Rotten Tomatoes",
-        "Value": "91%"
-      },
-      {
-        "Source": "Metacritic",
-        "Value": "69/100"
-      }
-    ],
-    "Metascore": "69",
-    "imdbRating": "8.0",
-    "imdbVotes": "1,449,383",
-    "imdbID": "tt0848228",
-    "Type": "movie",
-    "DVD": "22 Jun 2014",
-    "BoxOffice": "$623,357,910",
-    "Production": "N/A",
-    "Website": "N/A",
-    "Response": "True"
-  },
-  {
-    "Title": "Avatar",
-    "Year": "2009",
-    "Rated": "PG-13",
-    "Released": "18 Dec 2009",
-    "Runtime": "162 min",
-    "Genre": "Action, Adventure, Fantasy",
-    "Director": "James Cameron",
-    "Writer": "James Cameron",
-    "Actors": "Sam Worthington, Zoe Saldana, Sigourney Weaver",
-    "Plot": "A paraplegic Marine dispatched to the moon Pandora on a unique mission becomes torn between following his orders and protecting the world he feels is his home.",
-    "Language": "English, Spanish",
-    "Country": "United States",
-    "Awards": "Won 3 Oscars. 90 wins & 131 nominations total",
-    "Poster": "https://m.media-amazon.com/images/M/MV5BZDA0OGQxNTItMDZkMC00N2UyLTg3MzMtYTJmNjg3Nzk5MzRiXkEyXkFqcGdeQXVyMjUzOTY1NTc@._V1_SX300.jpg",
-    "Ratings": [
-      {
-        "Source": "Internet Movie Database",
-        "Value": "7.9/10"
-      },
-      {
-        "Source": "Rotten Tomatoes",
-        "Value": "82%"
-      },
-      {
-        "Source": "Metacritic",
-        "Value": "83/100"
-      }
-    ],
-    "Metascore": "83",
-    "imdbRating": "7.9",
-    "imdbVotes": "1,374,723",
-    "imdbID": "tt0499549",
-    "Type": "movie",
-    "DVD": "10 Feb 2016",
-    "BoxOffice": "$785,221,649",
-    "Production": "N/A",
-    "Website": "N/A",
-    "Response": "True"
-  }
-]
+{
+  "movie": [
+    {
+      "Title": "The Avengers",
+      "Year": "2012",
+      "Rated": "PG-13",
+      "Released": "04 May 2012",
+      "Runtime": "143 min",
+      "Genre": "Action, Sci-Fi",
+      "Director": "Joss Whedon",
+      "Writer": "Joss Whedon, Zak Penn",
+      "Actors": "Robert Downey Jr., Chris Evans, Scarlett Johansson",
+      "Plot": "Earth's mightiest heroes must come together and learn to fight as a team if they are going to stop the mischievous Loki and his alien army from enslaving humanity.",
+      "Language": "English, Russian",
+      "Country": "United States",
+      "Awards": "Nominated for 1 Oscar. 38 wins & 81 nominations total",
+      "Poster": "https://m.media-amazon.com/images/M/MV5BNDYxNjQyMjAtNTdiOS00NGYwLWFmNTAtNThmYjU5ZGI2YTI1XkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_SX300.jpg",
+      "Ratings": [
+        {
+          "Source": "Internet Movie Database",
+          "Value": "8.0/10"
+        },
+        {
+          "Source": "Rotten Tomatoes",
+          "Value": "91%"
+        },
+        {
+          "Source": "Metacritic",
+          "Value": "69/100"
+        }
+      ],
+      "Metascore": "69",
+      "imdbRating": "8.0",
+      "imdbVotes": "1,449,383",
+      "imdbID": "tt0848228",
+      "Type": "movie",
+      "DVD": "22 Jun 2014",
+      "BoxOffice": "$623,357,910",
+      "Production": "N/A",
+      "Website": "N/A",
+      "Response": "True",
+      "id": "193a"
+    },
+    {
+      "Title": "Avatar",
+      "Year": "2009",
+      "Rated": "PG-13",
+      "Released": "18 Dec 2009",
+      "Runtime": "162 min",
+      "Genre": "Action, Adventure, Fantasy",
+      "Director": "James Cameron",
+      "Writer": "James Cameron",
+      "Actors": "Sam Worthington, Zoe Saldana, Sigourney Weaver",
+      "Plot": "A paraplegic Marine dispatched to the moon Pandora on a unique mission becomes torn between following his orders and protecting the world he feels is his home.",
+      "Language": "English, Spanish",
+      "Country": "United States",
+      "Awards": "Won 3 Oscars. 90 wins & 131 nominations total",
+      "Poster": "https://m.media-amazon.com/images/M/MV5BZDA0OGQxNTItMDZkMC00N2UyLTg3MzMtYTJmNjg3Nzk5MzRiXkEyXkFqcGdeQXVyMjUzOTY1NTc@._V1_SX300.jpg",
+      "Ratings": [
+        {
+          "Source": "Internet Movie Database",
+          "Value": "7.9/10"
+        },
+        {
+          "Source": "Rotten Tomatoes",
+          "Value": "82%"
+        },
+        {
+          "Source": "Metacritic",
+          "Value": "83/100"
+        }
+      ],
+      "Metascore": "83",
+      "imdbRating": "7.9",
+      "imdbVotes": "1,374,723",
+      "imdbID": "tt0499549",
+      "Type": "movie",
+      "DVD": "10 Feb 2016",
+      "BoxOffice": "$785,221,649",
+      "Production": "N/A",
+      "Website": "N/A",
+      "Response": "True",
+      "id": "8111"
+    }
+  ],
+  "login": [
+    {
+      "id": "ef5e",
+      "username": "testza",
+      "email": "testza@gmail.com",
+      "imageUrl": "https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg",
+      "password": "03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4",
+      "confirmPassword": "03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4"
+    },
+    {
+      "id": "68ec",
+      "username": "test",
+      "email": "test@gmail.com",
+      "imageUrl": "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png",
+      "password": "91a73fd806ab2c005c13b4dc19130a884e909dea3f72d46e30266fe1a1f588d8",
+      "confirmPassword": "91a73fd806ab2c005c13b4dc19130a884e909dea3f72d46e30266fe1a1f588d8"
+    },
+    {
+      "id": "153f",
+      "username": "nongtest",
+      "email": "nongtest@gmail.com",
+      "imageUrl": "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png",
+      "password": "216e683ff0d2d25165b8bb7ba608c9a628ef299924ca49ab981ec7d2fecd6dad",
+      "confirmPassword": "216e683ff0d2d25165b8bb7ba608c9a628ef299924ca49ab981ec7d2fecd6dad"
+    }
+  ]
+}
