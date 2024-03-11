@@ -1,7 +1,9 @@
 <script setup>
+
 const props = defineProps({
     movie: Object,
 });
+
 </script>
 
 <template>
