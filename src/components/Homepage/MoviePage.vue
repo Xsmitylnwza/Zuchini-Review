@@ -1,16 +1,18 @@
 <script setup>
-import data from '/data/db.json'
-
+const props = defineProps({
+    movie: Object,
+});
 </script>
 
 <template>
     <div>
         <div class="bg-black rounded-[15px] laptop:flex w-[925px] h-[500px] p-[30px]">
             <div>
-                <img class="laptop:w-[350px] h-[520px] ml-[50px] " :src="data[0].Poster" />
+                <img class="absolute top-[120px] laptop:w-[330px] h-[480px] ml-[50px] rounded-[5px]"
+                    :src="'https://image.tmdb.org/t/p/w500/' + movie.poster_path" />
             </div>
             <div class="font-istok w-[420px] ml-[auto] text-white font-bold">
-                <h1 class="text-[40px]">{{ data[0].Title }}</h1>
+                <h1 class="text-[40px]">{{ movie.original_title }}</h1>
                 <p class="text-[16px]    mb-[10px]">Rating</p>
                 <input class="w-[100%] h-[180px] mb-[20px] bg-black border border-white rounded-[16px]" type="text" />
                 <div class="flex flex-col mb-[30px]">
