@@ -1,8 +1,16 @@
 <script setup>
+import { RouterLink, RouterView } from "vue-router";
+import { ref } from 'vue';
 
 const props = defineProps({
     movie: Object,
 });
+
+const movieza = ref(props.movie);
+
+console.log(movieza.value)
+
+const nahee = "KUY"
 
 </script>
 
@@ -45,7 +53,8 @@ const props = defineProps({
                 </div>
                 <div class="flex justify-center gap-[18px]">
                     <button class="w-[193px] h-[58px] border border-white text-[15px] rounded-[23px] hover:opacity-70">
-                        Description</button>
+                        <RouterLink to="/test" :movie="nahee">Description</RouterLink>
+                    </button>
                     <button
                         class="flex items-center justify-center gap-[5px] w-[193px] h-[58px] border border-white text-[20px] rounded-[23px] hover:opacity-70 gradient-background">
                         <svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">

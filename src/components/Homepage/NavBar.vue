@@ -1,5 +1,5 @@
 <script setup>
-
+import { RouterLink, RouterView } from "vue-router";
 
 
 </script>
@@ -19,8 +19,12 @@
                         clip-rule="evenodd" />
                 </svg>
             </div>
-            <button class="hover:opacity-80">Home</button>
-            <button class="hover:opacity-80">Categories</button>
+            <button class="hover:opacity-80">
+                <RouterLink to="/">Home</RouterLink>
+            </button>
+            <button class="hover:opacity-80">
+                Categories
+            </button>
             <div>
                 <button class="hover:opacity-80">Register</button>
                 |
