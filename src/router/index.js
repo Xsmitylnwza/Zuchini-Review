@@ -3,6 +3,7 @@ import Homepage from '@/components/Homepage/Homepage.vue'
 import RegisterView from '@/views/RegisterView.vue'
 import LoginView from '@/views/LoginView.vue'
 import MovieDes from '@/components/descriptionpage/MovieDescriptionPage.vue'
+import CommentedPage from '@/components/commentedpage/commentedPage.vue'
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
@@ -25,9 +26,12 @@ const router = createRouter({
         {
             path: '/:id',
             component: MovieDes,
+        },
+        {
+            path: '/commented',
+            component: CommentedPage,
         }
     ]
-
 })
 
 export default router
