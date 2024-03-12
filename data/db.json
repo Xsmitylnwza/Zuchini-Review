@@ -1,122 +1,463 @@
-[
-  {
-    "Title": "The Avengers",
-    "Year": "2012",
-    "Rated": "PG-13",
-    "Released": "04 May 2012",
-    "Runtime": "143 min",
-    "Genre": "Action, Sci-Fi",
-    "Director": "Joss Whedon",
-    "Writer": "Joss Whedon, Zak Penn",
-    "Actors": "Robert Downey Jr., Chris Evans, Scarlett Johansson",
-    "Plot": "Earth's mightiest heroes must come together and learn to fight as a team if they are going to stop the mischievous Loki and his alien army from enslaving humanity.",
-    "Language": "English, Russian",
-    "Country": "United States",
-    "Awards": "Nominated for 1 Oscar. 38 wins & 81 nominations total",
-    "Poster": "https://m.media-amazon.com/images/M/MV5BNDYxNjQyMjAtNTdiOS00NGYwLWFmNTAtNThmYjU5ZGI2YTI1XkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_SX300.jpg",
-    "Ratings": [
-      {
-        "Source": "Internet Movie Database",
-        "Value": "8.0/10"
-      },
-      {
-        "Source": "Rotten Tomatoes",
-        "Value": "91%"
-      },
-      {
-        "Source": "Metacritic",
-        "Value": "69/100"
-      }
-    ],
-    "Metascore": "69",
-    "imdbRating": "8.0",
-    "imdbVotes": "1,449,383",
-    "imdbID": "tt0848228",
-    "Type": "movie",
-    "DVD": "22 Jun 2014",
-    "BoxOffice": "$623,357,910",
-    "Production": "N/A",
-    "Website": "N/A",
-    "Response": "True"
-  },
-  {
-    "Title": "Avatar",
-    "Year": "2009",
-    "Rated": "PG-13",
-    "Released": "18 Dec 2009",
-    "Runtime": "162 min",
-    "Genre": "Action, Adventure, Fantasy",
-    "Director": "James Cameron",
-    "Writer": "James Cameron",
-    "Actors": "Sam Worthington, Zoe Saldana, Sigourney Weaver",
-    "Plot": "A paraplegic Marine dispatched to the moon Pandora on a unique mission becomes torn between following his orders and protecting the world he feels is his home.",
-    "Language": "English, Spanish",
-    "Country": "United States",
-    "Awards": "Won 3 Oscars. 90 wins & 131 nominations total",
-    "Poster": "https://m.media-amazon.com/images/M/MV5BZDA0OGQxNTItMDZkMC00N2UyLTg3MzMtYTJmNjg3Nzk5MzRiXkEyXkFqcGdeQXVyMjUzOTY1NTc@._V1_SX300.jpg",
-    "Ratings": [
-      {
-        "Source": "Internet Movie Database",
-        "Value": "7.9/10"
-      },
-      {
-        "Source": "Rotten Tomatoes",
-        "Value": "82%"
-      },
-      {
-        "Source": "Metacritic",
-        "Value": "83/100"
-      }
-    ],
-    "Metascore": "83",
-    "imdbRating": "7.9",
-    "imdbVotes": "1,374,723",
-    "imdbID": "tt0499549",
-    "Type": "movie",
-    "DVD": "10 Feb 2016",
-    "BoxOffice": "$785,221,649",
-    "Production": "N/A",
-    "Website": "N/A",
-    "Response": "True"
-  },
-  {
-    "Title": "The Fast and the Furious",
-    "Year": "2001",
-    "Rated": "PG-13",
-    "Released": "22 Jun 2001",
-    "Runtime": "106 min",
-    "Genre": "Action, Crime, Thriller",
-    "Director": "Rob Cohen",
-    "Writer": "Ken Li, Gary Scott Thompson, Erik Bergquist",
-    "Actors": "Vin Diesel, Paul Walker, Michelle Rodriguez",
-    "Plot": "Los Angeles police officer Brian O'Conner must decide where his loyalty really lies when he becomes enamored with the street racing world he has been sent undercover to destroy.",
-    "Language": "English, Spanish",
-    "Country": "United States, Germany",
-    "Awards": "11 wins & 18 nominations",
-    "Poster": "https://m.media-amazon.com/images/M/MV5BNzlkNzVjMDMtOTdhZC00MGE1LTkxODctMzFmMjkwZmMxZjFhXkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1_SX300.jpg",
-    "Ratings": [
-      {
-        "Source": "Internet Movie Database",
-        "Value": "6.8/10"
-      },
-      {
-        "Source": "Rotten Tomatoes",
-        "Value": "54%"
-      },
-      {
-        "Source": "Metacritic",
-        "Value": "58/100"
-      }
-    ],
-    "Metascore": "58",
-    "imdbRating": "6.8",
-    "imdbVotes": "415,740",
-    "imdbID": "tt0232500",
-    "Type": "movie",
-    "DVD": "10 Sep 2015",
-    "BoxOffice": "$144,745,925",
-    "Production": "N/A",
-    "Website": "N/A",
-    "Response": "True"
-  }
-]
+{
+  "movies": [
+    {
+      "adult": false,
+      "backdrop_path": "/mDeUmPe4MF35WWlAqj4QFX5UauJ.jpg",
+      "genre_ids": [
+        28, 27, 53
+      ],
+      "id": 1096197,
+      "original_language": "pt",
+      "original_title": "No Way Up",
+      "overview": "Characters from different backgrounds are thrown together when the plane they're travelling on crashes into the Pacific Ocean. A nightmare fight for survival ensues with the air supply running out and dangers creeping in from all sides.",
+      "popularity": 2304.766,
+      "poster_path": "/hu40Uxp9WtpL34jv3zyWLb5zEVY.jpg",
+      "release_date": "2024-01-18",
+      "title": "No Way Up",
+      "video": false,
+      "vote_average": 6.032,
+      "vote_count": 173
+    },
+    {
+      "adult": false,
+      "backdrop_path": "/ekRp1sEA8pnuzVHQkUESTgNSKdW.jpg",
+      "genre_ids": [
+        878, 28, 80
+      ],
+      "id": 932420,
+      "original_language": "en",
+      "original_title": "Code 8 Part II",
+      "overview": "In a world where superpowered people are heavily policed by robots, an ex-con teams up with a drug lord he despises to protect a teen from a corrupt cop.",
+      "popularity": 2107.221,
+      "poster_path": "/hhvMTxlTZtnCOe7YFhod9uz3m37.jpg",
+      "release_date": "2024-02-27",
+      "title": "Code 8 Part II",
+      "video": false,
+      "vote_average": 6.615,
+      "vote_count": 222
+    },
+    {
+      "adult": false,
+      "backdrop_path": "/image/avenger.jpg",
+      "genre_ids": [
+        28, 12, 16, 35, 10751
+      ],
+      "id": 1011985,
+      "original_language": "en",
+      "original_title": "Kung Fu Panda 4",
+      "overview": "Po is gearing up to become the spiritual leader of his Valley of Peace, but also needs someone to take his place as Dragon Warrior. As such, he will train a new kung fu practitioner for the spot and will encounter a villain called the Chameleon who conjures villains from the past.",
+      "popularity": 1962.814,
+      "poster_path": "/kDp1vUBnMpe8ak4rjgl3cLELqjU.jpg",
+      "release_date": "2024-03-02",
+      "title": "Kung Fu Panda 4",
+      "video": false,
+      "vote_average": 7.349,
+      "vote_count": 43
+    },
+    {
+      "adult": false,
+      "backdrop_path": "/xOMo8BRK7PfcJv9JCnx7s5hj0PX.jpg",
+      "genre_ids": [878, 12],
+      "id": 693134,
+      "original_language": "en",
+      "original_title": "Dune: Part Two",
+      "overview": "Follow the mythic journey of Paul Atreides as he unites with Chani and the Fremen while on a path of revenge against the conspirators who destroyed his family. Facing a choice between the love of his life and the fate of the known universe, Paul endeavors to prevent a terrible future only he can foresee.",
+      "popularity": 1383.507,
+      "poster_path": "/8b8R8l88Qje9dn9OE8PY05Nxl1X.jpg",
+      "release_date": "2024-02-27",
+      "title": "Dune: Part Two",
+      "video": false,
+      "vote_average": 8.44,
+      "vote_count": 1340
+    },
+    {
+      "adult": false,
+      "backdrop_path": "/meyhnvssZOPPjud4F1CjOb4snET.jpg",
+      "genre_ids": [
+        16, 28, 12, 35, 10751
+      ],
+      "id": 940551,
+      "original_language": "en",
+      "original_title": "Migration",
+      "overview": "After a migrating duck family alights on their pond with thrilling tales of far-flung places, the Mallard family embarks on a family road trip, from New England, to New York City, to tropical Jamaica.",
+      "popularity": 1419.11,
+      "poster_path": "/ldfCF9RhR40mppkzmftxapaHeTo.jpg",
+      "release_date": "2023-12-06",
+      "title": "Migration",
+      "video": false,
+      "vote_average": 7.579,
+      "vote_count": 896
+    },
+    {
+      "adult": false,
+      "backdrop_path": "/bQS43HSLZzMjZkcHJz4fGc7fNdz.jpg",
+      "genre_ids": [
+        878, 10749, 35
+      ],
+      "id": 792307,
+      "original_language": "en",
+      "original_title": "Poor Things",
+      "overview": "Brought back to life by an unorthodox scientist, a young woman runs off with a debauched lawyer on a whirlwind adventure across the continents. Free from the prejudices of her times, she grows steadfast in her purpose to stand for equality and liberation.",
+      "popularity": 1166.306,
+      "poster_path": "/kCGlIMHnOm8JPXq3rXM6c5wMxcT.jpg",
+      "release_date": "2023-12-07",
+      "title": "Poor Things",
+      "video": false,
+      "vote_average": 7.925,
+      "vote_count": 1999
+    },
+    {
+      "adult": false,
+      "backdrop_path": "/3Kzc6V4MWs3RXCmE5DhAYnfWL8F.jpg",
+      "genre_ids": [
+        16, 35, 878
+      ],
+      "id": 1239251,
+      "original_language": "en",
+      "original_title": "Megamind vs. the Doom Syndicate",
+      "overview": "Megamind's former villain team, The Doom Syndicate, has returned. Our newly crowned blue hero must now keep up evil appearances until he can assemble his friends (Roxanne, Ol' Chum and Keiko) to stop his former evil teammates from launching Metro City to the Moon.",
+      "popularity": 1561.396,
+      "poster_path": "/1N7terrMeZPwK5qq31MUD0HQ3IG.jpg",
+      "release_date": "2024-03-01",
+      "title": "Megamind vs. the Doom Syndicate",
+      "video": false,
+      "vote_average": 5.589,
+      "vote_count": 95
+    },
+    {
+      "adult": false,
+      "backdrop_path": "/oBIQDKcqNxKckjugtmzpIIOgoc4.jpg",
+      "genre_ids": [
+        28, 53, 10752
+      ],
+      "id": 969492,
+      "original_language": "en",
+      "original_title": "Land of Bad",
+      "overview": "When a Delta Force special ops mission goes terribly wrong, Air Force drone pilot Reaper has 48 hours to remedy what has devolved into a wild rescue operation. With no weapons and no communication other than the drone above, the ground mission suddenly becomes a full-scale battle when the team is discovered by the enemy.",
+      "popularity": 1340.207,
+      "poster_path": "/h27WHO2czaY5twDmV3Wfx5IdqoE.jpg",
+      "release_date": "2024-01-25",
+      "title": "Land of Bad",
+      "video": false,
+      "vote_average": 6.914,
+      "vote_count": 314
+    },
+    {
+      "adult": false,
+      "backdrop_path": "/nTPFkLUARmo1bYHfkfdNpRKgEOs.jpg",
+      "genre_ids": [
+        35, 10749
+      ],
+      "id": 1072790,
+      "original_language": "en",
+      "original_title": "Anyone But You",
+      "overview": "After an amazing first date, Bea and Ben’s fiery attraction turns ice cold — until they find themselves unexpectedly reunited at a destination wedding in Australia. So they do what any two mature adults would do: pretend to be a couple.",
+      "popularity": 1082.943,
+      "poster_path": "/yRt7MGBElkLQOYRvLTT1b3B1rcp.jpg",
+      "release_date": "2023-12-21",
+      "title": "Anyone But You",
+      "video": false,
+      "vote_average": 6.99,
+      "vote_count": 907
+    },
+    {
+      "adult": false,
+      "backdrop_path": "/hIUs8RzKlrzgbWxn2EpWmiTFqCc.jpg",
+      "genre_ids": [878, 53],
+      "id": 870404,
+      "original_language": "en",
+      "original_title": "Meteor",
+      "overview": "After a meteor collides into Earth, a lonely rancher and a lost young girl are on the run from vicious mercenaries.",
+      "popularity": 1144.654,
+      "poster_path": "/tVMddOS5bi3YPVPgTPlEw0TOWoF.jpg",
+      "release_date": "2021-09-01",
+      "title": "Meteor",
+      "video": false,
+      "vote_average": 5.444,
+      "vote_count": 80
+    },
+    {
+      "adult": false,
+      "backdrop_path": "/yyFc8Iclt2jxPmLztbP617xXllT.jpg",
+      "genre_ids": [
+        35, 10751, 14
+      ],
+      "id": 787699,
+      "original_language": "en",
+      "original_title": "Wonka",
+      "overview": "Willy Wonka – chock-full of ideas and determined to change the world one delectable bite at a time – is proof that the best things in life begin with a dream, and if you’re lucky enough to meet Willy Wonka, anything is possible.",
+      "popularity": 1043.23,
+      "poster_path": "/qhb1qOilapbapxWQn9jtRCMwXJF.jpg",
+      "release_date": "2023-12-06",
+      "title": "Wonka",
+      "video": false,
+      "vote_average": 7.198,
+      "vote_count": 2453
+    },
+    {
+      "adult": false,
+      "backdrop_path": "/lzWHmYdfeFiMIY4JaMmtR7GEli3.jpg",
+      "genre_ids": [878, 12],
+      "id": 438631,
+      "original_language": "en",
+      "original_title": "Dune",
+      "overview": "Paul Atreides, a brilliant and gifted young man born into a great destiny beyond his understanding, must travel to the most dangerous planet in the universe to ensure the future of his family and his people. As malevolent forces explode into conflict over the planet's exclusive supply of the most precious resource in existence-a commodity capable of unlocking humanity's greatest potential-only those who can conquer their fear will survive.",
+      "popularity": 950.966,
+      "poster_path": "/d5NXSklXo0qyIYkgV94XAgMIckC.jpg",
+      "release_date": "2021-09-15",
+      "title": "Dune",
+      "video": false,
+      "vote_average": 7.787,
+      "vote_count": 10642
+    },
+    {
+      "adult": false,
+      "backdrop_path": "/td2NcEUn7MPWzpFFjvHLsVQ2pkZ.jpg",
+      "genre_ids": [28, 53],
+      "id": 984249,
+      "original_language": "en",
+      "original_title": "Ruthless",
+      "overview": "A high school coach, whose teenage daughter was murdered, takes matters into his own hands by going after the men who kidnap his students for their sex trafficking operation.",
+      "popularity": 992.689,
+      "poster_path": "/3hVt5fEuUxNZ5h6ynczcUbq6lpJ.jpg",
+      "release_date": "2023-12-14",
+      "title": "Ruthless",
+      "video": false,
+      "vote_average": 6.556,
+      "vote_count": 26
+    },
+    {
+      "adult": false,
+      "backdrop_path": "/824e60sDlEXUP1vXCYNqh5RSlI5.jpg",
+      "genre_ids": [878, 12],
+      "id": 636706,
+      "original_language": "en",
+      "original_title": "Spaceman",
+      "overview": "During a research mission, an astronaut discovers that his marriage is in trouble. Luckily, he has the help of a mysterious creature hidden in his ship.",
+      "popularity": 760.021,
+      "poster_path": "/f46WvKEsBn98WJbPJcO47ZoKn6B.jpg",
+      "release_date": "2024-02-23",
+      "title": "Spaceman",
+      "video": false,
+      "vote_average": 6.697,
+      "vote_count": 277
+    },
+    {
+      "adult": false,
+      "backdrop_path": "/xi2pblvQtCnh26SeOYzx1YX3DLT.jpg",
+      "genre_ids": [
+        80, 28, 53
+      ],
+      "id": 1227816,
+      "original_language": "en",
+      "original_title": "Red Right Hand",
+      "overview": "Cash is trying to live a quiet, honest life in a small Appalachian town. When a vicious crime boss forces him back into her services, he soon learns he's capable of anything -- even killing -- to protect his family and his home.",
+      "popularity": 774.604,
+      "poster_path": "/vfEG79SQIg3p6B8rBLVeIo2BBhb.jpg",
+      "release_date": "2024-02-22",
+      "title": "Red Right Hand",
+      "video": false,
+      "vote_average": 7,
+      "vote_count": 50
+    },
+    {
+      "adult": false,
+      "backdrop_path": "/4MCKNAc6AbWjEsM2h9Xc29owo4z.jpg",
+      "genre_ids": [
+        28, 53, 18
+      ],
+      "id": 866398,
+      "original_language": "en",
+      "original_title": "The Beekeeper",
+      "overview": "One man’s campaign for vengeance takes on national stakes after he is revealed to be a former operative of a powerful and clandestine organization known as Beekeepers.",
+      "popularity": 789.973,
+      "poster_path": "/A7EByudX0eOzlkQ2FIbogzyazm2.jpg",
+      "release_date": "2024-01-08",
+      "title": "The Beekeeper",
+      "video": false,
+      "vote_average": 7.451,
+      "vote_count": 1635
+    },
+    {
+      "adult": false,
+      "backdrop_path": "/xvk5AhfhgQcTuaCQyq3XqAnhEma.jpg",
+      "genre_ids": [
+        28, 12, 35
+      ],
+      "id": 848538,
+      "original_language": "en",
+      "original_title": "Argylle",
+      "overview": "When the plots of reclusive author Elly Conway's fictional espionage novels begin to mirror the covert actions of a real-life spy organization, quiet evenings at home become a thing of the past. Accompanied by her cat Alfie and Aiden, a cat-allergic spy, Elly races across the world to stay one step ahead of the killers as the line between Conway's fictional world and her real one begins to blur.",
+      "popularity": 835.162,
+      "poster_path": "/95VlSEfLMqeX36UVcHJuNlWEpwf.jpg",
+      "release_date": "2024-01-31",
+      "title": "Argylle",
+      "video": false,
+      "vote_average": 6.122,
+      "vote_count": 475
+    },
+    {
+      "adult": false,
+      "backdrop_path": "/feSiISwgEpVzR1v3zv2n2AU4ANJ.jpg",
+      "genre_ids": [
+        878, 12, 28
+      ],
+      "id": 609681,
+      "original_language": "en",
+      "original_title": "The Marvels",
+      "overview": "Carol Danvers, aka Captain Marvel, has reclaimed her identity from the tyrannical Kree and taken revenge on the Supreme Intelligence. But unintended consequences see Carol shouldering the burden of a destabilized universe. When her duties send her to an anomalous wormhole linked to a Kree revolutionary, her powers become entangled with that of Jersey City super-fan Kamala Khan, aka Ms. Marvel, and Carol’s estranged niece, now S.A.B.E.R. astronaut Captain Monica Rambeau. Together, this unlikely trio must team up and learn to work in concert to save the universe.",
+      "popularity": 736.602,
+      "poster_path": "/9GBhzXMFjgcZ3FdR9w3bUMMTps5.jpg",
+      "release_date": "2023-11-08",
+      "title": "The Marvels",
+      "video": false,
+      "vote_average": 6.22,
+      "vote_count": 2009
+    },
+    {
+      "adult": false,
+      "backdrop_path": "/mOQV573Tr0WxI2VVOLKwtfaRGZH.jpg",
+      "genre_ids": [
+        10749, 35, 12
+      ],
+      "id": 949429,
+      "original_language": "th",
+      "original_title": "ผจญภัยล่าขุมทรัพย์หมื่นลี้",
+      "overview": "Joy, a secretary at a large multinational company, has an online shopping problem, likes to read adventure novels and watch travel and adventure shows. She daydreams about living a life of adventure.",
+      "popularity": 687.089,
+      "poster_path": "/z3SeS4wjKQ3TjHSvRidovGJbHYb.jpg",
+      "release_date": "2023-12-22",
+      "title": "The Adventures",
+      "video": false,
+      "vote_average": 6.6,
+      "vote_count": 12
+    },
+    {
+      "adult": false,
+      "backdrop_path": "/sKdDC38FHuPvEsRgIzMEQE6ydol.jpg",
+      "genre_ids": [
+        53, 27, 18
+      ],
+      "id": 714567,
+      "original_language": "ru",
+      "original_title": "#хочувигру",
+      "overview": "The story of a girl who, in an attempt to understand the mysterious suicide of her younger sister, embarks on a dangerous game, hoping to stop the curators of the \"death group\" pushing teenagers to suicide.",
+      "popularity": 757.256,
+      "poster_path": "/2TmZ2lgDEYJAFpeUMALRx5NwqK.jpg",
+      "release_date": "2021-10-07",
+      "title": "#Blue_Whale",
+      "video": false,
+      "vote_average": 6.038,
+      "vote_count": 13
+    }
+  ],
+  "genres": [
+    {
+      "id": 28,
+      "name": "Action"
+    },
+    {
+      "id": 12,
+      "name": "Adventure"
+    },
+    {
+      "id": 16,
+      "name": "Animation"
+    },
+    {
+      "id": 35,
+      "name": "Comedy"
+    },
+    {
+      "id": 80,
+      "name": "Crime"
+    },
+    {
+      "id": 99,
+      "name": "Documentary"
+    },
+    {
+      "id": 18,
+      "name": "Drama"
+    },
+    {
+      "id": 10751,
+      "name": "Family"
+    },
+    {
+      "id": 14,
+      "name": "Fantasy"
+    },
+    {
+      "id": 36,
+      "name": "History"
+    },
+    {
+      "id": 27,
+      "name": "Horror"
+    },
+    {
+      "id": 10402,
+      "name": "Music"
+    },
+    {
+      "id": 9648,
+      "name": "Mystery"
+    },
+    {
+      "id": 10749,
+      "name": "Romance"
+    },
+    {
+      "id": 878,
+      "name": "Science Fiction"
+    },
+    {
+      "id": 10770,
+      "name": "TV Movie"
+    },
+    {
+      "id": 53,
+      "name": "Thriller"
+    },
+    {
+      "id": 10752,
+      "name": "War"
+    },
+    {
+      "id": 37,
+      "name": "Western"
+    }
+  ],
+  "login": [
+    {
+      "id": "ef5e",
+      "username": "testza",
+      "email": "testza@gmail.com",
+      "imageUrl": "https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg",
+      "password": "03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4",
+      "confirmPassword": "03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4"
+    },
+    {
+      "id": "68ec",
+      "username": "test",
+      "email": "test@gmail.com",
+      "imageUrl": "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png",
+      "password": "91a73fd806ab2c005c13b4dc19130a884e909dea3f72d46e30266fe1a1f588d8",
+      "confirmPassword": "91a73fd806ab2c005c13b4dc19130a884e909dea3f72d46e30266fe1a1f588d8"
+    },
+    {
+      "id": "153f",
+      "username": "nongtest",
+      "email": "nongtest@gmail.com",
+      "imageUrl": "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png",
+      "password": "216e683ff0d2d25165b8bb7ba608c9a628ef299924ca49ab981ec7d2fecd6dad",
+      "confirmPassword": "216e683ff0d2d25165b8bb7ba608c9a628ef299924ca49ab981ec7d2fecd6dad"
+    }
+  ],
+  "api-key": [
+    {
+      "key": "68c7fd5eb47aa1979d5f275d3c876300"
+    }
+  ]
+}

@@ -1,28 +1,27 @@
 <script setup>
-import MoviePage from './components/Homepage/MoviePage.vue';
-import NavBar from './components/Homepage/NavBar.vue';
-import Homepage from './components/Homepage/Homepage.vue';
-import data from '/data/db.json'
-
-
-
+import MoviePage from "./components/Homepage/MoviePage.vue";
+import NavBar from "./components/Homepage/NavBar.vue";
+import Homepage from "./components/Homepage/Homepage.vue";
+import data from "/data/db.json";
+import { RouterLink, RouterView } from "vue-router";
 </script>
 
 <template>
-  <Homepage>
+  <div>
+    <RouterView />
+  </div>
+  <!-- <Homepage>
     <template v-slot:navBar>
       <NavBar />
     </template>
 
     <template v-slot:moviePage>
-      <template v-for="movie in data">
-        <MoviePage :poster="movie.Poster" :title="movie.Title" />
-      </template>
+      <MoviePage />
+      <MoviePage />
+      <MoviePage />
     </template>
   </Homepage>
-  <div class="w-[100vh] h-[100vh]"></div>
-
-
+  <div class="w-[100vh] h-[100vh]"></div> -->
 </template>
 
 <style scoped></style>./components/Homepage/MoviePage.vue./components/Homepage/NavBar.vue
