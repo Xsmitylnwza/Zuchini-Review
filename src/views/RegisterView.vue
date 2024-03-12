@@ -62,12 +62,16 @@ function checkUserExists(users) {
   return users.find((user) => user.username === userInfo.value.username);
 }
 
-const register = async () => {
-  const res = await fetch("http://localhost:5000/login");
-  const users = await res.json();
+function resetCorrectData() {
   isUsernameValid.value = true;
   isEmailValid.value = true;
   isPasswordValid.value = true;
+}
+
+const register = async () => {
+  const res = await fetch("http://localhost:5000/login");
+  const users = await res.json();
+  resetCorrectData();
   if (res.status === 200) {
     if (checkUserExists(users) || !validateUsername(userInfo.value.username)) {
       isUsernameValid.value = false;
