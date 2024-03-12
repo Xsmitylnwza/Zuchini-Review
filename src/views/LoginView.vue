@@ -5,6 +5,7 @@ import { RouterLink } from "vue-router";
 import hashPassword from "@/composable/hashPassword";
 import CationValidInput from "@/components/Homepage/CationValidInput.vue";
 import toggleIconShowHidePassword from "@/composable/toggleShowHidePassword";
+import passwordsMatch from "@/composable/passwordsMatch";
 
 const userInfo = ref({
   username: "",
@@ -22,7 +23,10 @@ const login = async () => {
   for (let i = 0; i < data.length; i++) {
     if (
       data[i].username === userInfo.value.username &&
-      data[i].password === (await hashPassword(userInfo.value.password))
+      passwordsMatch(
+        data[i].password,
+        await hashPassword(userInfo.value.password)
+      )
     ) {
       userInfo.value.username = data[i].username;
       userInfo.value.email = data[i].email;

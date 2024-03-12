@@ -5,6 +5,7 @@ import { RouterLink } from "vue-router";
 import CationValidInput from "@/components/Homepage/CationValidInput.vue";
 import hashPassword from "@/composable/hashPassword";
 import toggleIconShowHidePassword from "@/composable/toggleShowHidePassword";
+import passwordsMatch from "@/composable/passwordsMatch";
 
 const userInfo = ref({
   username: "".trim(),
@@ -29,26 +30,57 @@ function isValidImageFile(filename) {
   return allowedExtensions.includes(extension);
 }
 
+function validateUsername(username) {
+  if (!username.trim()) {
+    return false;
+  }
+
+  const regex = /^[a-zA-Z0-9_-]+$/;
+  if (!regex.test(username)) {
+    return false;
+  }
+
+  if (username.length < 3 || username.length > 20) {
+    return false;
+  }
+
+  return true;
+}
+
+function validateEmail(email) {
+  const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return regex.test(email);
+}
+
+function validatePassword(password) {
+  const regex =
+    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+  return regex.test(password);
+}
+
+function checkUserExists(users) {
+  return users.find((user) => user.username === userInfo.value.username);
+}
+
 const register = async () => {
   const res = await fetch("http://localhost:5000/login");
   const users = await res.json();
-  const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   isUsernameValid.value = true;
   isEmailValid.value = true;
   isPasswordValid.value = true;
   if (res.status === 200) {
-    if (
-      users.find((user) => user.username === userInfo.value.username) ||
-      userInfo.value.username.length === 0
-    ) {
+    if (checkUserExists(users) || !validateUsername(userInfo.value.username)) {
       isUsernameValid.value = false;
-    } else if (!regex.test(userInfo.value.email)) {
+    } else if (!validateEmail(userInfo.value.email)) {
       isUsernameValid.value = true;
       isEmailValid.value = false;
     } else if (
-      userInfo.value.password !== userInfo.value.confirmPassword ||
-      userInfo.value.password.length === 0 ||
-      userInfo.value.confirmPassword.length === 0
+      !passwordsMatch(
+        userInfo.value.password,
+        userInfo.value.confirmPassword
+      ) ||
+      !validatePassword(userInfo.value.password) ||
+      !validatePassword(userInfo.value.confirmPassword)
     ) {
       isUsernameValid.value = true;
       isEmailValid.value = true;
@@ -155,8 +187,8 @@ const openImageUpload = () => {
           />
         </div>
         <CationValidInput
-          v-if="userInfo.password.length === 0"
-          text="password should not empty"
+          v-if="!validatePassword(userInfo.password)"
+          text="password should valid password format"
           :check="isPasswordValid"
         />
         <CationValidInput
@@ -180,8 +212,8 @@ const openImageUpload = () => {
           />
         </div>
         <CationValidInput
-          v-if="userInfo.confirmPassword.length === 0"
-          text="password should not empty"
+          v-if="!validatePassword(userInfo.confirmPassword)"
+          text="password should valid password format"
           :check="isPasswordValid"
         />
         <CationValidInput
