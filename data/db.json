@@ -38,7 +38,7 @@
     },
     {
       "adult": false,
-      "backdrop_path": "/image/avenger.jpg",
+      "backdrop_path": "/image/kangfu4-backdropNOOB.jpg",
       "genre_ids": [
         28, 12, 16, 35, 10751
       ],
@@ -461,4 +461,3 @@
     }
   ]
 }
-

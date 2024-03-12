@@ -1,8 +1,8 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import RegisterView from '@/components/Homepage/Homepage.vue'
-import LoginView from '@/components/Homepage/Homepage.vue'
 import Homepage from '@/components/Homepage/Homepage.vue'
-import Test from '@/components/DescriptionPage/Test.vue'
+import RegisterView from '@/views/RegisterView.vue'
+import LoginView from '@/views/LoginView.vue'
+import MovieDes from '@/components/descriptionpage/MovieDescriptionPage.vue'
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
@@ -23,11 +23,11 @@ const router = createRouter({
             component: LoginView
         },
         {
-            path: '/test',
-            name: 'test',
-            component: Test
+            path: '/:id',
+            component: MovieDes,
         }
     ]
+
 })
 
 export default router

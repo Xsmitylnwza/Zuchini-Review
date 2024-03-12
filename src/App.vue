@@ -1,11 +1,8 @@
 <script setup>
-import { ref, onMounted } from 'vue';
-import MoviePage from './components/Homepage/MoviePage.vue';
-import NavBar from './components/Homepage/NavBar.vue';
-import Homepage from './components/Homepage/Homepage.vue';
+import MoviePage from "./components/Homepage/MoviePage.vue";
+import NavBar from "./components/Homepage/NavBar.vue";
+import data from "/data/db.json";
 import { RouterLink, RouterView } from "vue-router";
-
-
 </script>
 
 <template>
@@ -16,11 +13,17 @@ import { RouterLink, RouterView } from "vue-router";
     <template v-slot:navBar>
       <NavBar />
     </template>
+
 <template v-slot:moviePage>
-      <MoviePage v-for="movie in movies" :movie="movie" :key="movie.id" />
+      <MoviePage />
+      <MoviePage />
+      <MoviePage />
     </template>
 </Homepage>
-<div class="w-[100vh] h-[100vh] "></div> -->
+<div class="w-[100vh] h-[100vh]"></div> -->
 </template>
 
-<style scoped></style>
+
+
+
+<style scoped></style>./components/Homepage/HomePage.vue

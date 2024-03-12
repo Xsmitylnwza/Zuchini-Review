@@ -6,7 +6,7 @@ import { RouterLink, RouterView } from "vue-router";
 
 <template>
     <div
-        class="sticky top-0 z-10 font-inter laptop:flex justify-between px-[40px] py-[10px] h-[130px]  bg-gradient-to-b from-black via-black to-transparent">
+        class="sticky top-0 z-10 font-inter laptop:flex justify-between px-[40px] py-[10px] h-[120px]  bg-gradient-to-b from-black via-black to-transparent">
         <div>
             <img src="/image/logo.png" class="w-[271px] h-[82px]" />
         </div>
