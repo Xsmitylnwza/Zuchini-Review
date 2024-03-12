@@ -4,6 +4,7 @@ import router from "@/router";
 import { RouterLink } from "vue-router";
 import hashPassword from "@/composable/hashPassword";
 import CationValidInput from "@/components/Homepage/CationValidInput.vue";
+import toggleIconShowHidePassword from "@/composable/toggleShowHidePassword";
 
 const userInfo = ref({
   username: "",
@@ -12,6 +13,7 @@ const userInfo = ref({
   password: "",
 });
 
+const passwordField = ref(null);
 const isSuccess = ref(true);
 
 const login = async () => {
@@ -72,12 +74,20 @@ const login = async () => {
             class="input input-bordered input-info w-96 max-w-xs"
           />
           <label class="text-white">Password</label>
-          <input
-            type="text"
-            placeholder="Enter password here..."
-            v-model="userInfo.password"
-            class="input input-bordered input-info w-96 max-w-xs"
-          />
+          <div class="relative">
+            <input
+              type="password"
+              placeholder="Enter password here..."
+              v-model="userInfo.password"
+              class="input input-bordered input-info w-96 max-w-xs"
+              ref="passwordField"
+            />
+            <img
+              src="https://api.iconify.design/dashicons:hidden.svg?color=%23888888"
+              class="w-5 h-5 absolute top-1/2 right-2 transform -translate-y-1/2 cursor-pointer mr-2"
+              @click="toggleIconShowHidePassword($event, passwordField)"
+            />
+          </div>
           <CationValidInput
             text="Username or Password incorrect!"
             :check="isSuccess"

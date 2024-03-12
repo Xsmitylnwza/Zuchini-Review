@@ -4,6 +4,7 @@ import router from "@/router";
 import { RouterLink } from "vue-router";
 import CationValidInput from "@/components/Homepage/CationValidInput.vue";
 import hashPassword from "@/composable/hashPassword";
+import toggleIconShowHidePassword from "@/composable/toggleShowHidePassword";
 
 const userInfo = ref({
   username: "".trim(),
@@ -18,6 +19,9 @@ const profileImageUpload = ref(null);
 const isUsernameValid = ref(true);
 const isEmailValid = ref(true);
 const isPasswordValid = ref(true);
+
+const passwordField = ref(null);
+const confirmPasswordField = ref(null);
 
 function isValidImageFile(filename) {
   const allowedExtensions = ["jpg", "jpeg", "png", "gif", "bmp"];
@@ -38,7 +42,11 @@ const register = async () => {
     } else if (!regex.test(userInfo.value.email)) {
       isUsernameValid.value = true;
       isEmailValid.value = false;
-    } else if (userInfo.value.password !== userInfo.value.confirmPassword) {
+    } else if (
+      userInfo.value.password !== userInfo.value.confirmPassword ||
+      userInfo.value.password.length === 0 ||
+      userInfo.value.confirmPassword.length === 0
+    ) {
       isUsernameValid.value = true;
       isEmailValid.value = true;
       isPasswordValid.value = false;
@@ -87,7 +95,7 @@ const openImageUpload = () => {
     class="box-color w-screen h-screen flex justify-center items-center font-inter"
   >
     <div
-      class="bg-color mx-auto h-5/6 w-3/5 flex justify-around py-4 px-12 rounded-lg"
+      class="bg-color mx-auto w-3/5 flex justify-around py-4 px-12 rounded-lg"
     >
       <div class="flex flex-col gap-y-2 w-2/5">
         <h1 class="text-3xl text-white pl-24 font-bold">Register</h1>
@@ -111,7 +119,7 @@ const openImageUpload = () => {
           type="text"
           placeholder="Enter username here..."
           v-model="userInfo.username"
-          class="input input-bordered input-info w-96 max-w-xs h-20"
+          class="input input-bordered input-info w-96 max-w-xs h-14"
         />
         <CationValidInput
           text="Username is already exits or Invalid username"
@@ -122,28 +130,62 @@ const openImageUpload = () => {
           type="text"
           placeholder="Enter email here..."
           v-model="userInfo.email"
-          class="input input-bordered input-info w-80 max-w-xs h-20"
+          class="input input-bordered input-info w-80 max-w-xs h-14"
         />
         <CationValidInput
           text="Please Valid Email format"
           :check="isEmailValid"
         />
         <label class="text-white">Password</label>
-        <input
-          type="text"
-          placeholder="Enter password here..."
-          v-model="userInfo.password"
-          class="input input-bordered input-info w-96 max-w-xs h-20"
+        <div class="relative">
+          <input
+            type="password"
+            placeholder="Enter password here..."
+            v-model="userInfo.password"
+            class="input input-bordered input-info w-96 max-w-xs h-14"
+            ref="passwordField"
+          />
+          <img
+            src="https://api.iconify.design/dashicons:hidden.svg?color=%23888888"
+            class="w-5 h-5 absolute top-1/2 right-2 transform -translate-y-1/2 cursor-pointer mr-4"
+            @click="toggleIconShowHidePassword($event, passwordField)"
+          />
+        </div>
+        <CationValidInput
+          v-if="userInfo.password.length === 0"
+          text="password should not empty"
+          :check="isPasswordValid"
         />
-        <CationValidInput text="password dont match" :check="isPasswordValid" />
+        <CationValidInput
+          v-else-if="userInfo.password !== userInfo.confirmPassword"
+          text="password dont match"
+          :check="isPasswordValid"
+        />
         <label class="text-white">Confirm Password</label>
-        <input
-          type="text"
-          placeholder="Enter confirm password here..."
-          v-model="userInfo.confirmPassword"
-          class="input input-bordered input-info w-80 max-w-xs h-20"
+        <div class="relative">
+          <input
+            type="password"
+            placeholder="Enter password here..."
+            v-model="userInfo.confirmPassword"
+            class="input input-bordered input-info w-80 max-w-xs h-12"
+            ref="confirmPasswordField"
+          />
+          <img
+            src="https://api.iconify.design/dashicons:hidden.svg?color=%23888888"
+            class="w-5 h-5 absolute top-1/2 right-2 transform -translate-y-1/2 cursor-pointer mr-4"
+            @click="toggleIconShowHidePassword($event, confirmPasswordField)"
+          />
+        </div>
+        <CationValidInput
+          v-if="userInfo.confirmPassword.length === 0"
+          text="password should not empty"
+          :check="isPasswordValid"
         />
-        <CationValidInput text="password dont match" :check="isPasswordValid" />
+        <CationValidInput
+          v-else-if="userInfo.password !== userInfo.confirmPassword"
+          text="password dont match"
+          :check="isPasswordValid"
+        />
         <button
           class="btn btn-black py-2 w-80 text-white border-none hover:bg-stone-700"
           @click="register"
@@ -199,4 +241,4 @@ const openImageUpload = () => {
 .btn-red {
   background: #fc0606;
 }
-</style>
+</style>@/composable/toggleShowHidPassword
