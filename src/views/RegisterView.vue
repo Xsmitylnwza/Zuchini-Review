@@ -33,6 +33,9 @@ const register = async () => {
   const res = await fetch("http://localhost:5000/login");
   const users = await res.json();
   const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  isUsernameValid.value = true;
+  isEmailValid.value = true;
+  isPasswordValid.value = true;
   if (res.status === 200) {
     if (
       users.find((user) => user.username === userInfo.value.username) ||
