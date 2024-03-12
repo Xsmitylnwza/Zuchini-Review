@@ -1,20 +1,29 @@
 <script setup>
-import data from '/data/db.json'
+import { RouterLink, RouterView } from "vue-router";
+import { ref } from 'vue';
 
-const props = defineProps(['poster', 'title'])
+const props = defineProps({
+    movie: Object,
+});
 
+const movieza = ref(props.movie);
+
+console.log(movieza.value)
+
+const nahee = "KUY"
 
 </script>
 
 <template>
     <div>
-        <div class="bg-black rounded-[15px] laptop:flex w-[925px] h-[500px] p-[30px]">
+        <div class="blackBackground rounded-[15px] laptop:flex w-[925px] h-[500px] p-[30px]">
             <div>
-                <img class="absolute laptop:w-[350px] h-[520px] top-[105px] ml-[50px] " :src="poster" />
+                <img class="absolute top-[120px] laptop:w-[330px] h-[480px] ml-[50px] rounded-[5px]"
+                    :src="'https://image.tmdb.org/t/p/w500/' + movie.poster_path" />
             </div>
             <div class="font-istok w-[420px] ml-[auto] text-white font-bold">
-                <h1 class="text-[40px]">{{ title }}</h1>
-                <p class="text-[16px]    mb-[10px]">Rating</p>
+                <h1 class="text-[40px]">{{ movie.original_title }}</h1>
+                <p class="text-[16px] mb-[10px]">Rating</p>
                 <input class="w-[100%] h-[180px] mb-[20px] bg-black border border-white rounded-[16px]" type="text" />
                 <div class="flex flex-col mb-[30px]">
                     <p>Reviewer</p>
@@ -43,8 +52,12 @@ const props = defineProps(['poster', 'title'])
                     </div>
                 </div>
                 <div class="flex justify-center gap-[18px]">
-                    <button class="w-[193px] h-[58px] border border-white text-[15px] rounded-[23px] hover:opacity-70">
-                        Description</button>
+                    <RouterLink :to="{ path: '/' + movie.id }">
+                        <button
+                            class="w-[193px] h-[58px] border border-white text-[15px] rounded-[23px] hover:opacity-70">
+                            Description
+                        </button>
+                    </RouterLink>
                     <button
                         class="flex items-center justify-center gap-[5px] w-[193px] h-[58px] border border-white text-[20px] rounded-[23px] hover:opacity-70 gradient-background">
                         <svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -63,5 +76,10 @@ const props = defineProps(['poster', 'title'])
 <style scoped>
 .gradient-background {
     background-image: linear-gradient(90deg, #C60000 0%, #600000 100%);
+}
+
+.blackBackground {
+    background: rgb(0, 0, 0);
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0.85) 35%, rgba(0, 0, 0, 0.85) 100%);
 }
 </style>

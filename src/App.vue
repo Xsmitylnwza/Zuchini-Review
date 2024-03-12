@@ -1,7 +1,6 @@
 <script setup>
 import MoviePage from "./components/Homepage/MoviePage.vue";
 import NavBar from "./components/Homepage/NavBar.vue";
-import Homepage from "./components/Homepage/Homepage.vue";
 import data from "/data/db.json";
 import { RouterLink, RouterView } from "vue-router";
 </script>
@@ -15,13 +14,16 @@ import { RouterLink, RouterView } from "vue-router";
       <NavBar />
     </template>
 
-    <template v-slot:moviePage>
+<template v-slot:moviePage>
       <MoviePage />
       <MoviePage />
       <MoviePage />
     </template>
-  </Homepage>
-  <div class="w-[100vh] h-[100vh]"></div> -->
+</Homepage>
+<div class="w-[100vh] h-[100vh]"></div> -->
 </template>
 
-<style scoped></style>./components/Homepage/MoviePage.vue./components/Homepage/NavBar.vue
+
+
+
+<style scoped></style>./components/Homepage/HomePage.vue
