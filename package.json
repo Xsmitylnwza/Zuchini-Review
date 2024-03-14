@@ -11,9 +11,11 @@
   },
   "dependencies": {
     "json-server": "^1.0.0-alpha.23",
+    "node-fetch": "^2.7.0",
     "tailwindcss-animated": "^1.0.1",
     "vue": "^3.4.15",
     "vue-carousel": "^0.18.0",
+    "vue-router": "^4.3.0",
     "vue3-carousel": "^0.3.1"
   },
   "devDependencies": {
