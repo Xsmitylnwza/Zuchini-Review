@@ -10,7 +10,7 @@ const movieza = ref(props.movie);
 
 console.log(movieza.value)
 
-const nahee = "KUY"
+const nahee = "KUY";
 
 </script>
 
