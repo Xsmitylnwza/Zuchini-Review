@@ -1848,6 +1848,92 @@
       "confirmPassword": "216e683ff0d2d25165b8bb7ba608c9a628ef299924ca49ab981ec7d2fecd6dad"
     }
   ],
+  "reviews": [
+    {
+      "userId": "ef5e",
+      "movieId": "1096197",
+      "rating": {
+        "performance": 14,
+        "production": 24,
+        "movie_Chapter": 50,
+        "entertainment": 45,
+        "worthiness": 99
+      },
+      "comment": "I found 'No Way Up' to be a thrilling survival story with intense moments throughout. The character dynamics were well-developed, and the tension kept me on the edge of my seat."
+    },
+    {
+      "userId": "ef5e",
+      "movieId": "1011985",
+      "rating": {
+        "performance": 14,
+        "production": 44,
+        "movie_Chapter": 50,
+        "entertainment": 45,
+        "worthiness": 99
+      },
+      "comment": "I LOVE KANGFU PANDA 1 NOT 4 (1)"
+    },
+    {
+      "userId": "ef5e",
+      "movieId": "1011985",
+      "rating": {
+        "performance": 81,
+        "production": 44,
+        "movie_Chapter": 40,
+        "entertainment": 45,
+        "worthiness": 45
+      },
+      "comment": "I LOVE KANGFU PANDA 1 NOT 4 (2)"
+    },
+    {
+      "userId": "ef5e",
+      "movieId": "1011985",
+      "rating": {
+        "performance": 44,
+        "production": 74,
+        "movie_Chapter": 50,
+        "entertainment": 45,
+        "worthiness": 99
+      },
+      "comment": "I LOVE KANGFU PANDA 1 NOT 4 (3)"
+    },
+    {
+      "userId": "ef5e",
+      "movieId": "1011985",
+      "rating": {
+        "performance": 54,
+        "production": 44,
+        "movie_Chapter": 50,
+        "entertainment": 45,
+        "worthiness": 99
+      },
+      "comment": "I LOVE KANGFU PANDA 1 NOT 4 (4)"
+    },
+    {
+      "userId": "ef5e",
+      "movieId": "1011985",
+      "rating": {
+        "performance": 34,
+        "production": 44,
+        "movie_Chapter": 50,
+        "entertainment": 15,
+        "worthiness": 79
+      },
+      "comment": "I LOVE KANGFU PANDA 1 NOT 4 (5)"
+    },
+    {
+      "userId": "ef5e",
+      "movieId": "932420",
+      "rating": {
+        "performance": 34,
+        "production": 44,
+        "movie_Chapter": 50,
+        "entertainment": 15,
+        "worthiness": 79
+      },
+      "comment": "'Code 8 Part II' had some great action sequences, but I felt the plot was a bit predictable. Still, it's an enjoyable watch overall."
+    }
+  ],
   "api-key": [
     {
       "key": "68c7fd5eb47aa1979d5f275d3c876300"

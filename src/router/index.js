@@ -23,7 +23,7 @@ const router = createRouter({
             component: LoginView
         },
         {
-            path: '/:id',
+            path: '/movie/:id',
             component: MovieDes,
         }
     ]
