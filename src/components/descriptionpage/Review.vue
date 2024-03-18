@@ -13,9 +13,6 @@ const infoReviews = ref([]);
 const numlike = ref(0);
 
 onMounted(async () => {
-  if (localStorage.getItem("like")) {
-    numlike.value = parseInt(localStorage.getItem("like"));
-  }
   for (let i = 0; i < props.reviews.length; i++) {
     const review = props.reviews[i];
     const responseUser = await fetch(
