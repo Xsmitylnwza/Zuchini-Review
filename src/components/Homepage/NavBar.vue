@@ -1,12 +1,12 @@
 <script setup>
-
+import { RouterLink, RouterView } from "vue-router";
 
 
 </script>
 
 <template>
     <div
-        class="sticky top-0 z-10 font-inter laptop:flex justify-between px-[40px] py-[10px] h-[150px]  bg-gradient-to-b from-black via-black to-transparent">
+        class="sticky top-0 z-10 font-inter laptop:flex justify-between px-[40px] py-[10px] h-[120px]  bg-gradient-to-b from-black via-black to-transparent">
         <div>
             <img src="/image/logo.png" class="w-[271px] h-[82px]" />
         </div>
@@ -19,8 +19,12 @@
                         clip-rule="evenodd" />
                 </svg>
             </div>
-            <button class="hover:opacity-80">Home</button>
-            <button class="hover:opacity-80">Categories</button>
+            <button class="hover:opacity-80">
+                <RouterLink to="/">Home</RouterLink>
+            </button>
+            <button class="hover:opacity-80">
+                Categories
+            </button>
             <div>
                 <button class="hover:opacity-80">Register</button>
                 |
