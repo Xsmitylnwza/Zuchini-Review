@@ -18,7 +18,7 @@ const passwordField = ref(null);
 const isSuccess = ref(true);
 
 const login = async () => {
-  const res = await fetch("http://localhost:5000/login");
+  const res = await fetch("http://localhost:5000/users");
   const data = await res.json();
   for (let i = 0; i < data.length; i++) {
     if (

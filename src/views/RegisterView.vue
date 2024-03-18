@@ -69,7 +69,7 @@ function resetCorrectData() {
 }
 
 const register = async () => {
-  const res = await fetch("http://localhost:5000/login");
+  const res = await fetch("http://localhost:5000/users");
   const users = await res.json();
   resetCorrectData();
   if (res.status === 200) {
@@ -93,7 +93,7 @@ const register = async () => {
       isUsernameValid.value = true;
       isEmailValid.value = true;
       isPasswordValid.value = true;
-      await fetch("http://localhost:5000/login", {
+      await fetch("http://localhost:5000/users", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
