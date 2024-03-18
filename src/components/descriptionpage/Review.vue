@@ -10,7 +10,6 @@ const props = defineProps({
 });
 
 const infoReviews = ref([]);
-const numlike = ref(0);
 
 onMounted(async () => {
   for (let i = 0; i < props.reviews.length; i++) {
