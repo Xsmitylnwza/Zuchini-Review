@@ -12,9 +12,8 @@ const infoCredits = ref([]);
 const infoReview = ref([]);
 const isShowAllCrew = ref(false)
 const dataLoaded = ref(false)
+const reviewer = ref(0)
 let rating;
-
-
 
 
 onMounted(async () => {
@@ -38,9 +37,11 @@ onMounted(async () => {
         infoReview.value = dataReview;
         infoCredits.value = dataCredit;
         dataLoaded.value = true;
+        reviewer.value = infoReview.value.reviews.length;
         console.log(infoReview.value);
         console.log(infoDetails.value)
         console.log(infoCredits.value)
+        console.log(infoReview.value.reviews.length)
         rating = calRating();
 
     } catch (error) {
@@ -65,7 +66,7 @@ function crewFilter(job) {
     return data?.join(', ')
 }
 
-function dosomething() {
+function getCastData() {
     const data = infoCredits.value.cast?.filter(cast => cast.profile_path)
     if (isShowAllCrew.value) {
         return data
@@ -76,18 +77,17 @@ function handleShowAllCrew() {
 }
 
 function calRating() {
-    const performanceScore = infoReview.value.reviews?.reduce((sum, review) => sum + review.rating.performance, 0) / infoReview.value.reviews?.length
-    const productionScore = infoReview.value.reviews?.reduce((sum, review) => sum + review.rating.production, 0) / infoReview.value.reviews?.length
-    const movieChapterScore = infoReview.value.reviews?.reduce((sum, review) => sum + review.rating.movie_Chapter, 0) / infoReview.value.reviews?.length
-    const entertainmentScore = infoReview.value.reviews?.reduce((sum, review) => sum + review.rating.entertainment, 0) / infoReview.value.reviews?.length
-    const worthinessScore = infoReview.value.reviews?.reduce((sum, review) => sum + review.rating.worthiness, 0) / infoReview.value.reviews?.length
-    return [performanceScore, productionScore, movieChapterScore, entertainmentScore, worthinessScore]
+    if (infoReview.value.reviews.length == 0) {
+        return
+    } else {
+        const performanceScore = infoReview.value.reviews?.reduce((sum, review) => sum + review.rating.performance, 0) / infoReview.value.reviews?.length
+        const productionScore = infoReview.value.reviews?.reduce((sum, review) => sum + review.rating.production, 0) / infoReview.value.reviews?.length
+        const movieChapterScore = infoReview.value.reviews?.reduce((sum, review) => sum + review.rating.movie_Chapter, 0) / infoReview.value.reviews?.length
+        const entertainmentScore = infoReview.value.reviews?.reduce((sum, review) => sum + review.rating.entertainment, 0) / infoReview.value.reviews?.length
+        const worthinessScore = infoReview.value.reviews?.reduce((sum, review) => sum + review.rating.worthiness, 0) / infoReview.value.reviews?.length
+        return [performanceScore, productionScore, movieChapterScore, entertainmentScore, worthinessScore]
+    }
 }
-
-function yeahbro() {
-    return
-}
-
 </script>
 
 <template>
@@ -104,10 +104,10 @@ function yeahbro() {
                     <div class=" w-[75%] ml-[8px] font-semibold">
                         <RedBarTopic :topic="'Movie info'" />
                         <div class="mb-[5px] font-medium">{{ infoDetails.overview }}</div>
-                        <div class="flex gap-[8px] items-center mb-[7px]">
+                        <div class="flex flex-wrap gap-[8px] items-center mb-[7px]">
                             <div class="py-[4px] px-[15px] border-white border-2 rounded-[10px]"
-                                v-for=" genere  in  infoDetails.genres ">{{ genere.name
-                                }}</div>
+                                v-for=" genere  in  infoDetails.genres ">{{ genere.name }}
+                            </div>
                         </div>
                         <div>Original Language: <span class="font-medium">{{ infoDetails.original_language = "en" ?
             "English" : "IDK"
@@ -126,7 +126,7 @@ function yeahbro() {
                     <div class="">
                         <RedBarTopic :topic="'Casts & Crews'" />
                         <div class="flex flex-wrap justify-center gap-[20px]">
-                            <div class="w-[100px]" v-for="cast in dosomething()" :key="cast.id">
+                            <div class="w-[100px]" v-for="cast in getCastData()" :key="cast.id">
                                 <img class="rounded-[3px] mb-[5px]" width="100px" height="1px"
                                     :src="'https://image.tmdb.org/t/p/w500/' + cast.profile_path">
                                 <a href="#" class="w-[50%] text-blue-500 hover:text-blue-600">{{ cast.original_name
@@ -145,9 +145,8 @@ function yeahbro() {
                     <div class="Rating mb-[20px]">
                         <RedBarTopic :topic="'Rating'" />
                         <div class="pr-[30px]">
-                            <RatingPage v-if="dataLoaded" :rating="calRating()" :overall="15" />
+                            <RatingPage v-if="dataLoaded" :rating="rating" :reviewer="reviewer" />
                         </div>
-
                     </div>
                     <div class="Review">
                         <RedBarTopic :topic="'Review'" />
@@ -168,7 +167,7 @@ function yeahbro() {
                     </div>
                 </div>
                 <div class="w-[100%]">
-                    <Review v-if="dataLoaded" :reviews="infoReview.reviews" />
+                    <Review v-if="dataLoaded && infoReview.reviews" :reviews="infoReview.reviews" />
                 </div>
             </div>
         </div>

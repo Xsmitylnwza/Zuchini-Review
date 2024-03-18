@@ -11,14 +11,6 @@ const props = defineProps({
         type: Array,
         default: [0, 0, 0, 0, 0]
     },
-    format: {
-        type: String,
-        default: 'rating'
-    },
-    reviewer: {
-        type: Number,
-        default: 0
-    }
 })
 
 const reviewItems = [
@@ -37,25 +29,24 @@ function getOverAllScore() {
 </script>
 
 <template>
-    <div class="flex flex-row flex-wrap"
-        :class="format === 'comment' ? 'w-[450px] gap-x-[10px]' : 'justify-between font-semibold'">
-        <div class="flex flex-row items-center" :class="format === 'comment' ? 'w-[100%]' : ''">
-            <div class="flex flex-col items-center ml-[auto]">
-                <img :src="reviewIconZucchini" :class="format === 'comment' ? 'w-[50px]' : 'w-[75px]'" />
+    <div class="flex flex-row justify-between flex-wrap">
+        <div class="flex flex-row items-center">
+            <div class="flex flex-col items-center">
+                <img :src="reviewIconZucchini" width="75px" height="75px" />
                 <div class="flex flex-col">
                     <p class="mt-[10px] text-[20px]">Zucchinitor</p>
-                    <p v-if="format !== 'comment'" class="text-red-500 text-[13px]">{{ reviewer }} Review</p>
+                    <p class="text-red-500 text-[10px] ml-[auto]">200
+                        Reviews</p>
                 </div>
             </div>
-            <div :class="format === 'comment' ? 'mr-[auto]' : ''">{{ getOverAllScore() }}%</div>
+            <div>{{ getOverAllScore() }}%</div>
         </div>
-        <div v-for=" item  in  reviewItems " :key="item.label" class="flex flex-row items-center mb-[5px]"
-            :class="format === 'comment' ? ' w-[93px]' : 'w-[140px]'">
+        <div v-for="item in reviewItems" :key="item.label" class="flex flex-row items-center">
             <div class="flex flex-col items-center">
-                <img :src="item.icon" :class="format === 'comment' ? 'w-[20px]' : 'w-[55px]'" />
-                <p class="mt-[10px]" :class="format === 'comment' ? 'text-[10px]' : ''">{{ item.label }}</p>
+                <img :src="item.icon" width="50px" height="50px" />
+                <p class="mt-[10px]">{{ item.label }}</p>
             </div>
-            <div class="ml-[auto]">{{ item.value }}%</div>
+            <div>{{ item.value }}%</div>
         </div>
     </div>
 </template>
