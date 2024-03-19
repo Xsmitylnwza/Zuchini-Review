@@ -5,51 +5,34 @@ import NavBar from "../Homepage/NavBar.vue";
 import RedBarTopic from "./RedBarTopic.vue";
 import RatingPage from "./RatingPage.vue";
 import Review from "./Review.vue";
+import { getMoviesDetails, getMoviesCredits, getMoviesReviews } from "../../libs/ferchUtils.js"
 
 const route = useRoute();
 const infoDetails = ref([]);
 const infoCredits = ref([]);
 const infoReview = ref([]);
-const infoUsers = ref([]);
 const reviewer = ref(0)
-const isShowAllCrew = ref(false);
-const dataLoaded = ref(false);
 const reviewArray = ref([]);
 const currentPage = ref(1);
+const isShowAllCrew = ref(false);
+const dataLoaded = ref(false);
 let rating;
 
 onMounted(async () => {
   try {
-    const url = `https://api.themoviedb.org/3/movie/${route.fullPath.split("/")[2]
-      }?language=en-US`;
-    const urlcredit = `https://api.themoviedb.org/3/movie/${route.fullPath.split("/")[2]
-      }/credits?language=en-US`;
-    const options = {
-      method: "GET",
-      headers: {
-        accept: "application/json",
-        Authorization:
-          "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI2OGM3ZmQ1ZWI0N2FhMTk3OWQ1ZjI3NWQzYzg3NjMwMCIsInN1YiI6IjY1ZWVjMjUxMmIxMTNkMDE3ZGY5Mjk1MiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.1fR4x1gAywLqZIZBcaHET0fOF9DZTlawyjv446MzFe0",
-      },
-    };
-    const responseReview = await fetch(
-      `http://localhost:5000/movies/${route.params.id}/?_embed=reviews`
-    );
-    const responseInfo = await fetch(url, options);
-    const responseCredit = await fetch(urlcredit, options);
-    const dataReview = await responseReview.json();
-    const dataInfo = await responseInfo.json();
-    const dataCredit = await responseCredit.json();
-    infoDetails.value = dataInfo;
+    const moviesDetails = await getMoviesDetails(route.fullPath.split("/")[2]);
+    const moviesCredits = await getMoviesCredits(route.fullPath.split("/")[2])
+    const dataReview = await getMoviesReviews('http://localhost:5000', route.params.id);
+    infoDetails.value = moviesDetails;
     infoReview.value = dataReview;
-    infoCredits.value = dataCredit;
+    infoCredits.value = moviesCredits;
     dataLoaded.value = true;
     reviewer.value = infoReview.value.reviews.length;
     reviewArray.value = showReviewByPage();
+    rating = calRating();
     // console.log(infoReview.value);
     // console.log(infoDetails.value);
     // console.log(infoCredits.value);
-    rating = calRating();
   } catch (error) {
     console.error(error);
   }
@@ -135,9 +118,9 @@ function setCurrentPage(page) {
     'background-image': 'url(' + infoReview?.backdrop_path + ')',
     'background-size': '100%',
   }">
-    <div class="bg-layers h-[100%]">
+    <div class="bg-layer h-[100%]">
       <NavBar />
-      <div class="w-[75%] m-[auto] font-istok text-white px-[45px] py-[10px] blackBackground">
+      <div class="w-[75%] m-[auto] font-istok text-white px-[45px] py-[10px] movieDetails-bg">
         <div class="text-[40px] font-bold">{{ infoDetails.title }}</div>
         <div class="flex justify-between mb-[20px]">
           <div class="w-[25%]">
@@ -221,7 +204,7 @@ function setCurrentPage(page) {
             <div class="flex flex-col items-center p-[20px]">
               <p class="mb-[15px]">Review form is here!! Check to Enter form</p>
               <button
-                class="flex items-center justify-center gap-[5px] w-[193px] h-[58px] border border-white text-[20px] rounded-[23px] hover:opacity-70 gradient-background">
+                class="flex items-center justify-center gap-[5px] w-[193px] h-[58px] border border-white text-[20px] rounded-[23px] hover:opacity-70 gradient-bg">
                 <svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path
                     d="M7.83333 7.88235H17.1667M7.83333 12.5882H14.8333M19.5 2C20.4283 2 21.3185 2.37185 21.9749 3.03374C22.6313 3.69563 23 4.59335 23 5.52941V14.9412C23 15.8772 22.6313 16.775 21.9749 17.4368C21.3185 18.0987 20.4283 18.4706 19.5 18.4706H13.6667L7.83333 22V18.4706H5.5C4.57174 18.4706 3.6815 18.0987 3.02513 17.4368C2.36875 16.775 2 15.8772 2 14.9412V5.52941C2 4.59335 2.36875 3.69563 3.02513 3.03374C3.6815 2.37185 4.57174 2 5.5 2H19.5Z"
@@ -247,11 +230,11 @@ function setCurrentPage(page) {
 </template>
 
 <style scoped>
-.gradient-background {
+.gradient-bg {
   background-image: linear-gradient(90deg, #c60000 0%, #600000 100%);
 }
 
-.blackBackground {
+.movieDetails-bg {
   background: rgb(0, 0, 0);
   background: linear-gradient(180deg,
       rgba(0, 0, 0, 0.75) 0%,
@@ -259,7 +242,8 @@ function setCurrentPage(page) {
       rgba(0, 0, 0, 1) 100%);
 }
 
-.bg-layers {
+
+.bg-layer {
   background: rgb(0, 0, 0);
   background: linear-gradient(180deg,
       rgba(0, 0, 0, 0) 0%,

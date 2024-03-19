@@ -1,6 +1,7 @@
 <script setup>
 import { onMounted, ref } from "vue";
 import RatingPage from "./RatingPage.vue";
+import { getUsersInfo } from "../../libs/ferchUtils.js"
 
 const props = defineProps({
   reviews: {
@@ -15,11 +16,7 @@ const infoReviews = ref([]);
 onMounted(async () => {
   for (let i = 0; i < props.reviews.length; i++) {
     const review = props.reviews[i];
-    const responseUser = await fetch(
-      `http://localhost:5000/users/${review.userId}`
-    );
-    const user = await responseUser.json();
-    const { username, imageUrl } = user;
+    const { username, imageUrl } = await getUsersInfo(review.userId);
     const rating = review.rating;
     const comment = review.comment;
     const userReview = {
@@ -55,7 +52,7 @@ function getRatingScore(rating) {
   <div v-if="infoReviews.length == 0" class="w-[100%] h-[150px] border-y border-gray-400 py-[10px] flex justify-center">
     <div class="font-istok text-[24px] m-[auto]">We didn't have any review right now...</div>
   </div>
-  <div class="w-[100%] border-y border-white py-[10px]" v-for="review in infoReviews" :key="review.length">
+  <div v-else class="w-[100%] border-y border-white py-[10px]" v-for="review in infoReviews" :key="review.length">
     <div class="flex flex-row gap-[15px] items-center pl-2">
       <img class="w-[70px] rounded-full" :src="review.imageUrl" />
       <p class="text-[32px]">{{ review.username }}</p>
