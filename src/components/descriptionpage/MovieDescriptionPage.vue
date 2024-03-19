@@ -14,6 +14,7 @@ const infoUsers = ref([]);
 const reviewer = ref(0)
 const isShowAllCrew = ref(false);
 const dataLoaded = ref(false);
+const reviewArray = ref()
 let rating;
 
 onMounted(async () => {
@@ -36,7 +37,6 @@ onMounted(async () => {
     const responseInfo = await fetch(url, options);
     const responseCredit = await fetch(urlcredit, options);
     const dataReview = await responseReview.json();
-    console.log(dataReview.value);
     const dataInfo = await responseInfo.json();
     const dataCredit = await responseCredit.json();
     infoDetails.value = dataInfo;
@@ -44,6 +44,8 @@ onMounted(async () => {
     infoCredits.value = dataCredit;
     dataLoaded.value = true;
     reviewer.value = infoReview.value.reviews.length;
+    reviewArray.value = dosomething();
+    console.log(reviewArray.value)
     // console.log(infoReview.value);
     // console.log(infoDetails.value);
     // console.log(infoCredits.value);
@@ -116,8 +118,8 @@ function calRating() {
   ];
 }
 
-function yeahbro() {
-  return;
+function dosomething() {
+  return infoReview.value.reviews.slice(0, 3);
 }
 </script>
 
