@@ -6,8 +6,12 @@ import hashPassword from "@/composable/hashPassword";
 import CationValidInput from "@/components/Homepage/CationValidInput.vue";
 import toggleIconShowHidePassword from "@/composable/toggleShowHidePassword";
 import passwordsMatch from "@/composable/passwordsMatch";
+import { useUserStore } from "@/store/user";
+
+const userStore = useUserStore();
 
 const userInfo = ref({
+  id: "",
   username: "",
   email: "",
   imageUrl: "",
@@ -18,7 +22,7 @@ const passwordField = ref(null);
 const isSuccess = ref(true);
 
 const login = async () => {
-  const res = await fetch("http://localhost:5000/login");
+  const res = await fetch("http://localhost:5000/users");
   const data = await res.json();
   for (let i = 0; i < data.length; i++) {
     if (
@@ -32,6 +36,8 @@ const login = async () => {
       userInfo.value.email = data[i].email;
       userInfo.value.imageUrl = data[i].imageUrl;
       userInfo.value.password = data[i].password;
+      userInfo.value.id = data[i].id;
+      userStore.setUserInfo(userInfo.value);
       await router.push("/");
     }
   }
