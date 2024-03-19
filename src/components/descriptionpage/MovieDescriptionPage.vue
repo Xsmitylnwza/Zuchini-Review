@@ -1,6 +1,6 @@
 <script setup>
 import { useRoute } from "vue-router";
-import { ref, onMounted } from "vue";
+import { ref, onMounted, watchEffect } from "vue";
 import NavBar from "../Homepage/NavBar.vue";
 import RedBarTopic from "./RedBarTopic.vue";
 import RatingPage from "./RatingPage.vue";
@@ -14,7 +14,8 @@ const infoUsers = ref([]);
 const reviewer = ref(0)
 const isShowAllCrew = ref(false);
 const dataLoaded = ref(false);
-const reviewArray = ref();
+const reviewArray = ref([]);
+const currentPage = ref(1);
 let rating;
 
 onMounted(async () => {
@@ -44,8 +45,7 @@ onMounted(async () => {
     infoCredits.value = dataCredit;
     dataLoaded.value = true;
     reviewer.value = infoReview.value.reviews.length;
-    reviewArray.value = dosomething();
-    console.log(reviewArray.value.length)
+    reviewArray.value = showReviewByPage();
     // console.log(infoReview.value);
     // console.log(infoDetails.value);
     // console.log(infoCredits.value);
@@ -53,6 +53,9 @@ onMounted(async () => {
   } catch (error) {
     console.error(error);
   }
+});
+watchEffect(() => {
+  reviewArray.value = showReviewByPage(currentPage.value);
 });
 
 function timeFormat() {
@@ -118,8 +121,11 @@ function calRating() {
   ];
 }
 
-function dosomething() {
-  return infoReview.value.reviews.slice(0, 3);
+function showReviewByPage(currentPage = 1) {
+  return infoReview.value.reviews?.slice((currentPage - 1) * 3, currentPage * 3);
+}
+function setCurrentPage(page) {
+  currentPage.value = page
 }
 
 </script>
@@ -227,10 +233,11 @@ function dosomething() {
           </div>
         </div>
         <div class="w-[100%]">
-          <Review v-if="dataLoaded" :reviews="reviewArray" />
-          <div class="flex justify-center gap-[5px]">
-            <div class="border rounded-md w-[30px]" v-for="page in Math.ceil(reviewer / 3)">
-              <button class="w-[100%]">{{ page }}</button>
+          <Review v-if="dataLoaded && reviewArray.value?.length != 0" :reviews="reviewArray" :key="reviewArray" />
+          <div class="flex justify-center gap-[5px] mt-[20px]">
+            <div class="border rounded-md w-[25px]" :class="currentPage === page ? 'bg-red-600' : ''"
+              v-for="page in Math.ceil(reviewer / 3)" :key="page.length">
+              <button class="w-[100%]" @click="setCurrentPage(page)">{{ page }}</button>
             </div>
           </div>
         </div>

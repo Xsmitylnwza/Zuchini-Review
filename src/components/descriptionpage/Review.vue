@@ -9,6 +9,7 @@ const props = defineProps({
   },
 });
 
+
 const infoReviews = ref([]);
 
 onMounted(async () => {
@@ -51,7 +52,10 @@ function getRatingScore(rating) {
 </script>
 
 <template>
-  <div class="w-[100%] border-y border-white py-[10px]" v-for="review in infoReviews">
+  <div v-if="infoReviews.length == 0" class="w-[100%] h-[150px] border-y border-gray-400 py-[10px] flex justify-center">
+    <div class="font-istok text-[24px] m-[auto]">We didn't have any review right now...</div>
+  </div>
+  <div class="w-[100%] border-y border-white py-[10px]" v-for="review in infoReviews" :key="review.length">
     <div class="flex flex-row gap-[15px] items-center pl-2">
       <img class="w-[70px] rounded-full" :src="review.imageUrl" />
       <p class="text-[32px]">{{ review.username }}</p>
@@ -64,7 +68,7 @@ function getRatingScore(rating) {
         <div class="w-[100%] mb-[15px]">
           {{ review.comment }}
         </div>
-        <div class="flex flex-row gap-[5px] ml-[auto]">
+        <div class="flex flex-row gap-[5px] ml-[auto] mt-[auto]">
           <span>Liked {{ review.numlike }}</span>
           <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg"
             @click="incrementLike(review)" class="cursor-pointer">
