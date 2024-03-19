@@ -10,7 +10,7 @@ import { getMoviesDetails, getMoviesCredits, getMoviesReviews } from "../../libs
 const route = useRoute();
 const infoDetails = ref([]);
 const infoCredits = ref([]);
-const infoReview = ref([]);
+const infoReview = ref({ reviews: [] });
 const reviewer = ref(0)
 const reviewArray = ref([]);
 const currentPage = ref(1);
@@ -27,12 +27,12 @@ onMounted(async () => {
     infoReview.value = dataReview;
     infoCredits.value = moviesCredits;
     dataLoaded.value = true;
-    reviewer.value = infoReview.value.reviews.length;
+    reviewer.value = infoReview.value.reviews?.length;
     reviewArray.value = showReviewByPage();
     rating = calRating();
     // console.log(infoReview.value);
     // console.log(infoDetails.value);
-    // console.log(infoCredits.value);
+    console.log(infoCredits.value);
   } catch (error) {
     console.error(error);
   }
@@ -70,38 +70,43 @@ function handleShowAllCrew() {
 }
 
 function calRating() {
-  const performanceScore =
-    infoReview.value.reviews?.reduce(
-      (sum, review) => sum + review.rating.performance,
-      0
-    ) / infoReview.value.reviews?.length;
-  const productionScore =
-    infoReview.value.reviews?.reduce(
-      (sum, review) => sum + review.rating.production,
-      0
-    ) / infoReview.value.reviews?.length;
-  const movieChapterScore =
-    infoReview.value.reviews?.reduce(
-      (sum, review) => sum + review.rating.movie_Chapter,
-      0
-    ) / infoReview.value.reviews?.length;
-  const entertainmentScore =
-    infoReview.value.reviews?.reduce(
-      (sum, review) => sum + review.rating.entertainment,
-      0
-    ) / infoReview.value.reviews?.length;
-  const worthinessScore =
-    infoReview.value.reviews?.reduce(
-      (sum, review) => sum + review.rating.worthiness,
-      0
-    ) / infoReview.value.reviews?.length;
-  return [
-    performanceScore,
-    productionScore,
-    movieChapterScore,
-    entertainmentScore,
-    worthinessScore,
-  ];
+  if (infoReview.value.reviews.length == 0) {
+    return
+  } else {
+    const performanceScore =
+      infoReview.value.reviews?.reduce(
+        (sum, review) => sum + review.rating.performance,
+        0
+      ) / infoReview.value.reviews?.length;
+    const productionScore =
+      infoReview.value.reviews?.reduce(
+        (sum, review) => sum + review.rating.production,
+        0
+      ) / infoReview.value.reviews?.length;
+    const movieChapterScore =
+      infoReview.value.reviews?.reduce(
+        (sum, review) => sum + review.rating.movie_Chapter,
+        0
+      ) / infoReview.value.reviews?.length;
+    const entertainmentScore =
+      infoReview.value.reviews?.reduce(
+        (sum, review) => sum + review.rating.entertainment,
+        0
+      ) / infoReview.value.reviews?.length;
+    const worthinessScore =
+      infoReview.value.reviews?.reduce(
+        (sum, review) => sum + review.rating.worthiness,
+        0
+      ) / infoReview.value.reviews?.length;
+    return [
+      performanceScore,
+      productionScore,
+      movieChapterScore,
+      entertainmentScore,
+      worthinessScore,
+    ];
+  }
+
 }
 
 function showReviewByPage(currentPage = 1) {
@@ -118,13 +123,18 @@ const incrementLike = (review) => {
 </script>
 
 <template>
-  <div class="w-[100%] h-[100%]" :style="{
+  <div v-if="!dataLoaded" class="bg-black w-[100%] h-[100vh]">
+    <NavBar />
+    <div class="loader">
+    </div>
+  </div>
+  <div v-if="dataLoaded" class="w-[100%] h-[100%] " :style="{
     'background-image': 'url(' + infoReview?.backdrop_path + ')',
     'background-size': '100%',
   }">
     <div class="bg-layer h-[100%]">
       <NavBar />
-      <div class="w-[75%] m-[auto] font-istok text-white px-[45px] py-[10px] movieDetails-bg">
+      <div class="w-[75%] m-[auto] font-istok text-white px-[45px] py-[10px] movieDetails-bg fade-up">
         <div class="text-[40px] font-bold">{{ infoDetails.title }}</div>
         <div class="flex justify-between mb-[20px]">
           <div class="w-[25%]">
@@ -223,9 +233,10 @@ const incrementLike = (review) => {
           <Review v-if="dataLoaded && reviewArray.value?.length != 0" :reviews="reviewArray" :key="reviewArray"
             @incrementLike="incrementLike" />
           <div class="flex justify-center gap-[5px] mt-[20px]">
-            <div class="border rounded-md w-[25px]" :class="currentPage === page ? 'bg-red-600' : ''"
+            <div class="border rounded-md w-[25px] bg-black  "
+              :class="currentPage === page ? 'bg-red-600 hover:bg-red-800' : 'hover:bg-gray-700'"
               v-for="page in Math.ceil(reviewer / 3)" :key="page.length">
-              <button class="w-[100%]" @click="setCurrentPage(page)">{{ page }}</button>
+              <button class="w-[100%] m-[auto]" @click="setCurrentPage(page)">{{ page }}</button>
             </div>
           </div>
         </div>
@@ -254,5 +265,46 @@ const incrementLike = (review) => {
       rgba(0, 0, 0, 0) 0%,
       rgba(0, 0, 0, 0.15) 63%,
       rgba(0, 0, 0, 1) 83%);
+}
+
+.loader {
+  border: 32px solid #F1F1F1;
+  border-top: 32px solid #E90000;
+  border-radius: 50%;
+  width: 200px;
+  height: 200px;
+  animation: spin 1.5s linear infinite;
+  margin: auto;
+  margin-top: 150px;
+  top: 0;
+  bottom: 0;
+}
+
+.fade-up {
+  animation: fadeUp 0.5s ease-out;
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+
 }
 </style>./RedBarTopic.vue

@@ -33,6 +33,7 @@ async function getMoviesCredits(movie_id) {
         const moviesCredits = await data.json()
         return moviesCredits
     } catch (error) {
+
         console.log(`error: ${error}`)
     }
 }
@@ -42,6 +43,7 @@ async function getMoviesReviews(url, movie_id) {
         const moviesReviews = await data.json()
         return moviesReviews
     } catch (error) {
+        return { reviews: [] }
         console.log(`error: ${error}`)
     }
 }
