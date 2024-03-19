@@ -3,6 +3,8 @@ import { onMounted, ref } from "vue";
 import RatingPage from "./RatingPage.vue";
 import { getUsersInfo } from "../../libs/ferchUtils.js"
 
+defineEmits(['incrementLike']);
+
 const props = defineProps({
   reviews: {
     type: Object,
@@ -30,10 +32,6 @@ onMounted(async () => {
   }
 });
 
-const incrementLike = (review) => {
-  review.numlike++;
-  localStorage.setItem(`like_${review.username}`, review.numlike);
-};
 function getRatingScore(rating) {
   const { performance, production, movie_Chapter, entertainment, worthiness } =
     rating;
@@ -68,7 +66,7 @@ function getRatingScore(rating) {
         <div class="flex flex-row gap-[5px] ml-[auto] mt-[auto]">
           <span>Liked {{ review.numlike }}</span>
           <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg"
-            @click="incrementLike(review)" class="cursor-pointer">
+            @click="$emit('incrementLike', review)" class="cursor-pointer">
             <g clip-path="url(#clip0_90_683)">
               <path
                 d="M5.625 3C3.34688 3 1.5 4.84688 1.5 7.125C1.5 11.25 6.375 15 9 15.8723C11.625 15 16.5 11.25 16.5 7.125C16.5 4.84688 14.6531 3 12.375 3C10.98 3 9.74625 3.69263 9 4.75275C8.61963 4.21095 8.11431 3.76878 7.52682 3.46368C6.93934 3.15858 6.28699 2.99953 5.625 3Z"

@@ -110,6 +110,10 @@ function showReviewByPage(currentPage = 1) {
 function setCurrentPage(page) {
   currentPage.value = page
 }
+const incrementLike = (review) => {
+  review.numlike++;
+  localStorage.setItem(`like_${review.username}`, review.numlike);
+};
 
 </script>
 
@@ -216,7 +220,8 @@ function setCurrentPage(page) {
           </div>
         </div>
         <div class="w-[100%]">
-          <Review v-if="dataLoaded && reviewArray.value?.length != 0" :reviews="reviewArray" :key="reviewArray" />
+          <Review v-if="dataLoaded && reviewArray.value?.length != 0" :reviews="reviewArray" :key="reviewArray"
+            @incrementLike="incrementLike" />
           <div class="flex justify-center gap-[5px] mt-[20px]">
             <div class="border rounded-md w-[25px]" :class="currentPage === page ? 'bg-red-600' : ''"
               v-for="page in Math.ceil(reviewer / 3)" :key="page.length">
