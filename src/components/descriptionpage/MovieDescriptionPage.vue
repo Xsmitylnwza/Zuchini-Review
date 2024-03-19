@@ -14,7 +14,7 @@ const infoUsers = ref([]);
 const reviewer = ref(0)
 const isShowAllCrew = ref(false);
 const dataLoaded = ref(false);
-const reviewArray = ref()
+const reviewArray = ref();
 let rating;
 
 onMounted(async () => {
@@ -45,7 +45,7 @@ onMounted(async () => {
     dataLoaded.value = true;
     reviewer.value = infoReview.value.reviews.length;
     reviewArray.value = dosomething();
-    console.log(reviewArray.value)
+    console.log(reviewArray.value.length)
     // console.log(infoReview.value);
     // console.log(infoDetails.value);
     // console.log(infoCredits.value);
@@ -121,6 +121,7 @@ function calRating() {
 function dosomething() {
   return infoReview.value.reviews.slice(0, 3);
 }
+
 </script>
 
 <template>
@@ -226,7 +227,12 @@ function dosomething() {
           </div>
         </div>
         <div class="w-[100%]">
-          <Review v-if="dataLoaded" :reviews="infoReview.reviews" />
+          <Review v-if="dataLoaded" :reviews="reviewArray" />
+          <div class="flex justify-center gap-[5px]">
+            <div class="border rounded-md w-[30px]" v-for="page in Math.ceil(reviewer / 3)">
+              <button class="w-[100%]">{{ page }}</button>
+            </div>
+          </div>
         </div>
       </div>
     </div>
