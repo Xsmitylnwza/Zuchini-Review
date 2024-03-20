@@ -1,6 +1,9 @@
 <script setup>
 import { onMounted, ref } from "vue";
 import RatingPage from "./RatingPage.vue";
+import { getUsersInfo } from "../../libs/ferchUtils.js"
+
+defineEmits(['incrementLike']);
 
 const props = defineProps({
   reviews: {
@@ -15,11 +18,7 @@ const infoReviews = ref([]);
 onMounted(async () => {
   for (let i = 0; i < props.reviews.length; i++) {
     const review = props.reviews[i];
-    const responseUser = await fetch(
-      `http://localhost:5000/users/${review.userId}`
-    );
-    const user = await responseUser.json();
-    const { username, imageUrl } = user;
+    const { username, imageUrl } = await getUsersInfo(review.userId);
     const rating = review.rating;
     const comment = review.comment;
     const userReview = {
@@ -33,10 +32,6 @@ onMounted(async () => {
   }
 });
 
-const incrementLike = (review) => {
-  review.numlike++;
-  localStorage.setItem(`like_${review.username}`, review.numlike);
-};
 function getRatingScore(rating) {
   const { performance, production, movie_Chapter, entertainment, worthiness } =
     rating;
@@ -55,23 +50,24 @@ function getRatingScore(rating) {
   <div v-if="infoReviews.length == 0" class="w-[100%] h-[150px] border-y border-gray-400 py-[10px] flex justify-center">
     <div class="font-istok text-[24px] m-[auto]">We didn't have any review right now...</div>
   </div>
-  <div class="w-[100%] border-y border-white py-[10px]" v-for="review in infoReviews" :key="review.length">
+  <div v-else class="w-[100%] border-y border-white py-[10px] font-istok" v-for="review in infoReviews"
+    :key="review.length">
     <div class="flex flex-row gap-[15px] items-center pl-2">
       <img class="w-[70px] rounded-full" :src="review.imageUrl" />
-      <p class="text-[32px]">{{ review.username }}</p>
+      <p class="text-[32px] font-bold">{{ review.username }}</p>
     </div>
     <div class="flex flex-row gap-[15px] w-[100%]">
       <div class="flex p-[15px] border-r border-gray-600 w-[32%]">
         <RatingPage :rating="getRatingScore(review.rating)" :format="'comment'" />
       </div>
       <div class="flex flex-col p-[20px] w-[70%]">
-        <div class="w-[100%] mb-[15px]">
+        <div class="w-[100%] mb-[15px] ">
           {{ review.comment }}
         </div>
-        <div class="flex flex-row gap-[5px] ml-[auto] mt-[auto]">
+        <div class="flex flex-row items-center justify-center gap-[5px] ml-[auto] mt-[auto]">
           <span>Liked {{ review.numlike }}</span>
-          <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg"
-            @click="incrementLike(review)" class="cursor-pointer">
+          <svg width="23" height="23" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg"
+            @click="$emit('incrementLike', review)" class="cursor-pointer hover:opacity-50">
             <g clip-path="url(#clip0_90_683)">
               <path
                 d="M5.625 3C3.34688 3 1.5 4.84688 1.5 7.125C1.5 11.25 6.375 15 9 15.8723C11.625 15 16.5 11.25 16.5 7.125C16.5 4.84688 14.6531 3 12.375 3C10.98 3 9.74625 3.69263 9 4.75275C8.61963 4.21095 8.11431 3.76878 7.52682 3.46368C6.93934 3.15858 6.28699 2.99953 5.625 3Z"
