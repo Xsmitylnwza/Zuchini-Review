@@ -1,7 +1,7 @@
 <script setup>
 import { onMounted, ref } from "vue";
 import RatingPage from "./RatingPage.vue";
-import { getUsersInfo } from "../../libs/ferchUtils.js";
+import { getUsersInfo } from "../../libs/fetchUtils.js";
 import { useUserStore } from "@/store/user";
 
 const userStore = useUserStore();
@@ -94,4 +94,4 @@ function getRatingScore(rating) {
   </div>
 </template>
 
-<style scoped></style>
+<style scoped></style>../../libs/fetchUtils.js

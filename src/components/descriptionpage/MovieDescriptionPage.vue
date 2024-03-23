@@ -11,7 +11,7 @@ import {
   getMoviesDetails,
   getMoviesCredits,
   getMoviesReviews,
-} from "../../libs/ferchUtils.js";
+} from "../../libs/fetchUtils.js";
 import { useUserStore } from "@/store/user";
 
 const userStore = useUserStore();
@@ -337,4 +337,4 @@ async function incrementLike(review) {
     transform: translateY(0);
   }
 }
-</style>
+</style>../../libs/fetchUtils.js

@@ -1,6 +1,6 @@
 <script setup>
 import { ref, onMounted } from "vue";
-import { getMovies } from "../../libs/ferchUtils.js";
+import { getMovies } from "../../libs/fetchUtils.js";
 import NavBar from "./NavBar.vue";
 import MovieRecom from "./MovieRecom.vue";
 import ListModels from "../sortGenre/ListModels.vue"
@@ -35,4 +35,4 @@ onMounted(async () => {
   </div>
 </template>
 
-<style scoped></style>
+<style scoped></style>../../libs/fetchUtils.js
