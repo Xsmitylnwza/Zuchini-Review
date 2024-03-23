@@ -2,25 +2,17 @@ import { defineStore } from 'pinia'
 
 export const useUserStore = defineStore('user', {
   state: () => ({
-    userState: {
-      id: "",
-      username: "",
-      email: "",
-      imageUrl: "",
-      password: ""
-    }
+    currnetUser: {},
   }),
   actions: {
-    setUserInfo(user) {
-      this.userState.id = user.id
-      this.userState.username = user.username
-      this.userState.email = user.email
-      this.userState.imageUrl = user.imageUrl
-      this.userState.password = user.password
+    setUser(user) {
+      this.currnetUser = user
     },
-    getUser() {
-      return this.userState
+    logout() {
+      this.currnetUser = {}
+    },
+    checkUserLoggedIn() {
+      return Object.keys(this.currnetUser).length !== 0
     },
   }
 })
-
