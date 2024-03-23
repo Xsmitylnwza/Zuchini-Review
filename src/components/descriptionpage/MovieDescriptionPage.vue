@@ -45,7 +45,7 @@ onMounted(async () => {
     reviewer.value = infoReview.value.reviews?.length;
     reviewArray.value = showReviewByPage();
     rating = calRating();
-    console.log(infoReview.value.backdrop_path);
+    console.log(infoDetails.value.backdrop_path);
     // console.log(infoDetails.value);
     // console.log(infoCredits.value);
   } catch (error) {
@@ -176,14 +176,12 @@ async function incrementLike(review) {
 
 <template>
   <loadingScreen v-if="!dataLoaded" />
-  <div v-if="dataLoaded" class="w-[100%] h-[100%]" :style="infoReview?.backdrop_path ? {
-    'background-image': 'url(' + infoReview?.backdrop_path + ')',
-    'background-size': '100%',
-  } : {
-    'background-image': 'url(/image/avenger.jpg)',
-    'background-size': '100%'
+  <div v-if="dataLoaded" class="w-full h-full bg-cover" :style="{
+    'background-image': 'url(https://image.tmdb.org/t/p/original' + infoDetails?.backdrop_path + ')',
+    'background-attachment': 'fixed',
+    'background-repeat': 'no-repeat'
   }">
-    <div v-if="dataLoaded" class="bg-layer h-[100%]">
+    <div class="bg-layer h-[100%]">
       <NavBar />
       <div class="w-[75%] m-[auto] font-istok text-white px-[45px] py-[10px] movieDetails-bg fade-up">
         <div class="text-[40px] font-bold">{{ infoDetails.title }}</div>
@@ -196,7 +194,8 @@ async function incrementLike(review) {
             <RedBarTopic :topic="'Movie info'" />
             <div class="mb-[5px] font-medium">{{ infoDetails.overview }}</div>
             <div class="flex flex-wrap gap-[8px] items-center mb-[7px]">
-              <div class="py-[4px] px-[15px] border-white border-2 rounded-[10px]" v-for="genere in infoDetails.genres">
+              <div class="py-[4px] px-[15px] border-white border-2 rounded-[10px]"
+                v-for=" genere  in  infoDetails.genres ">
                 {{ genere.name }}
               </div>
             </div>
@@ -239,7 +238,7 @@ async function incrementLike(review) {
           <div class="">
             <RedBarTopic :topic="'Casts & Crews'" />
             <div class="flex flex-wrap justify-center gap-[20px]">
-              <div class="w-[100px]" v-for="cast in getCastData()" :key="cast.id">
+              <div class="w-[100px]" v-for=" cast  in  getCastData() " :key="cast.id">
                 <img class="rounded-[3px] mb-[5px]" width="100px" height="1px"
                   :src="'https://image.tmdb.org/t/p/w500/' + cast.profile_path" />
                 <a href="#" class="w-[50%] text-blue-500 hover:text-blue-600">{{
@@ -287,7 +286,7 @@ async function incrementLike(review) {
             <div class="border rounded-md w-[25px] bg-black" :class="currentPage === page
     ? 'bg-red-600 hover:bg-red-800'
       : 'hover:bg-gray-700'
-    " v-for="page in Math.ceil(reviewer / 3)" :key="page.length">
+    " v-for=" page  in Math.ceil(reviewer / 3)" :key="page.length">
               <button class="w-[100%] m-[auto]" @click="setCurrentPage(page)">
                 {{ page }}
               </button>
