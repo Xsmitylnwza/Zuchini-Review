@@ -20,8 +20,11 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div class="laptop:bg-cover h-[100vh] max-w-[100%]"
-    :style="{ 'background-image': 'url(' + '/image/avenger.jpg' + ')' }">
+  <div class="bg-cover h-full max-w-[100%]" :style="{
+    'background-image': 'url(/image/avenger.jpg)',
+    'background-attachment': 'fixed',
+    'background-repeat': 'no-repeat'
+  }">
     <NavBar />
     <div class="text-white text-2xl ml-[5%] font-istok font-bold">
       RECCOMMENT

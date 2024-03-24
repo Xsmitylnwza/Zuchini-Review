@@ -1,10 +1,17 @@
 <script setup>
-import { RouterLink, RouterView } from 'vue-router'
+import { RouterLink } from 'vue-router'
 import { ref } from 'vue'
 
 const props = defineProps({
-  movie: Object,
-  index: Number,
+  movie: {
+    type: Object,
+    default: null
+  },
+  index: {
+    type: Number,
+    default: 0
+  }
+
 })
 
 const indexMovie = ref(props.index);

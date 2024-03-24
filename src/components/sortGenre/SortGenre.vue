@@ -37,7 +37,8 @@ function sortGenres() {
 <template>
     <div class="bg-black">
         <div class="flex flex-row overflow-x-scroll overflow-y-clip gap-[20px]">
-            <div v-for="movie in  sortByCategory " class="transition ease-in-out hover:-translate-y-1 hover:scale-110">
+            <div v-for="movie in  sortByCategory " :key="movie.id"
+                class="transition ease-in-out hover:-translate-y-1 hover:scale-110">
                 <RouterLink :to="{ path: '/movie/' + movie.id }">
                     <MovieBox :movie="movie" />
                 </RouterLink>

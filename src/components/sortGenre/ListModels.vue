@@ -3,7 +3,8 @@ import { ref, onMounted } from "vue"
 import SortGenre from "./SortGenre.vue"
 const prop = defineProps({
     dataMovies: {
-        type: Array
+        type: Array,
+        default: []
     }
 })
 onMounted(async () => {
