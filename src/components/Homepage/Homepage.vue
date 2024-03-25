@@ -29,12 +29,14 @@ onMounted(async () => {
     <div class="text-white text-2xl ml-[5%] font-istok font-bold">
       RECCOMMENT
     </div>
-    <div class="flex justify-center gap-[150px] mt-[20px]">
-      <div class="carousel w-full">
+    <div class="h-[650px]">
+      <div class="carousel w-full relative bottom-[150px]">
         <MovieRecom v-for="(movie, index) in movies" :movie="movie" :index="index" :key="movie.id" />
       </div>
     </div>
-    <ListModels v-if="dataLoaded" :dataMovies="NotSliceMovies" />
+    <div class="relative ">
+      <ListModels v-if="dataLoaded" :dataMovies="NotSliceMovies" />
+    </div>
   </div>
 </template>
 
