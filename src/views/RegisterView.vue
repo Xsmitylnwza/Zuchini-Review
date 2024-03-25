@@ -104,6 +104,7 @@ const register = async () => {
           imageUrl: userInfo.value.imageUrl,
           password: await hashPassword(userInfo.value.password),
           confirmPassword: await hashPassword(userInfo.value.password),
+          likedComments: [],
         }),
       });
       await router.push("/login");
