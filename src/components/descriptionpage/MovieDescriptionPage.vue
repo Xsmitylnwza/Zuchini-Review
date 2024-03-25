@@ -6,12 +6,12 @@ import RedBarTopic from "./RedBarTopic.vue";
 import RatingPage from "./RatingPage.vue";
 import Review from "./Review.vue";
 import LoadingScreen from "./LoadingScreen.vue";
-import router from "@/router";
+import { ReviewManagement } from "@/libs/ReviewManagement.js"
 import {
   getMoviesDetails,
-  getMoviesCredits,
   getMoviesReviews,
-} from "../../libs/fetchUtils.js";
+  getUsersInfo,
+} from "@/libs/fetchUtils.js";
 import { useUserStore } from "@/store/user";
 
 const userStore = useUserStore();
@@ -19,46 +19,58 @@ const userStore = useUserStore();
 const currnetUser = userStore.currnetUser;
 
 const route = useRoute();
-const infoDetails = ref([]);
-const infoCredits = ref([]);
-const infoReview = ref({ reviews: [] });
-const reviewer = ref(0);
-const reviewArray = ref([]);
+const moviesDetails = ref([]);
+const moviesCredits = ref([]);
+const moviesTrailer = ref([])
 const currentPage = ref(1);
+const moviesReview = ref(new ReviewManagement());
 const isShowAllCrew = ref(false);
+const isPlayVideo = ref(false)
 const dataLoaded = ref(false);
-let rating;
 
 onMounted(async () => {
   try {
-    const moviesDetails = await getMoviesDetails(route.params.id);
-    const moviesCredits = await getMoviesCredits(route.params.id);
+    const dataDetails = await getMoviesDetails(route.params.id);
+    const dataCredits = await getMoviesDetails(route.params.id, '/credits');
+    const dataVideos = await getMoviesDetails(route.params.id, '/videos')
     const dataReview = await getMoviesReviews(
       import.meta.env.VITE_BASE_URL,
       route.params.id
     );
-
-    infoDetails.value = moviesDetails;
-    infoReview.value = dataReview;
-    infoCredits.value = moviesCredits;
+    const reviews = dataReview.reviews;
+    moviesDetails.value = dataDetails;
+    moviesCredits.value = dataCredits;
+    moviesTrailer.value = getmoviesTrailer(dataVideos);
+    await Promise.all(reviews.map(async (review) => {
+      const { username, imageUrl, likedComments } = await getUsersInfo(
+        review.userId
+      );
+      const { rating, comment, id, likeCount } = review;
+      const userReview = {
+        username,
+        rating,
+        comment,
+        imageUrl,
+        id,
+        likeCount,
+        isLiked: likedComments && likedComments.includes(review.userId),
+      };
+      moviesReview.value.addReview(userReview);
+    }));
     dataLoaded.value = true;
-    reviewer.value = infoReview.value.reviews?.length;
-    reviewArray.value = showReviewByPage();
-    rating = calRating();
-    console.log(infoDetails.value.backdrop_path);
-    // console.log(infoDetails.value);
-    // console.log(infoCredits.value);
   } catch (error) {
     console.error(error);
   }
 });
-watchEffect(() => {
-  reviewArray.value = showReviewByPage(currentPage.value);
-});
+
+
+function getmoviesTrailer(videos) {
+  return videos.results.filter((video) => video.type === 'Trailer').filter((video) => video.name === 'Official Trailer')[0]
+}
 
 function timeFormat() {
-  const hours = Math.floor(infoDetails.value.runtime / 60);
-  const remainminutes = infoDetails.value.runtime % 60;
+  const hours = Math.floor(moviesDetails.value.runtime / 60);
+  const remainminutes = moviesDetails.value.runtime % 60;
   return `${hours} hour ${remainminutes} minute`;
 }
 function revenueFormat(money) {
@@ -67,7 +79,7 @@ function revenueFormat(money) {
   return `$${million}.${String(remain).substring(0, 2)} million`;
 }
 function crewFilter(job) {
-  const data = infoCredits.value.crew
+  const data = moviesCredits.value.crew
     ?.filter((crew) => crew.job == job)
     .sort((a, b) => b.popularity - a.popularity)
     .map((crew) => crew.name);
@@ -75,7 +87,7 @@ function crewFilter(job) {
 }
 
 function getCastData() {
-  const data = infoCredits.value.cast?.filter((cast) => cast.profile_path);
+  const data = moviesCredits.value.cast?.filter((cast) => cast.profile_path);
   if (isShowAllCrew.value) {
     return data;
   } else return data?.splice(0, 8);
@@ -83,54 +95,12 @@ function getCastData() {
 function handleShowAllCrew() {
   isShowAllCrew.value = !isShowAllCrew.value;
 }
-
-function calRating() {
-  if (infoReview.value.reviews.length == 0) {
-    return;
-  } else {
-    const performanceScore =
-      infoReview.value.reviews?.reduce(
-        (sum, review) => sum + review.rating.performance,
-        0
-      ) / infoReview.value.reviews?.length;
-    const productionScore =
-      infoReview.value.reviews?.reduce(
-        (sum, review) => sum + review.rating.production,
-        0
-      ) / infoReview.value.reviews?.length;
-    const movieChapterScore =
-      infoReview.value.reviews?.reduce(
-        (sum, review) => sum + review.rating.movie_Chapter,
-        0
-      ) / infoReview.value.reviews?.length;
-    const entertainmentScore =
-      infoReview.value.reviews?.reduce(
-        (sum, review) => sum + review.rating.entertainment,
-        0
-      ) / infoReview.value.reviews?.length;
-    const worthinessScore =
-      infoReview.value.reviews?.reduce(
-        (sum, review) => sum + review.rating.worthiness,
-        0
-      ) / infoReview.value.reviews?.length;
-    return [
-      performanceScore,
-      productionScore,
-      movieChapterScore,
-      entertainmentScore,
-      worthinessScore,
-    ];
-  }
-}
-
-function showReviewByPage(currentPage = 1) {
-  return infoReview.value.reviews?.slice(
-    (currentPage - 1) * 3,
-    currentPage * 3
-  );
-}
 function setCurrentPage(page) {
   currentPage.value = page;
+}
+function handleVideo() {
+  isPlayVideo.value = !isPlayVideo.value
+
 }
 async function incrementLike(review) {
   if (userStore.checkUserLoggedIn()) {
@@ -165,6 +135,7 @@ async function incrementLike(review) {
           }),
         }),
       ]);
+      moviesReview.value.incrementLike(review.id)
     } else {
       console.log("User has already liked this review.");
     }
@@ -172,37 +143,56 @@ async function incrementLike(review) {
     console.log("User is not logged in");
   }
 }
+function handleOptionChange(option) {
+  moviesReview.value.sortReviewBy(option)
+}
+
 </script>
 
 <template>
   <loadingScreen v-if="!dataLoaded" />
   <div v-if="dataLoaded" class="w-full h-full bg-cover" :style="{
-    'background-image': 'url(https://image.tmdb.org/t/p/original' + infoDetails?.backdrop_path + ')',
+    'background-image': 'url(https://image.tmdb.org/t/p/original' + moviesDetails?.backdrop_path + ')',
     'background-attachment': 'fixed',
     'background-repeat': 'no-repeat'
   }">
     <div class="bg-layer h-[100%]">
       <NavBar />
+
       <div class="w-[75%] m-[auto] font-istok text-white px-[45px] py-[10px] movieDetails-bg fade-up">
-        <div class="text-[40px] font-bold">{{ infoDetails.title }}</div>
+        <div class="text-[40px] font-bold">{{ moviesDetails.title }}</div>
         <div class="flex justify-between mb-[20px]">
-          <div class="w-[25%]">
-            <img class="w-[225px]" :src="'https://image.tmdb.org/t/p/w500/' + infoDetails.poster_path
+          <div class="w-[22%] mr-[3%] flex flex-col items-center">
+            <img class="w-[225px]" :src="'https://image.tmdb.org/t/p/w500/' + moviesDetails.poster_path
     " />
+            <label for="my_modal_7"
+              class="btn font-bold text-[22px] mt-[10px] pt-[2px] text-white font-istok gradient-bg border hover:opacity-70"
+              @click="handleVideo">Trailer</label>
+            <input type="checkbox" id="my_modal_7" class="modal-toggle" />
+            <div class="modal" role="dialog">
+              <div
+                class="modal-box min-w-[200px] max-w-[1024px] h-[600px] p-0 flex items-center justify-center gradient-bg">
+                <iframe v-if="isPlayVideo && moviesTrailer?.key" class="w-[100%] h-[100%]"
+                  :src="'https://www.youtube.com/embed/' + moviesTrailer?.key + '?stop=1'" frameborder=" 0"
+                  allowfullscreen autoplay></iframe>
+                <div v-else class="text-[50px] text-white relative font-bold">Trailer not found</div>
+              </div>
+              <label class="modal-backdrop border border-black" for="my_modal_7" @click="handleVideo"></label>
+            </div>
           </div>
           <div class="w-[75%] ml-[8px] font-semibold">
             <RedBarTopic :topic="'Movie info'" />
-            <div class="mb-[5px] font-medium">{{ infoDetails.overview }}</div>
+            <div class="mb-[5px] font-medium">{{ moviesDetails.overview }}</div>
             <div class="flex flex-wrap gap-[8px] items-center mb-[7px]">
               <div class="py-[4px] px-[15px] border-white border-2 rounded-[10px]"
-                v-for=" genere  in  infoDetails.genres ">
+                v-for="genere in moviesDetails.genres" :key="genere">
                 {{ genere.name }}
               </div>
             </div>
             <div>
               Original Language:
               <span class="font-medium">{{
-    (infoDetails.original_language = "en" ? "English" : "IDK")
+    (moviesDetails.original_language = "en" ? "English" : "IDK")
   }}</span>
             </div>
             <div>
@@ -215,18 +205,18 @@ async function incrementLike(review) {
             </div>
             <div>
               Release Data:
-              <span class="font-medium">{{ infoDetails.release_date }}</span>
+              <span class="font-medium">{{ moviesDetails.release_date }}</span>
             </div>
             <div>
               Budget:
               <span class="font-medium">{{
-    revenueFormat(infoDetails.budget)
+    revenueFormat(moviesDetails.budget)
   }}</span>
             </div>
             <div>
               Box Office:
               <span class="font-medium">{{
-      revenueFormat(infoDetails.revenue)
+      revenueFormat(moviesDetails.revenue)
     }}</span>
             </div>
             <div>
@@ -238,7 +228,7 @@ async function incrementLike(review) {
           <div class="">
             <RedBarTopic :topic="'Casts & Crews'" />
             <div class="flex flex-wrap justify-center gap-[20px]">
-              <div class="w-[100px]" v-for=" cast  in  getCastData() " :key="cast.id">
+              <div class="w-[100px]" v-for="  cast   in   getCastData()  " :key="cast.id">
                 <img class="rounded-[3px] mb-[5px]" width="100px" height="1px"
                   :src="'https://image.tmdb.org/t/p/w500/' + cast.profile_path" />
                 <a href="#" class="w-[50%] text-blue-500 hover:text-blue-600">{{
@@ -260,7 +250,8 @@ async function incrementLike(review) {
           <div class="Rating mb-[20px]">
             <RedBarTopic :topic="'Rating'" />
             <div class="pr-[30px]">
-              <RatingPage v-if="dataLoaded" :rating="calRating()" :reviewer="reviewer" />
+              <RatingPage v-if="dataLoaded" :rating="moviesReview.getAllRating()"
+                :reviewer="moviesReview.getReviews().length" />
             </div>
           </div>
           <div class="Review">
@@ -280,13 +271,11 @@ async function incrementLike(review) {
           </div>
         </div>
         <div class="w-[100%]">
-          <Review v-if="dataLoaded && reviewArray.value?.length != 0" :reviews="reviewArray" :key="reviewArray"
-            @incrementLike="incrementLike" />
+          <Review v-if="dataLoaded" :reviews="moviesReview.getReviewByPage(currentPage)" @incrementLike="incrementLike"
+            @handleOptionChange="handleOptionChange" />
           <div class="flex justify-center gap-[5px] mt-[20px]">
-            <div class="border rounded-md w-[25px] bg-black" :class="currentPage === page
-    ? 'bg-red-600 hover:bg-red-800'
-      : 'hover:bg-gray-700'
-    " v-for=" page  in Math.ceil(reviewer / 3)" :key="page.length">
+            <div class="border rounded-md w-[25px] bg-black" :class="currentPage === page ? 'bg-red-600 hover:bg-red-800' : 'hover:bg-gray-700'
+    " v-for="page in Math.ceil(moviesReview.getReviews().length / 3)" :key="page.length">
               <button class="w-[100%] m-[auto]" @click="setCurrentPage(page)">
                 {{ page }}
               </button>
@@ -319,7 +308,9 @@ async function incrementLike(review) {
       rgba(0, 0, 0, 1) 83%);
 }
 
-
+.modal-box {
+  width: 1550px;
+}
 
 .fade-up {
   animation: fadeUp 0.5s ease-out;

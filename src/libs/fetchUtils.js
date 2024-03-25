@@ -1,11 +1,4 @@
-const optionGetApi = {
-    method: "GET",
-    headers: {
-        accept: "application/json",
-        Authorization:
-            "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI2OGM3ZmQ1ZWI0N2FhMTk3OWQ1ZjI3NWQzYzg3NjMwMCIsInN1YiI6IjY1ZWVjMjUxMmIxMTNkMDE3ZGY5Mjk1MiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.1fR4x1gAywLqZIZBcaHET0fOF9DZTlawyjv446MzFe0",
-    },
-};
+
 async function getMovies(url) {
     try {
         const data = await fetch(`${url}/movies`)
@@ -16,9 +9,17 @@ async function getMovies(url) {
     }
 }
 
-async function getMoviesDetails(movieId) {
+async function getMoviesDetails(movieId, type) {
     try {
-        const url = `https://api.themoviedb.org/3/movie/${movieId}?language=en-US`;
+        const url = `https://api.themoviedb.org/3/movie/${movieId}${type}?language=en-US`;
+        const optionGetApi = {
+            method: "GET",
+            headers: {
+                accept: "application/json",
+                Authorization:
+                    "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI2OGM3ZmQ1ZWI0N2FhMTk3OWQ1ZjI3NWQzYzg3NjMwMCIsInN1YiI6IjY1ZWVjMjUxMmIxMTNkMDE3ZGY5Mjk1MiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.1fR4x1gAywLqZIZBcaHET0fOF9DZTlawyjv446MzFe0",
+            },
+        };
         const data = await fetch(url, optionGetApi)
         const moviesDetails = await data.json()
         return moviesDetails
@@ -26,17 +27,7 @@ async function getMoviesDetails(movieId) {
         console.log(`error: ${error}`)
     }
 }
-async function getMoviesCredits(movieId) {
-    try {
-        const url = `https://api.themoviedb.org/3/movie/${movieId}/credits?language=en-US`;
-        const data = await fetch(url, optionGetApi)
-        const moviesCredits = await data.json()
-        return moviesCredits
-    } catch (error) {
 
-        console.log(`error: ${error}`)
-    }
-}
 async function getMoviesReviews(url, movieId) {
     try {
         const data = await fetch(`${url}/movies/${movieId}/?_embed=reviews`)
@@ -55,8 +46,9 @@ async function getUsersInfo(userId) {
         const userInfo = await responseUser.json();
         return userInfo
     } catch (error) {
+        console.log("YEAH man")
         console.log(`error: ${error}`)
     }
 }
 
-export { getMovies, getMoviesDetails, getMoviesCredits, getMoviesReviews, getUsersInfo }
+export { getMovies, getMoviesDetails, getMoviesReviews, getUsersInfo }

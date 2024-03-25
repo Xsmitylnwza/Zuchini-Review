@@ -1,25 +1,27 @@
 <script setup>
-import { RouterLink, RouterView } from 'vue-router'
+import { RouterLink } from 'vue-router'
 import { ref } from 'vue'
 
 const props = defineProps({
-  movie: Object,
-  index: Number,
-})
+  movie: {
+    type: Object,
+    default: null
+  },
+  index: {
+    type: Number,
+    default: 0
+  }
 
-const indexMovie = ref(props.index);
-
-
+});
 
 </script>
 
 <template>
-  <div :id="'slide' + indexMovie" class="carousel-item relative w-full flex justify-center">
-    <div class="flex">
-      <a :href="'#slide' + (indexMovie === 0 ? 4 : indexMovie - 1)"
-        class="btn btn-outline m-auto mr-11 shadow-inner shadow-black ">❮</a>
+  <div :id="'slide' + index" class="carousel-item relative w-full flex justify-center h-screen pt-[170px] ">
+    <div class="flex relative bottom-[80px]">
+      <a :href="'#slide' + (index === 0 ? 4 : index - 1)"
+        class="btn btn-outline m-auto mr-11 shadow-inner shadow-black">❮</a>
     </div>
-
     <div class="blackBackground rounded-[15px] laptop:flex w-[80%] h-[550px] p-[30px]">
       <div>
         <img class="laptop:w-[300px] h-[500px] ml-[50px] rounded-[5px]"
@@ -74,8 +76,8 @@ const indexMovie = ref(props.index);
         </div>
       </div>
     </div>
-    <div class="flex">
-      <a :href="'#slide' + (indexMovie === 4 ? 0 : indexMovie + 1)"
+    <div class="flex relative bottom-[80px]">
+      <a :href="'#slide' + (index === 4 ? 0 : index + 1)"
         class="btn btn-outline m-auto ml-11 shadow-inner shadow-black">❯</a>
     </div>
   </div>
