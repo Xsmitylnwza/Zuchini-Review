@@ -1,6 +1,9 @@
 <script setup>
 const props = defineProps({
-    movie: Object
+    movie: {
+        type: Object,
+        default: {}
+    }
 });
 
 </script>

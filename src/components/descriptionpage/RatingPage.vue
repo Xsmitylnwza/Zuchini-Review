@@ -31,7 +31,7 @@ const reviewItems = [
 
 function getOverAllScore() {
     const overAllScore = props.rating.reduce((sum, rating) => sum + rating, 0) / props.rating.length
-    return overAllScore.toFixed(1)
+    return overAllScore.toFixed(2)
 }
 
 </script>
