@@ -46,6 +46,7 @@ async function getUsersInfo(userId) {
         const userInfo = await responseUser.json();
         return userInfo
     } catch (error) {
+        console.log("YEAH man")
         console.log(`error: ${error}`)
     }
 }

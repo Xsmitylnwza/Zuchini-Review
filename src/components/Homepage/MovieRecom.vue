@@ -12,19 +12,14 @@ const props = defineProps({
     default: 0
   }
 
-})
-
-console.log("HELLO WORLD")
-const indexMovie = ref(props.index);
-
-
+});
 
 </script>
 
 <template>
-  <div :id="'slide' + indexMovie" class="carousel-item relative w-full flex justify-center h-screen pt-[170px] ">
+  <div :id="'slide' + index" class="carousel-item relative w-full flex justify-center h-screen pt-[170px] ">
     <div class="flex relative bottom-[80px]">
-      <a :href="'#slide' + (indexMovie === 0 ? 4 : indexMovie - 1)"
+      <a :href="'#slide' + (index === 0 ? 4 : index - 1)"
         class="btn btn-outline m-auto mr-11 shadow-inner shadow-black">❮</a>
     </div>
     <div class="blackBackground rounded-[15px] laptop:flex w-[80%] h-[550px] p-[30px]">
@@ -82,7 +77,7 @@ const indexMovie = ref(props.index);
       </div>
     </div>
     <div class="flex relative bottom-[80px]">
-      <a :href="'#slide' + (indexMovie === 4 ? 0 : indexMovie + 1)"
+      <a :href="'#slide' + (index === 4 ? 0 : index + 1)"
         class="btn btn-outline m-auto ml-11 shadow-inner shadow-black">❯</a>
     </div>
   </div>

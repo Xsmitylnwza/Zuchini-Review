@@ -10,6 +10,7 @@ import { ReviewManagement } from "@/libs/ReviewManagement.js"
 import {
   getMoviesDetails,
   getMoviesReviews,
+  getUsersInfo,
 } from "@/libs/fetchUtils.js";
 import { useUserStore } from "@/store/user";
 
@@ -21,15 +22,11 @@ const route = useRoute();
 const moviesDetails = ref([]);
 const moviesCredits = ref([]);
 const moviesTrailer = ref([])
-const moviesReview = ref(new ReviewManagement());
-const reviewer = ref(0);
-const reviewArray = ref([]);
 const currentPage = ref(1);
-const selectedOption = ref();
+const moviesReview = ref(new ReviewManagement());
 const isShowAllCrew = ref(false);
 const isPlayVideo = ref(false)
 const dataLoaded = ref(false);
-let rating;
 
 onMounted(async () => {
   try {
@@ -40,30 +37,32 @@ onMounted(async () => {
       import.meta.env.VITE_BASE_URL,
       route.params.id
     );
+    const reviews = dataReview.reviews;
     moviesDetails.value = dataDetails;
-    moviesReview.value.addReviews(dataReview.reviews);
     moviesCredits.value = dataCredits;
     moviesTrailer.value = getmoviesTrailer(dataVideos);
+    await Promise.all(reviews.map(async (review) => {
+      const { username, imageUrl, likedComments } = await getUsersInfo(
+        review.userId
+      );
+      const { rating, comment, id, likeCount } = review;
+      const userReview = {
+        username,
+        rating,
+        comment,
+        imageUrl,
+        id,
+        likeCount,
+        isLiked: likedComments && likedComments.includes(review.userId),
+      };
+      moviesReview.value.addReview(userReview);
+    }));
     dataLoaded.value = true;
-    reviewer.value = moviesReview.value.reviews?.length;
-    reviewArray.value = showReviewByPage();
-    rating = calRating();
-    // console.log(moviesDetails.value.backdrop_path);
-    // console.log(moviesCredits.value);
   } catch (error) {
     console.error(error);
   }
 });
-watchEffect(() => {
-  reviewArray.value = showReviewByPage(currentPage.value);
-});
 
-function showReviewByPage(currentPage = 1) {
-  return moviesReview.value.reviews?.slice(
-    (currentPage - 1) * 3,
-    currentPage * 3
-  );
-}
 
 function getmoviesTrailer(videos) {
   return videos.results.filter((video) => video.type === 'Trailer').filter((video) => video.name === 'Official Trailer')[0]
@@ -96,55 +95,13 @@ function getCastData() {
 function handleShowAllCrew() {
   isShowAllCrew.value = !isShowAllCrew.value;
 }
-
-function calRating() {
-  if (moviesReview.value.reviews.length == 0) {
-    return;
-  } else {
-    const performanceScore =
-      moviesReview.value.reviews?.reduce(
-        (sum, review) => sum + review.rating.performance,
-        0
-      ) / moviesReview.value.reviews?.length;
-    const productionScore =
-      moviesReview.value.reviews?.reduce(
-        (sum, review) => sum + review.rating.production,
-        0
-      ) / moviesReview.value.reviews?.length;
-    const movieChapterScore =
-      moviesReview.value.reviews?.reduce(
-        (sum, review) => sum + review.rating.movie_Chapter,
-        0
-      ) / moviesReview.value.reviews?.length;
-    const entertainmentScore =
-      moviesReview.value.reviews?.reduce(
-        (sum, review) => sum + review.rating.entertainment,
-        0
-      ) / moviesReview.value.reviews?.length;
-    const worthinessScore =
-      moviesReview.value.reviews?.reduce(
-        (sum, review) => sum + review.rating.worthiness,
-        0
-      ) / moviesReview.value.reviews?.length;
-    return [
-      performanceScore,
-      productionScore,
-      movieChapterScore,
-      entertainmentScore,
-      worthinessScore,
-    ];
-  }
-}
-
 function setCurrentPage(page) {
   currentPage.value = page;
 }
-
 function handleVideo() {
   isPlayVideo.value = !isPlayVideo.value
 
 }
-
 async function incrementLike(review) {
   if (userStore.checkUserLoggedIn()) {
     const [resReview, resUser] = await Promise.all([
@@ -190,10 +147,6 @@ function handleOptionChange(option) {
   moviesReview.value.sortReviewBy(option)
 }
 
-function testhandle() {
-  moviesReview.value.incrementLike("223a")
-  reviewArray.value = showReviewByPage(currentPage.value)
-}
 </script>
 
 <template>
@@ -222,7 +175,7 @@ function testhandle() {
                 <iframe v-if="isPlayVideo && moviesTrailer?.key" class="w-[100%] h-[100%]"
                   :src="'https://www.youtube.com/embed/' + moviesTrailer?.key + '?stop=1'" frameborder=" 0"
                   allowfullscreen autoplay></iframe>
-                <div v-else class="text-[50px] text-gray-900 relative font-bold">Trailer not found</div>
+                <div v-else class="text-[50px] text-white relative font-bold">Trailer not found</div>
               </div>
               <label class="modal-backdrop border border-black" for="my_modal_7" @click="handleVideo"></label>
             </div>
@@ -297,7 +250,8 @@ function testhandle() {
           <div class="Rating mb-[20px]">
             <RedBarTopic :topic="'Rating'" />
             <div class="pr-[30px]">
-              <RatingPage v-if="dataLoaded" :rating="calRating()" :reviewer="reviewer" />
+              <RatingPage v-if="dataLoaded" :rating="moviesReview.getAllRating()"
+                :reviewer="moviesReview.getReviews().length" />
             </div>
           </div>
           <div class="Review">
@@ -317,13 +271,11 @@ function testhandle() {
           </div>
         </div>
         <div class="w-[100%]">
-          <div class="border" @click="testhandle">KUY {{ moviesReview.value }}</div>
-
-          <Review v-if="dataLoaded && reviewArray.value?.length != 0" :reviews="reviewArray" :option="selectedOption"
-            :key="reviewArray" @incrementLike="incrementLike" @handleOptionChange="handleOptionChange" />
+          <Review v-if="dataLoaded" :reviews="moviesReview.getReviewByPage(currentPage)" @incrementLike="incrementLike"
+            @handleOptionChange="handleOptionChange" />
           <div class="flex justify-center gap-[5px] mt-[20px]">
-            <div class="border rounded-md w-[25px] bg-black" :class="currentPage === page ? 'bg-red-600 hover:bg-red-800': 'hover:bg-gray-700'
-    " v-for="page in Math.ceil(reviewer / 3)" :key="page.length">
+            <div class="border rounded-md w-[25px] bg-black" :class="currentPage === page ? 'bg-red-600 hover:bg-red-800' : 'hover:bg-gray-700'
+    " v-for="page in Math.ceil(moviesReview.getReviews().length / 3)" :key="page.length">
               <button class="w-[100%] m-[auto]" @click="setCurrentPage(page)">
                 {{ page }}
               </button>

@@ -10,9 +10,9 @@ const prop = defineProps({
         type: String
     }
 })
-const DataGenreId = ref(prop.GenreId)
+const dataGenreId = ref(prop.GenreId)
 const dataLoaded = ref(false)
-const DataMovies = ref(prop.dataMovies)
+const dataMovies = ref(prop.dataMovies)
 const sortByCategory = ref([])
 const isHover = ref(false)
 onMounted(async () => {
@@ -25,10 +25,10 @@ onMounted(async () => {
 })
 function sortGenres() {
     sortByCategory.value = []
-    const id = DataMovies.value.map((obj) => obj.genre_ids)
-    for (let i = 0; i < DataMovies.value.length; i++) {
-        if (id[i].includes(parseInt(DataGenreId.value))) {
-            sortByCategory.value.push(DataMovies.value[i])
+    const id = dataMovies.value.map((obj) => obj.genre_ids)
+    for (let i = 0; i < dataMovies.value.length; i++) {
+        if (id[i].includes(parseInt(dataGenreId.value))) {
+            sortByCategory.value.push(dataMovies.value[i])
         }
     }
 }

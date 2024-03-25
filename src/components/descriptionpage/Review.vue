@@ -5,83 +5,44 @@ import { getUsersInfo } from "../../libs/fetchUtils.js";
 import { useUserStore } from "@/store/user";
 
 const userStore = useUserStore();
-
 const currnetUser = userStore.currnetUser;
-
 defineEmits(["incrementLike", "handleOptionChange"]);
 
 const props = defineProps({
   reviews: {
     type: Object,
     default: null,
-  },
-  option: {
-    type: String
   }
 });
-console.log(props.reviews)
 
-const infoReviews = ref([]);
-const optionSelected = ref('Top-comment');
 
-onMounted(async () => {
-  for (let i = 0; i < props.reviews.length; i++) {
-    const review = props.reviews[i];
-    const { username, imageUrl, likedComments } = await getUsersInfo(
-      review.userId
-    );
-    const { rating, comment, id, likeCount } = review;
-    const userReview = {
-      username,
-      rating,
-      comment,
-      imageUrl,
-      id,
-      likeCount,
-      isLiked: likedComments && likedComments.includes(review.userId),
-    };
-    infoReviews.value.push(userReview);
-  }
-  console.log("TEST")
-});
-
-function getRatingScore(rating) {
-  const { performance, production, movie_Chapter, entertainment, worthiness } =
-    rating;
-  const ratingScore = [
-    performance,
-    production,
-    movie_Chapter,
-    entertainment,
-    worthiness,
-  ];
-  return ratingScore;
-}
 </script>
 
 <template>
-  <div v-if="infoReviews.length == 0" class="w-[100%] h-[150px] border-y border-gray-400 py-[10px] flex justify-center">
+  <div v-if="reviews.length == 0" class="w-[100%] h-[150px] border-y border-gray-400 py-[10px] flex justify-center">
     <div class="font-istok text-[24px] m-[auto]">
       We didn't have any review right now...
     </div>
   </div>
   <div v-else class="flex flex-col">
     <div class="relative top-[50px] ml-[auto] rouned-[10px]">
-      <select class="text-black p-[1px] border" v-model="optionSelected"
-        @change="$emit('handleOptionChange', optionSelected)">
+      <select class="text-white font-bold p-[1px] border bg-red-600 rounded-[10px]"
+        @change="$emit('handleOptionChange', $event.target.value)">
         <option value="most-liked" selected>Most like</option>
         <option value="high-rating">High rating</option>
         <option value="low-rating">Low rating</option>
       </select>
     </div>
-    <div class="w-[100%] border-y border-white py-[10px] font-istok" v-for="review in infoReviews" :key="review.length">
+    <div class="w-[100%] border-y border-white py-[10px] font-istok" v-for="review in reviews" :key="review.id">
       <div class="flex flex-row gap-[15px] items-center pl-2">
         <img class="w-[70px] rounded-full" :src="review.imageUrl" />
         <p class="text-[32px] font-bold">{{ review.username }}</p>
       </div>
       <div class="flex flex-row gap-[15px] w-[100%]">
         <div class="flex p-[15px] border-r border-gray-600 w-[32%]">
-          <RatingPage :rating="getRatingScore(review.rating)" :format="'comment'" />
+          <RatingPage
+            :rating="[review.rating.entertainment, review.rating.movie_Chapter, review.rating.performance, review.rating.production, review.rating.worthiness]"
+            :format="'comment'" />
         </div>
         <div class="flex flex-col p-[20px] w-[70%]">
           <div class="w-[100%] mb-[15px]">

@@ -10,7 +10,7 @@ const NotSliceMovies = ref([])
 const dataLoaded = ref(false)
 
 onMounted(async () => {
-  const movieData = await getMovies("http://localhost:5000");
+  const movieData = await getMovies(import.meta.env.VITE_BASE_URL);
   movies.value = movieData.slice(0, 5);
   NotSliceMovies.value = movieData
   dataLoaded.value = true
@@ -20,7 +20,7 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div class="bg-cover h-full max-w-[100%]" :style="{
+  <div class="bg-cover h-full max-w-[100%] section-with-smooth-scroll" :style="{
     'background-image': 'url(/image/avenger.jpg)',
     'background-attachment': 'fixed',
     'background-repeat': 'no-repeat'
@@ -40,4 +40,4 @@ onMounted(async () => {
   </div>
 </template>
 
-<style scoped></style>../../libs/fetchUtils.js
+<style scoped></style>
