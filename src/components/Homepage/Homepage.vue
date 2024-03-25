@@ -29,7 +29,7 @@ onMounted(async () => {
     <div class="text-white text-2xl ml-[5%] font-istok font-bold">
       RECCOMMENT
     </div>
-    <div class="h-[650px]">
+    <div class="h-[700px]">
       <div class="carousel w-full relative bottom-[150px]">
         <MovieRecom v-for="(movie, index) in movies" :movie="movie" :index="index" :key="movie.id" />
       </div>

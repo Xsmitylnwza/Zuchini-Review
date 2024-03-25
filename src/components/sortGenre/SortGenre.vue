@@ -6,11 +6,11 @@ const prop = defineProps({
     dataMovies: {
         type: Array
     },
-    GenreId: {
+    genreId: {
         type: String
     }
 })
-const dataGenreId = ref(prop.GenreId)
+const dataGenreId = ref(prop.genreId)
 const dataLoaded = ref(false)
 const dataMovies = ref(prop.dataMovies)
 const sortByCategory = ref([])

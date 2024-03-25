@@ -26,7 +26,7 @@ const props = defineProps({
   </div>
   <div v-else class="flex flex-col">
     <div class="relative top-[50px] ml-[auto] rouned-[10px]">
-      <select class="text-white font-bold p-[1px] border bg-red-600 rounded-[10px]"
+      <select class="text-white font-bold p-[1px] border gradient-bg bg-red-600 hover:bg-red-700 rounded-[10px]"
         @change="$emit('handleOptionChange', $event.target.value)">
         <option value="most-liked" selected>Most like</option>
         <option value="high-rating">High rating</option>
@@ -64,10 +64,15 @@ const props = defineProps({
               </defs>
             </svg>
           </div>
+
         </div>
       </div>
     </div>
   </div>
 </template>
 
-<style scoped></style>../../libs/fetchUtils.js
+<style scoped>
+.gradient-bg {
+  background-image: linear-gradient(90deg, #c60000 0%, #600000 100%);
+}
+</style>../../libs/fetchUtils.js
