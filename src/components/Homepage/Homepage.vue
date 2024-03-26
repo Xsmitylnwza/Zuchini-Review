@@ -1,28 +1,51 @@
 <script setup>
-import NavBar from './NavBar.vue'
-import MoviePage from './MoviePage.vue'
-import { ref, onMounted } from 'vue'
-import { getMovies } from '../../libs/ferchUtils.js'
+import { ref, onMounted } from "vue";
+import { getMovies } from "../../libs/fetchUtils.js";
+import NavBar from "./NavBar.vue";
+import MovieRecom from "./MovieRecom.vue";
+import ListModels from "../sortGenre/ListModels.vue";
+import { useUserStore } from "@/store/user";
 
-const movies = ref([])
+const userStore = useUserStore();
+
+const movies = ref([]);
+const NotSliceMovies = ref([]);
+const dataLoaded = ref(false);
+userStore.loadUserFromLocalStorage();
 
 onMounted(async () => {
-  const movieData = await getMovies('http://localhost:5000')
-  movies.value = movieData.slice(0, 5)
+  const movieData = await getMovies(import.meta.env.VITE_BASE_URL);
+  movies.value = movieData.slice(0, 5);
+  NotSliceMovies.value = movieData;
+  dataLoaded.value = true;
 });
 </script>
 
 <template>
-  <div class="laptop:bg-cover h-[100vh] max-w-[100%]"
-    :style="{ 'background-image': 'url(' + '/image/avenger.jpg' + ')' }">
+  <div
+    class="bg-cover h-full max-w-[100%] section-with-smooth-scroll"
+    :style="{
+      'background-image': 'url(/image/avenger.jpg)',
+      'background-attachment': 'fixed',
+      'background-repeat': 'no-repeat',
+    }"
+  >
     <NavBar />
     <div class="text-white text-2xl ml-[5%] font-istok font-bold">
       RECCOMMENT
     </div>
-    <div class="flex justify-center gap-[150px] mt-[20px]">
-      <div class="carousel w-full ">
-        <MoviePage v-for="(movie, index) in movies" :movie="movie" :index="index" :key="movie.id" />
+    <div class="h-[700px]">
+      <div class="carousel w-full relative bottom-[150px]">
+        <MovieRecom
+          v-for="(movie, index) in movies"
+          :movie="movie"
+          :index="index"
+          :key="movie.id"
+        />
       </div>
+    </div>
+    <div class="relative">
+      <ListModels v-if="dataLoaded" :dataMovies="NotSliceMovies" />
     </div>
   </div>
 </template>

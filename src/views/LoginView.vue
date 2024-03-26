@@ -37,7 +37,8 @@ const login = async () => {
       userInfo.value.imageUrl = data[i].imageUrl;
       userInfo.value.password = data[i].password;
       userInfo.value.id = data[i].id;
-      userStore.setUserInfo(userInfo.value);
+      console.log(userStore);
+      userStore.setUser(userInfo.value);
       await router.push("/");
     }
   }
@@ -125,6 +126,7 @@ const login = async () => {
     rgba(209, 164, 15, 1) 100%
   );
 }
+
 .box-color {
   background: rgb(56, 18, 18);
   background: linear-gradient(
@@ -133,9 +135,11 @@ const login = async () => {
     rgba(163, 25, 25, 1) 83%
   );
 }
+
 .btn-black {
   background: #100f0f;
 }
+
 .btn-red {
   background: #fc0606;
 }
