@@ -72,7 +72,6 @@ const userStore = useUserStore()
 const currentUserId = userStore.currnetUser.id
 
 async function submitReview() {
-  //แก้ไข
   if (!id) {
     await fetch(`http://localhost:5000/reviews/${props.reviewId}`, {
       method: 'PUT',
@@ -95,7 +94,6 @@ async function submitReview() {
       }),
     })
   } else {
-    //เพิ่ม
     await fetch('http://localhost:5000/reviews', {
       method: 'POST',
       headers: {
@@ -116,7 +114,7 @@ async function submitReview() {
         likeCount: 0,
       }),
     })
-    alert('บันทึกสำเร็จ')
+    alert('Reviewed')
     router.replace(`/commented`)
     //go to review page
   }
@@ -124,7 +122,6 @@ async function submitReview() {
 
 onMounted(async () => {
   const response = await getMovies(import.meta.env.VITE_BASE_URL)
-  console.log('🚀 ~ onMounted ~ response:', response)
   movies.value = response
 })
 </script>
@@ -225,7 +222,7 @@ onMounted(async () => {
           <button
             class="flex items-center justify-center gap-[5px] w-[193px] h-[58px] border border-white text-[20px] rounded-[23px] hover:opacity-70 gradient-background bg-red-900"
             @click="
-              async () => {
+              ;async () => {
                 await submitReview()
                 $emit('submitReview')
                 $emit('close')
