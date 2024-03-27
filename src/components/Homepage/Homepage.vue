@@ -1,24 +1,24 @@
 <script setup>
-import { ref, onMounted } from "vue";
-import { getMovies } from "../../libs/fetchUtils.js";
-import NavBar from "./NavBar.vue";
-import MovieRecom from "./MovieRecom.vue";
-import ListModels from "../sortGenre/ListModels.vue";
-import { useUserStore } from "@/store/user";
+import { ref, onMounted } from "vue"
+import { getMovies } from "../../libs/fetchUtils.js"
+import NavBar from "./NavBar.vue"
+import MovieRecom from "./MovieRecom.vue"
+import ListModels from "../sortGenre/ListModels.vue"
+import { useUserStore } from "@/store/user"
+import footers from "../footer/footer.vue"
+const userStore = useUserStore()
 
-const userStore = useUserStore();
-
-const movies = ref([]);
-const NotSliceMovies = ref([]);
-const dataLoaded = ref(false);
-userStore.loadUserFromLocalStorage();
+const movies = ref([])
+const NotSliceMovies = ref([])
+const dataLoaded = ref(false)
+userStore.loadUserFromLocalStorage()
 
 onMounted(async () => {
-  const movieData = await getMovies(import.meta.env.VITE_BASE_URL);
-  movies.value = movieData.slice(0, 5);
-  NotSliceMovies.value = movieData;
-  dataLoaded.value = true;
-});
+  const movieData = await getMovies(import.meta.env.VITE_BASE_URL)
+  movies.value = movieData.slice(0, 5)
+  NotSliceMovies.value = movieData
+  dataLoaded.value = true
+})
 </script>
 
 <template>
@@ -27,7 +27,7 @@ onMounted(async () => {
     :style="{
       'background-image': 'url(/image/avenger.jpg)',
       'background-attachment': 'fixed',
-      'background-repeat': 'no-repeat',
+      'background-repeat': 'no-repeat'
     }"
   >
     <NavBar />
@@ -47,6 +47,7 @@ onMounted(async () => {
     <div class="relative">
       <ListModels v-if="dataLoaded" :dataMovies="NotSliceMovies" />
     </div>
+    <footers></footers>
   </div>
 </template>
 
