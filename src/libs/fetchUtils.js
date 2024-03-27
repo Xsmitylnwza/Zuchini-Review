@@ -8,6 +8,15 @@ async function getMovies(url) {
         console.log(`error: ${error}`)
     }
 }
+async function getGenre(url) {
+    try {
+        const data = await fetch(`${url}/genres`)
+        const genres = await data.json()
+        return genres
+    } catch (error) {
+        console.log(`error: ${error}`)
+    }
+}
 
 async function getMoviesDetails(movieId, type) {
     try {
@@ -51,4 +60,4 @@ async function getUsersInfo(userId) {
     }
 }
 
-export { getMovies, getMoviesDetails, getMoviesReviews, getUsersInfo }
+export { getMovies, getGenre, getMoviesDetails, getMoviesReviews, getUsersInfo }

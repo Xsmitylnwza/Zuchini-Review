@@ -32,19 +32,41 @@ function sortGenres() {
         }
     }
 }
+
+
+
+const containerRef = ref(null);
+
+function scrollLeft() {
+    const container = containerRef.value;
+    const scrollAmount = 1000;
+    container.scrollTo({
+        left: container.scrollLeft - scrollAmount,
+        behavior: 'smooth'
+    });
+}
+function scrollRight() {
+    const container = containerRef.value;
+    const scrollAmount = 1000;
+    container.scrollTo({
+        left: container.scrollLeft + scrollAmount,
+        behavior: 'smooth'
+    });
+}
 </script>
 
 <template>
-    <div class="bg-black">
-        <div class="flex flex-row overflow-x-scroll overflow-y-clip gap-[20px]">
+    <div class="bg-black px-[60px]">
+        <div ref="containerRef" class="flex flex-row overflow-x-scroll overflow-y-clip gap-[20px]">
             <div v-for="movie in  sortByCategory " :key="movie.id"
                 class="transition ease-in-out hover:-translate-y-1 hover:scale-110">
                 <RouterLink :to="{ path: '/movie/' + movie.id }">
                     <MovieBox :movie="movie" />
                 </RouterLink>
-
             </div>
         </div>
+        <button class="slide-button left text-white" @click="scrollLeft">&lt;</button>
+        <button class="slide-button right text-white" @click="scrollRight">&gt;</button>
     </div>
 </template>
 
