@@ -1,18 +1,16 @@
 <script setup>
-import { onMounted, ref } from "vue";
-import RatingPage from "./RatingPage.vue";
-import { getUsersInfo } from "../../libs/ferchUtils.js"
+import { onMounted, ref } from 'vue'
+import RatingPage from './RatingPage.vue'
+import { getUsersInfo } from '@/libs/fetchUtils.js'
 
-defineEmits(['incrementLike']);
-
-defineEmits(["incrementLike", "handleOptionChange"]);
+defineEmits(['incrementLike', 'handleOptionChange'])
 
 const props = defineProps({
   reviews: {
     type: Object,
     default: null,
   },
-});
+})
 </script>
 
 <template>
@@ -64,7 +62,7 @@ const props = defineProps({
           <div
             class="flex flex-row items-center justify-center gap-[5px] ml-[auto] mt-[auto]"
           >
-            <span>Liked {{ review.likeCount ? review.likeCount : "0" }}</span>
+            <span>Liked {{ review.likeCount ? review.likeCount : '0' }}</span>
             <svg
               width="23"
               height="23"
@@ -100,4 +98,5 @@ const props = defineProps({
 .gradient-bg {
   background-image: linear-gradient(90deg, #c60000 0%, #600000 100%);
 }
-</style>../../libs/fetchUtils.js
+</style>
+../../libs/fetchUtils.js
