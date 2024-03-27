@@ -2,19 +2,19 @@ import { defineStore } from 'pinia'
 
 export const useUserStore = defineStore('user', {
   state: () => ({
-    currnetUser: {},
+    currentUser: {},
   }),
   actions: {
     setUser(user) {
-      this.currnetUser = user
+      this.currentUser = user
       this.saveUserToLocalStorage(user)
     },
     logout() {
-      this.currnetUser = {}
+      this.currentUser = {}
       this.clearUserFromLocalStorage()
     },
     checkUserLoggedIn() {
-      return Object.keys(this.currnetUser).length !== 0
+      return Object.keys(this.currentUser).length !== 0
     },
     saveUserToLocalStorage(user) {
       localStorage.setItem('currentUser', JSON.stringify(user))
@@ -25,7 +25,7 @@ export const useUserStore = defineStore('user', {
     loadUserFromLocalStorage() {
       const userJson = localStorage.getItem('currentUser')
       if (userJson) {
-        this.currnetUser = JSON.parse(userJson)
+        this.currentUser = JSON.parse(userJson)
       }
     },
   },

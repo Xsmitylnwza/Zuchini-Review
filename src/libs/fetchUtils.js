@@ -61,10 +61,21 @@ async function getReviews() {
   }
 }
 
+async function getReview(reviewId) {
+  try {
+    const data = await fetch(`${import.meta.env.VITE_BASE_URL}/reviews/${reviewId}`)
+    const review = await data.json()
+    return review
+  } catch (error) {
+    console.log(`error: ${error}`)
+  }
+}
+
 export {
   getMovies,
   getMoviesDetails,
   getMoviesReviews,
   getUsersInfo,
   getReviews,
+  getReview
 }

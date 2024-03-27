@@ -1,53 +1,54 @@
 <script setup>
-import { useRoute, useRouter } from 'vue-router'
-import { ref, onMounted, watchEffect } from 'vue'
-import NavBar from '../Homepage/NavBar.vue'
-import RedBarTopic from './RedBarTopic.vue'
-import RatingPage from './RatingPage.vue'
-import Review from './Review.vue'
-import LoadingScreen from './LoadingScreen.vue'
-import { ReviewManagement } from '@/libs/ReviewManagement.js'
+import { useRoute, useRouter } from "vue-router";
+import { ref, onMounted, watchEffect } from "vue";
+import NavBar from "../Homepage/NavBar.vue";
+import RedBarTopic from "./RedBarTopic.vue";
+import RatingPage from "./RatingPage.vue";
+import Review from "./Review.vue";
+import LoadingScreen from "./LoadingScreen.vue";
+import { ReviewManagement } from "@/libs/ReviewManagement.js";
 import {
   getMoviesDetails,
   getMoviesReviews,
   getUsersInfo,
-} from '@/libs/fetchUtils.js'
-import { useUserStore } from '@/store/user'
+} from "@/libs/fetchUtils.js";
+import { useUserStore } from "@/store/user";
 
-const userStore = useUserStore()
+const userStore = useUserStore();
 
-const currnetUser = userStore.currnetUser
+const currnetUser = userStore.currentUser;
 
-const route = useRoute()
-const router = useRouter()
-const moviesDetails = ref([])
-const moviesCredits = ref([])
-const moviesTrailer = ref([])
-const currentPage = ref(1)
-const moviesReview = ref(new ReviewManagement())
-const isShowAllCrew = ref(false)
-const isPlayVideo = ref(false)
-const dataLoaded = ref(false)
+const route = useRoute();
+const router = useRouter();
+const moviesDetails = ref([]);
+const moviesCredits = ref([]);
+const moviesTrailer = ref([]);
+const currentPage = ref(1);
+const moviesReview = ref(new ReviewManagement());
+const isShowAllCrew = ref(false);
+const isPlayVideo = ref(false);
+const dataLoaded = ref(false);
+const toggleColor = ref(false);
 
 onMounted(async () => {
   try {
-    const dataDetails = await getMoviesDetails(route.params.id)
-    const dataCredits = await getMoviesDetails(route.params.id, '/credits')
-    const dataVideos = await getMoviesDetails(route.params.id, '/videos')
+    const dataDetails = await getMoviesDetails(route.params.id);
+    const dataCredits = await getMoviesDetails(route.params.id, "/credits");
+    const dataVideos = await getMoviesDetails(route.params.id, "/videos");
     const dataReview = await getMoviesReviews(
       import.meta.env.VITE_BASE_URL,
       route.params.id
-    )
-    const reviews = dataReview.reviews
-    moviesDetails.value = dataDetails
-    moviesCredits.value = dataCredits
-    moviesTrailer.value = getmoviesTrailer(dataVideos)
+    );
+    const reviews = dataReview.reviews;
+    moviesDetails.value = dataDetails;
+    moviesCredits.value = dataCredits;
+    moviesTrailer.value = getmoviesTrailer(dataVideos);
     await Promise.all(
       reviews.map(async (review) => {
         const { username, imageUrl, likedComments } = await getUsersInfo(
           review.userId
-        )
-        const { rating, comment, id, likeCount } = review
+        );
+        const { rating, comment, id, likeCount, toggleColor } = review;
         const userReview = {
           username,
           rating,
@@ -55,112 +56,139 @@ onMounted(async () => {
           imageUrl,
           id,
           likeCount,
-          isLiked: likedComments && likedComments.includes(review.userId),
-        }
-        moviesReview.value.addReview(userReview)
+          toggleColor,
+          isLiked: likedComments.includes(review.userId),
+        };
+        moviesReview.value.addReview(userReview);
+        console.log(moviesReview.value);
       })
-    )
-    dataLoaded.value = true
+    );
+    dataLoaded.value = true;
   } catch (error) {
-    console.error(error)
+    console.error(error);
   }
-})
+});
 
 function handleClickReview() {
   if (userStore.checkUserLoggedIn()) {
     router.push({
-      name: 'review',
+      name: "review",
       params: { id: route.params.id },
-    })
+    });
   } else {
     router.push({
-      name: 'login',
-    })
+      name: "login",
+    });
   }
 }
 
 function getmoviesTrailer(videos) {
   return videos.results
-    .filter((video) => video.type === 'Trailer')
-    .filter((video) => video.name === 'Official Trailer')[0]
+    .filter((video) => video.type === "Trailer")
+    .filter((video) => video.name === "Official Trailer")[0];
 }
 
 function timeFormat() {
-  const hours = Math.floor(moviesDetails.value.runtime / 60)
-  const remainminutes = moviesDetails.value.runtime % 60
-  return `${hours} hour ${remainminutes} minute`
+  const hours = Math.floor(moviesDetails.value.runtime / 60);
+  const remainminutes = moviesDetails.value.runtime % 60;
+  return `${hours} hour ${remainminutes} minute`;
 }
 function revenueFormat(money) {
-  const million = Math.floor(money / 1000000)
-  const remain = money % 1000000
-  return `$${million}.${String(remain).substring(0, 2)} million`
+  const million = Math.floor(money / 1000000);
+  const remain = money % 1000000;
+  return `$${million}.${String(remain).substring(0, 2)} million`;
 }
 function crewFilter(job) {
   const data = moviesCredits.value.crew
     ?.filter((crew) => crew.job == job)
     .sort((a, b) => b.popularity - a.popularity)
-    .map((crew) => crew.name)
-  return data?.join(', ')
+    .map((crew) => crew.name);
+  return data?.join(", ");
 }
 
 function getCastData() {
-  const data = moviesCredits.value.cast?.filter((cast) => cast.profile_path)
+  const data = moviesCredits.value.cast?.filter((cast) => cast.profile_path);
   if (isShowAllCrew.value) {
-    return data
-  } else return data?.splice(0, 8)
+    return data;
+  } else return data?.splice(0, 8);
 }
 function handleShowAllCrew() {
-  isShowAllCrew.value = !isShowAllCrew.value
+  isShowAllCrew.value = !isShowAllCrew.value;
 }
 function setCurrentPage(page) {
-  currentPage.value = page
+  currentPage.value = page;
 }
 function handleVideo() {
-  isPlayVideo.value = !isPlayVideo.value
+  isPlayVideo.value = !isPlayVideo.value;
 }
 async function incrementLike(review) {
   if (userStore.checkUserLoggedIn()) {
     const [resReview, resUser] = await Promise.all([
       fetch(`${import.meta.env.VITE_BASE_URL}/reviews/${review.id}`),
       fetch(`${import.meta.env.VITE_BASE_URL}/users/${currnetUser.id}`),
-    ])
-    const reviewUpdate = await resReview.json()
-    const userData = await resUser.json()
+    ]);
+    const reviewUpdate = await resReview.json();
+    const userData = await resUser.json();
 
-    console.log('review = ', review.isLiked)
     if (!review.isLiked && !userData.likedComments.includes(review.id)) {
       await Promise.all([
         fetch(`${import.meta.env.VITE_BASE_URL}/reviews/${review.id}`, {
-          method: 'PUT',
+          method: "PUT",
           headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
           },
           body: JSON.stringify({
             ...reviewUpdate,
+            toggleColor: true,
             likeCount: reviewUpdate.likeCount + 1,
           }),
         }),
         fetch(`${import.meta.env.VITE_BASE_URL}/users/${currnetUser.id}`, {
-          method: 'PUT',
+          method: "PUT",
           headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
           },
           body: JSON.stringify({
             ...userData,
             likedComments: [...userData.likedComments, review.id],
           }),
         }),
-      ])
-      moviesReview.value.incrementLike(review.id)
+      ]);
+      moviesReview.value.incrementLike(review.id);
     } else {
-      console.log('User has already liked this review.')
+      await Promise.all([
+        fetch(`${import.meta.env.VITE_BASE_URL}/reviews/${review.id}`, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            ...reviewUpdate,
+            toggleColor: false,
+            likeCount: reviewUpdate.likeCount - 1,
+          }),
+        }),
+        fetch(`${import.meta.env.VITE_BASE_URL}/users/${currnetUser.id}`, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            ...userData,
+            likedComments: userData.likedComments.filter(
+              (commentId) => commentId !== review.id
+            ),
+          }),
+        }),
+      ]);
+      moviesReview.value.decrementLike(review.id);
     }
   } else {
-    console.log('User is not logged in')
+    console.log("User is not logged in");
   }
 }
 function handleOptionChange(option) {
-  moviesReview.value.sortReviewBy(option)
+  moviesReview.value.sortReviewBy(option);
 }
 </script>
 
@@ -243,16 +271,16 @@ function handleOptionChange(option) {
             <div>
               Original Language:
               <span class="font-medium">{{
-                (moviesDetails.original_language = 'en' ? 'English' : 'IDK')
+                (moviesDetails.original_language = "en" ? "English" : "IDK")
               }}</span>
             </div>
             <div>
               Director:
-              <span class="font-medium">{{ crewFilter('Director') }}</span>
+              <span class="font-medium">{{ crewFilter("Director") }}</span>
             </div>
             <div>
               Producer:
-              <span class="font-medium">{{ crewFilter('Producer') }}</span>
+              <span class="font-medium">{{ crewFilter("Producer") }}</span>
             </div>
             <div>
               Release Data:
@@ -300,7 +328,7 @@ function handleOptionChange(option) {
               <div class="ml-[auto] w-[100px]">
                 <button @click="handleShowAllCrew">
                   <span class="hover:text-gray-400">{{
-                    isShowAllCrew ? 'Hide' : 'Show All'
+                    isShowAllCrew ? "Hide" : "Show All"
                   }}</span>
                 </button>
               </div>

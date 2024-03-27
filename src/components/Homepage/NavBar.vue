@@ -5,7 +5,7 @@ import { useUserStore } from "@/store/user";
 
 const userStore = useUserStore();
 
-const currnetUser = userStore.currnetUser;
+const currentUser = userStore.currentUser;
 </script>
 
 <template>
@@ -28,18 +28,18 @@ const currnetUser = userStore.currnetUser;
       <button class="hover:opacity-80">Categories</button>
       <div>
         <div v-if="userStore.checkUserLoggedIn()" class="flex">
-          <div class="flex items-center pr-3">{{ currnetUser.username }}</div>
+          <div class="flex items-center pr-3">{{ currentUser.username }}</div>
           <div class="dropdown dropdown-end">
-            <img tabindex="0" role="button" class="btn btn-circle" :src="currnetUser.imageUrl"></img>
+            <img tabindex="0" role="button" class="btn btn-circle" :src="currentUser.imageUrl"></img>
             <ul tabindex="0" class="dropdown-content z-[1] menu p-2 shadow rounded-box w-52 bg-black bg-opacity-75">
               <div class="flex justify-center pt-5">
-                <img :src="currnetUser.imageUrl" class="w-[30%]" />
+                <img :src="currentUser.imageUrl" class="w-[30%]" />
               </div>
-              <div class="flex justify-center pt-3 pb-4">{{ currnetUser.username }}</div>
+              <div class="flex justify-center pt-3 pb-4">{{ currentUser.username }}</div>
               <li>
                 <a>
                   <div class="flex items-center">
-                    <img :src="currnetUser.imageUrl" class="w-[25%] pr-3" />
+                    <img :src="currentUser.imageUrl" class="w-[25%] pr-3" />
                     <div>Myprofile</div>
                   </div>
                 </a>

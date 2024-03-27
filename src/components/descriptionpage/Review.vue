@@ -10,6 +10,7 @@ const props = defineProps({
     default: null,
   },
 });
+console.log(props.reviews);
 </script>
 
 <template>
@@ -68,7 +69,7 @@ const props = defineProps({
               viewBox="0 0 18 18"
               xmlns="http://www.w3.org/2000/svg"
               @click="$emit('incrementLike', review)"
-              :fill="!review.isLiked ? 'red' : 'none'"
+              :fill="review.toggleColor ? 'red' : 'none'"
               class="cursor-pointer hover:opacity-50"
             >
               <g clip-path="url(#clip0_90_683)">

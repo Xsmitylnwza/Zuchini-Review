@@ -1,23 +1,25 @@
 <script setup>
-import router from '@/router'
-import RedBar from '../commentedpage/RedBar.vue'
-import ratingIcon from './ratingIcon.vue'
-import { useUserStore } from '@/store/user'
-import { onMounted, ref, watch } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
-import { getMovies } from '@/libs/fetchUtils'
-import NavBar from '../Homepage/NavBar.vue'
+import router from "@/router";
+import RedBar from "../commentedpage/RedBar.vue";
+import ratingIcon from "./ratingIcon.vue";
+import { useUserStore } from "@/store/user";
+import { onMounted, ref, watch } from "vue";
+import { useRoute, useRouter } from "vue-router";
+import { getMovies } from "@/libs/fetchUtils";
+import NavBar from "../Homepage/NavBar.vue";
 
-const route = useRoute()
-const id = route.params.id
+const emit = defineEmits(["close", "submitReview"]);
 
-const performance_ratio = ref('50')
-const chapter_ratio = ref('50')
-const production_ratio = ref('50')
-const entertainment_ratio = ref('50')
-const worthiness_ratio = ref('50')
-const review = ref('')
-const movies = ref([])
+const route = useRoute();
+const id = route.params.id;
+
+const performance_ratio = ref("50");
+const chapter_ratio = ref("50");
+const production_ratio = ref("50");
+const entertainment_ratio = ref("50");
+const worthiness_ratio = ref("50");
+const review = ref("");
+const movies = ref([]);
 
 const props = defineProps({
   movieName: {
@@ -52,32 +54,36 @@ const props = defineProps({
     type: String,
     required: false,
   },
-})
+  toggleColor: {
+    type: Boolean,
+    required: false,
+  },
+});
 
 watch(
   () => props.open,
   (newProps) => {
     if (props.open) {
-      performance_ratio.value = props.rating.performance
-      chapter_ratio.value = props.rating.movie_Chapter
-      production_ratio.value = props.rating.production
-      entertainment_ratio.value = props.rating.entertainment
-      worthiness_ratio.value = props.rating.worthiness
-      review.value = props.review
+      performance_ratio.value = props.rating.performance;
+      chapter_ratio.value = props.rating.movie_Chapter;
+      production_ratio.value = props.rating.production;
+      entertainment_ratio.value = props.rating.entertainment;
+      worthiness_ratio.value = props.rating.worthiness;
+      review.value = props.review;
     }
   }
-)
+);
 
-const userStore = useUserStore()
-const currentUserId = userStore.currnetUser.id
+const userStore = useUserStore();
+const currentUserId = userStore.currentUser.id;
 
 async function submitReview() {
   //แก้ไข
   if (!id) {
     await fetch(`http://localhost:5000/reviews/${props.reviewId}`, {
-      method: 'PUT',
+      method: "PUT",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({
         userId: currentUserId,
@@ -92,14 +98,15 @@ async function submitReview() {
         comment: review.value,
         id: props.reviewId,
         likeCount: props.likeCount,
+        toggleColor: props.toggleColor,
       }),
-    })
+    });
   } else {
     //เพิ่ม
-    await fetch('http://localhost:5000/reviews', {
-      method: 'POST',
+    await fetch("http://localhost:5000/reviews", {
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({
         userId: currentUserId,
@@ -112,21 +119,21 @@ async function submitReview() {
           worthiness: Number(worthiness_ratio.value),
         },
         comment: review.value,
-        id: crypto.randomUUID(),
         likeCount: 0,
+        toggleColor: props.toggleColor,
       }),
-    })
-    alert('บันทึกสำเร็จ')
-    router.replace(`/commented`)
+    });
+    alert("บันทึกสำเร็จ");
+    router.replace(`/commented`);
     //go to review page
   }
 }
 
 onMounted(async () => {
-  const response = await getMovies(import.meta.env.VITE_BASE_URL)
-  console.log('🚀 ~ onMounted ~ response:', response)
-  movies.value = response
-})
+  const response = await getMovies(import.meta.env.VITE_BASE_URL);
+  console.log("🚀 ~ onMounted ~ response:", response);
+  movies.value = response;
+});
 </script>
 
 <template>
@@ -226,9 +233,9 @@ onMounted(async () => {
             class="flex items-center justify-center gap-[5px] w-[193px] h-[58px] border border-white text-[20px] rounded-[23px] hover:opacity-70 gradient-background bg-red-900"
             @click="
               async () => {
-                await submitReview()
-                $emit('submitReview')
-                $emit('close')
+                await submitReview();
+                $emit('submitReview');
+                $emit('close');
               }
             "
           >
@@ -239,9 +246,9 @@ onMounted(async () => {
             @click="
               () => {
                 if (id) {
-                  router.replace(`/`)
+                  router.replace(`/`);
                 }
-                $emit('close')
+                $emit('close');
               }
             "
           >
