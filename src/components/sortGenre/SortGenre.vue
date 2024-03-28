@@ -14,7 +14,6 @@ const dataGenreId = ref(prop.genreId)
 const dataLoaded = ref(false)
 const dataMovies = ref(prop.dataMovies)
 const sortByCategory = ref([])
-const isHover = ref(false)
 onMounted(async () => {
     try {
         dataLoaded.value = true
@@ -56,8 +55,8 @@ function scrollRight() {
 </script>
 
 <template>
-    <div class="bg-black px-[60px]">
-        <div ref="containerRef" class="flex flex-row overflow-x-scroll overflow-y-clip gap-[20px]">
+    <div class="bg-black">
+        <div ref="containerRef" class="flex flex-row overflow-x-scroll overflow-y-clip gap-[20px] min-h-[292px]">
             <div v-for="movie in  sortByCategory " :key="movie.id"
                 class="transition ease-in-out hover:-translate-y-1 hover:scale-110">
                 <RouterLink :to="{ path: '/movie/' + movie.id }">
@@ -65,8 +64,16 @@ function scrollRight() {
                 </RouterLink>
             </div>
         </div>
-        <button class="slide-button left text-white text-[36px]" @click="scrollLeft">&lt;</button>
-        <button class=" slide-button right text-white text-[36px]" @click="scrollRight">&gt;</button>
+        <div class="w-full flex justify-between">
+            <div class="relative flex items-center justify-center bottom-[200px] rounded-[10px] w-[55px] btn-bg hover:opacity-85 cursor-pointer"
+                @click="scrollLeft">
+                <button class=" text-white text-[36px]">&lt;</button>
+            </div>
+            <div class="relative flex items-center justify-center bottom-[200px] rounded-[10px] w-[55px] btn-bg hover:opacity-85  cursor-pointer"
+                @click="scrollRight">
+                <button class="text-white text-[36px]">&gt;</button>
+            </div>
+        </div>
 
     </div>
 </template>
@@ -74,5 +81,10 @@ function scrollRight() {
 <style scoped>
 ::-webkit-scrollbar {
     display: none;
+}
+
+.btn-bg {
+    background: rgb(255, 0, 0);
+    background: linear-gradient(180deg, rgba(255, 0, 0, 1) 1%, rgba(131, 0, 0, 1) 53%, rgba(0, 0, 0, 1) 100%);
 }
 </style>
