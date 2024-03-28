@@ -29,8 +29,7 @@ onMounted(() => {
   if (props.reviewDetails !== null) {
     ratingScore.value.performance = props.reviewDetails.rating.performance
     ratingScore.value.production = props.reviewDetails.rating.production
-    ratingScore.value.movie_Chapter
-      = props.reviewDetails.rating.movie_Chapter
+    ratingScore.value.movie_Chapter = props.reviewDetails.rating.movie_Chapter
     ratingScore.value.entertainment = props.reviewDetails.rating.entertainment
     ratingScore.value.worthiness = props.reviewDetails.rating.worthiness
     review.value = props.reviewDetails.comment

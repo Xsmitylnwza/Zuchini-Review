@@ -81,7 +81,6 @@ class ReviewManagement {
         }
     }
     getReviewByPage(currentPage = 1) {
-        console.log(this.reviews)
         return this.reviews.slice(
             (currentPage - 1) * 3,
             currentPage * 3

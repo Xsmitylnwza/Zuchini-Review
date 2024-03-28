@@ -1,5 +1,5 @@
 <script setup>
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 import { ref, onMounted } from "vue";
 import NavBar from "../Homepage/NavBar.vue";
 import RedBarTopic from "./RedBarTopic.vue";
@@ -21,6 +21,7 @@ const userStore = useUserStore();
 const currnetUser = userStore.currnetUser;
 
 const route = useRoute();
+const router = useRouter();
 const moviesDetails = ref([]);
 const moviesCredits = ref([]);
 const moviesTrailer = ref([]);
@@ -41,7 +42,6 @@ onMounted(async () => {
       route.params.id
     );
     const reviews = dataReview
-    console.log(dataReview.reviews)
     moviesDetails.value = dataDetails;
     moviesCredits.value = dataCredits;
     moviesTrailer.value = getmoviesTrailer(dataVideos);
@@ -108,6 +108,17 @@ function setCurrentPage(page) {
 function handleVideo() {
   isPlayVideo.value = !isPlayVideo.value;
 }
+function handleOptionChange(option) {
+  moviesReview.value.sortReviewBy(option);
+}
+function reviewModalHandler(value) {
+  if (userStore.checkUserLoggedIn()) {
+    isReviewModalOpen.value = value
+  } else {
+    alert("You need to login first !!!")
+    router.push('/login')
+  }
+}
 async function incrementLike(review) {
   if (userStore.checkUserLoggedIn()) {
     const [resReview, resUser] = await Promise.all([
@@ -116,11 +127,6 @@ async function incrementLike(review) {
     ]);
     const reviewUpdate = await resReview.json();
     const userData = await resUser.json();
-
-    console.log("review = ", review.isLiked);
-    console.log(review)
-    console.log(review.id)
-    console.log(userData.likedComments)
     if (!review.isLiked && !userData.likedComments.includes(review.id)) {
       await Promise.all([
         fetch(`${import.meta.env.VITE_BASE_URL}/reviews/${review.id}`, {
@@ -149,15 +155,11 @@ async function incrementLike(review) {
       console.log("User has already liked this review.");
     }
   } else {
-    console.log("User is not logged in");
+    alert("You need to login first !!!")
+    router.push('/login')
   }
 }
-function handleOptionChange(option) {
-  moviesReview.value.sortReviewBy(option);
-}
-function reviewModalHandler(value) {
-  isReviewModalOpen.value = value
-}
+
 async function addNewReview(ratingScore, review, movieId, currentUserId, isAdd) {
   const newratinhscore = { ...ratingScore }
   const response = await addReview(ratingScore, review, movieId, currentUserId, isAdd)
@@ -166,7 +168,6 @@ async function addNewReview(ratingScore, review, movieId, currentUserId, isAdd) 
     const newReview = { id: responseReview.id, username: currnetUser.username, comment: review, rating: newratinhscore, imageUrl: currnetUser.imageUrl, likeCount: 0, isLiked: false }
     moviesReview.value.addReview(newReview)
     reviewModalHandler(false)
-    //this.reviews.push({ id: review.id, username: review.username, comment: review.comment, rating: review.rating, imageUrl: review.imageUrl, likeCount: review.likeCount, isLiked: review.isLiked })
   }
 }
 

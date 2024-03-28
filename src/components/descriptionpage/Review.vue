@@ -11,7 +11,6 @@ const props = defineProps({
   },
 });
 
-console.log(props.reviews)
 </script>
 
 <template>

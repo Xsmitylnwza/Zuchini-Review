@@ -21,7 +21,6 @@ const props = defineProps({
     }
 })
 
-console.log(props.rating)
 
 const reviewItems = [
     { icon: reviewIconWatching, label: 'Entertainment' },

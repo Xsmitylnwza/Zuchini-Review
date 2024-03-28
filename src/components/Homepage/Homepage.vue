@@ -18,7 +18,6 @@ onMounted(async () => {
   movies.value = movieData.slice(0, 5);
   NotSliceMovies.value = movieData;
   dataLoaded.value = true;
-  console.log(userStore.currnetUser.id)
 });
 </script>
 

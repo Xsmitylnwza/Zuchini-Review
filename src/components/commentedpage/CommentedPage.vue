@@ -98,8 +98,8 @@ function closeModal(isOpen) {
             <img class="w-[50px] h-[50px] btn-circle" :src="currnetUser.imageUrl" />
             <div class="font-bold text-[22px]">{{ currnetUser.username }}</div>
             <div class="flex gap-[10px] ml-[auto]">
-              <div @click="reviewModalHandler(true, index)"><button>Edit</button></div>
-              <div @click="deleteReview(review.id)"><button>Delete</button></div>
+              <div @click="reviewModalHandler(true, index)" class="hover:text-gray-300"><button>Edit</button></div>
+              <div @click="deleteReview(review.id)" class="hover:text-gray-300"><button>Delete</button></div>
             </div>
           </div>
           <div v-if="dataLoaded" class=" w-full flex flex-row ">
