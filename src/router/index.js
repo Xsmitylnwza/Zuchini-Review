@@ -4,6 +4,8 @@ import RegisterView from '@/views/RegisterView.vue'
 import LoginView from '@/views/LoginView.vue'
 import MovieDes from '@/components/descriptionpage/MovieDescriptionPage.vue'
 import NotFound from '@/views/NotFound.vue'
+import ReviewPage from '@/components/reviewpage/ReviewPage.vue'
+import CommentedPage from '@/components/commentedpage/CommentedPage.vue'
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
@@ -30,7 +32,17 @@ const router = createRouter({
         {
             path: '/:notfound(.*)',
             component: NotFound
-        }
+        },
+        {
+            name: 'review',
+            path: '/review/:id',
+            component: ReviewPage,
+        },
+        {
+            path: '/commented',
+            name: 'commented',
+            component: CommentedPage,
+        },
     ]
 
 })

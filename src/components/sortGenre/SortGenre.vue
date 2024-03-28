@@ -65,8 +65,9 @@ function scrollRight() {
                 </RouterLink>
             </div>
         </div>
-        <button class="slide-button left text-white" @click="scrollLeft">&lt;</button>
-        <button class="slide-button right text-white" @click="scrollRight">&gt;</button>
+        <button class="slide-button left text-white text-[36px]" @click="scrollLeft">&lt;</button>
+        <button class=" slide-button right text-white text-[36px]" @click="scrollRight">&gt;</button>
+
     </div>
 </template>
 
