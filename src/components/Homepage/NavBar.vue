@@ -10,7 +10,10 @@ const movieSearched = ref([])
 const searchQuery = ref()
 
 async function searchMovies() {
-  const movie = await getMoviesByName(encodeURIComponent(searchQuery.value))
+  const trimmedQuery = searchQuery.value.trim()
+  const encodedQuery = trimmedQuery.replaceAll(' ', '%20')
+  const movie = await getMoviesByName(encodeURIComponent(encodedQuery))
+  console.log(movie)
   movieSearched.value = movie
 }
 function clearSearchQuery() {
@@ -68,19 +71,55 @@ function clearSearchQuery() {
               <router-link :to="'/movie/' + movie.id">
                 <img
                   class="w-[70px] h-[100px] rounded-[5px]"
-                  :src="'https://image.tmdb.org/t/p/w500/' + movie.poster_path"
+                  :src="
+                    movie.poster_path
+                      ? 'https://image.tmdb.org/t/p/w500/' + movie.poster_path
+                      : '../icons/noimageavailable.png'
+                  "
                 />
-                <h2>{{ movie.original_title }}</h2>
+                <h2>{{ movie.title }}</h2>
               </router-link>
             </li>
             <li v-else class="w-60"><h3>No result found</h3></li>
           </ul>
         </div>
       </div>
-      <button class="hover:opacity-80">
+      <button class="hover:opacity-80 btn btn-ghost rounded-btn">
         <RouterLink to="/">Home</RouterLink>
       </button>
-      <button class="hover:opacity-80">Categories</button>
+      <div>
+        <div class="dropdown dropdown-end">
+          <div
+            tabindex="0"
+            role="button"
+            class="btn btn-ghost rounded-btn hover:opacity-10"
+          >
+            Categories
+          </div>
+          <ul
+            tabindex="0"
+            class="menu dropdown-content z-[1] p-2 shadow bg-slate-950 rounded-box w-56 mt-2"
+          >
+            <li><a>Action</a></li>
+            <li><a>Adventure</a></li>
+            <li><a>Animation</a></li>
+            <li><a>Comedy</a></li>
+            <li><a>Drama</a></li>
+            <li><a>Documentary</a></li>
+            <li><a>Family</a></li>
+            <li><a>Fantasy</a></li>
+            <li><a>History</a></li>
+            <li><a>Horror</a></li>
+            <li><a>Music</a></li>
+            <li><a>Mystery</a></li>
+            <li><a>Romance</a></li>
+            <li><a>TV Movie</a></li>
+            <li><a>Thriller</a></li>
+            <li><a>War</a></li>
+            <li><a>Western</a></li>
+          </ul>
+        </div>
+      </div>
       <div>
         <div v-if="userStore.checkUserLoggedIn()" class="flex">
           <div class="flex items-center pr-3">{{ currnetUser.username }}</div>
