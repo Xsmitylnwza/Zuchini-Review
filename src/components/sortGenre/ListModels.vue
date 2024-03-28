@@ -1,5 +1,6 @@
 <script setup>
 import { ref, onMounted } from "vue"
+import { getGenre } from "../../libs/fetchUtils.js";
 import SortGenre from "./SortGenre.vue"
 const prop = defineProps({
     dataMovies: {
@@ -9,9 +10,7 @@ const prop = defineProps({
 });
 onMounted(async () => {
     try {
-        const responseGenres = await fetch(`http://localhost:5000/genres`)
-        const dataGenres = await responseGenres.json()
-        genres.value = dataGenres
+        genres.value = await getGenre(import.meta.env.VITE_BASE_URL)
         dataLoaded.value = true
     } catch (error) {
         console.error(error)
