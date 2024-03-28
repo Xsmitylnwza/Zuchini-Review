@@ -13,6 +13,9 @@ async function searchMovies() {
   const movie = await getMoviesByName(encodeURIComponent(searchQuery.value))
   movieSearched.value = movie
 }
+function clearSearchQuery() {
+  searchQuery.value = ''
+}
 </script>
 
 <template>
@@ -53,7 +56,11 @@ async function searchMovies() {
             class="dropdown-content flex flex-row z-[1] menu p-2 shadow bg-base-100 rounded-box mt-12 overflow-y-auto max-h-96"
           >
             <li
-              v-if="movieSearched && movieSearched.results"
+              v-if="
+                movieSearched &&
+                movieSearched.results &&
+                movieSearched.results.length > 0
+              "
               v-for="movie in movieSearched.results"
               :key="movie.id"
               class="w-60"
@@ -66,6 +73,7 @@ async function searchMovies() {
                 <h2>{{ movie.original_title }}</h2>
               </router-link>
             </li>
+            <li v-else class="w-60"><h3>No result found</h3></li>
           </ul>
         </div>
       </div>
