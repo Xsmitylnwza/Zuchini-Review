@@ -10,6 +10,7 @@
     "backend": "json-server --watch ./data/db.json --port 5000"
   },
   "dependencies": {
+    "backend": "^0.0.0",
     "json-server": "^1.0.0-alpha.23",
     "node-fetch": "^2.7.0",
     "pinia": "^2.1.7",

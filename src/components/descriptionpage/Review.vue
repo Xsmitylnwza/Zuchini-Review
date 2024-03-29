@@ -1,8 +1,9 @@
 <script setup>
-import { onMounted, ref } from "vue";
-import RatingPage from "./RatingPage.vue";
+import { onMounted, ref } from 'vue'
+import RatingPage from './RatingPage.vue'
+import { getUsersInfo } from '@/libs/fetchUtils.js'
 
-defineEmits(["incrementLike", "handleOptionChange"]);
+defineEmits(['incrementLike', 'handleOptionChange'])
 
 const props = defineProps({
   reviews: {
@@ -70,4 +71,11 @@ const props = defineProps({
   </div>
 </template>
 
-<style scoped></style>../../libs/fetchUtils.js
+
+<style scoped>
+.gradient-bg {
+  background-image: linear-gradient(90deg, #c60000 0%, #600000 100%);
+}
+</style>
+../../libs/fetchUtils.js
+

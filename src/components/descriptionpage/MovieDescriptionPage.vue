@@ -63,6 +63,7 @@ onMounted(async () => {
         moviesReview.value.addReview(userReview);
       })
     );
+    console.log(moviesReview.value.getReviews())
     dataLoaded.value = true;
   } catch (error) {
     console.error(error);
