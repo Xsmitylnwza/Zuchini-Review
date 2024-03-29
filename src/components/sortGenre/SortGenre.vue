@@ -14,7 +14,6 @@ const dataGenreId = ref(prop.genreId)
 const dataLoaded = ref(false)
 const dataMovies = ref(prop.dataMovies)
 const sortByCategory = ref([])
-const isHover = ref(false)
 onMounted(async () => {
     try {
         dataLoaded.value = true
@@ -32,24 +31,60 @@ function sortGenres() {
         }
     }
 }
+
+
+
+const containerRef = ref(null);
+
+function scrollLeft() {
+    const container = containerRef.value;
+    const scrollAmount = 1000;
+    container.scrollTo({
+        left: container.scrollLeft - scrollAmount,
+        behavior: 'smooth'
+    });
+}
+function scrollRight() {
+    const container = containerRef.value;
+    const scrollAmount = 1000;
+    container.scrollTo({
+        left: container.scrollLeft + scrollAmount,
+        behavior: 'smooth'
+    });
+}
 </script>
 
 <template>
     <div class="bg-black">
-        <div class="flex flex-row overflow-x-scroll overflow-y-clip gap-[20px]">
+        <div ref="containerRef" class="flex flex-row overflow-x-scroll overflow-y-clip gap-[20px] min-h-[292px]">
             <div v-for="movie in  sortByCategory " :key="movie.id"
                 class="transition ease-in-out hover:-translate-y-1 hover:scale-110">
                 <RouterLink :to="{ path: '/movie/' + movie.id }">
                     <MovieBox :movie="movie" />
                 </RouterLink>
-
             </div>
         </div>
+        <div class="w-full flex justify-between">
+            <div class="relative flex items-center justify-center bottom-[200px] rounded-[10px] w-[55px] btn-bg hover:opacity-85 cursor-pointer"
+                @click="scrollLeft">
+                <button class=" text-white text-[36px]">&lt;</button>
+            </div>
+            <div class="relative flex items-center justify-center bottom-[200px] rounded-[10px] w-[55px] btn-bg hover:opacity-85  cursor-pointer"
+                @click="scrollRight">
+                <button class="text-white text-[36px]">&gt;</button>
+            </div>
+        </div>
+
     </div>
 </template>
 
 <style scoped>
 ::-webkit-scrollbar {
     display: none;
+}
+
+.btn-bg {
+    background: rgb(255, 0, 0);
+    background: linear-gradient(180deg, rgba(255, 0, 0, 1) 1%, rgba(131, 0, 0, 1) 53%, rgba(0, 0, 0, 1) 100%);
 }
 </style>

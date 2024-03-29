@@ -47,14 +47,11 @@ async function test(review) {
 </script>
 
 <template>
-  <div
-    class="bg-cover h-full max-w-[100%] section-with-smooth-scroll"
-    :style="{
-      'background-image': 'url(/image/avenger.jpg)',
-      'background-attachment': 'fixed',
-      'background-repeat': 'no-repeat',
-    }"
-  >
+  <div class="bg-cover h-full max-w-[100%] section-with-smooth-scroll" :style="{
+    'background-image': 'url(/image/avenger.jpg)',
+    'background-attachment': 'fixed',
+    'background-repeat': 'no-repeat',
+  }">
     <NavBar />
     <div class="text-white text-2xl ml-[5%] font-istok font-bold">
       RECCOMMENT
