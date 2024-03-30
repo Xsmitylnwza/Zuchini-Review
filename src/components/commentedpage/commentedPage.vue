@@ -1,180 +1,191 @@
 <script setup>
-import NavBar from "../Homepage/NavBar.vue";
-import RedBar from "../commentedpage/RedBar.vue";
-import RatingIcon from "../commentedpage/RatingIcon.vue";
-import { ref, onMounted, computed } from "vue";
-import ReviewPage from "../reviewpage/ReviewPage.vue";
-import { ReviewManagement } from "@/libs/ReviewManagement.js";
+import { ref, onMounted } from "vue";
 import { useUserStore } from "@/store/user";
-import { getReviews, getMovies } from "@/libs/fetchUtils";
-const userStore = useUserStore();
+import {
+  getReviews,
+  getMovies,
+  getMoviesDetails,
+  deleteReviewById,
+} from "@/libs/fetchUtils";
+import { editReview } from "@/libs/fetchUtils";
+import NavBar from "../Homepage/NavBar.vue";
+import RedBarTopic from "../descriptionpage/RedBarTopic.vue";
+import RatingPage from "../descriptionpage/RatingPage.vue";
+import ReviewPage from "../reviewpage/ReviewPage.vue";
+import LoadingScreen from "../descriptionpage/LoadingScreen.vue";
 
-const showReview = ref(false);
+const userStore = useUserStore();
+const currnetUser = userStore.currnetUser;
 const reviews = ref([]);
 const movies = ref([]);
-const currnetUser = userStore.currnetUser;
-const reviewSelected = ref(null);
-const openRewiewModal = ({ id }) => {
-  const review = reviews.value.find((review) => review.id === id);
-  reviewSelected.value = review;
-  showReview.value = true;
-};
-
-const reloadData = async () => {
-  const getMoviesResponse = await getMovies(import.meta.env.VITE_BASE_URL);
-  const getReviewsResponse = await getReviews();
-  movies.value = getMoviesResponse;
-  reviews.value = getReviewsResponse.filter(
-    (review) => review.userId === currnetUser.id
-  );
-};
-
-const submitReview = async (review) => {
-  await reloadData();
-};
-
-const onClickDelete = async (id) => {
-  if (!confirm("Are you sure you want to delete this review?")) return;
-  await fetch(import.meta.env.VITE_BASE_URL + "/reviews/" + id, {
-    method: "DELETE",
-  });
-  await reloadData();
-};
+const selectedReview = ref("");
+const isReviewModalOpen = ref(false);
+const moviesDetails = ref(false);
+const dataLoaded = ref(false);
 
 onMounted(async () => {
-  await reloadData();
+  reviews.value = await getReviews(`?userId=${userStore.currnetUser.id}`);
+  const movieDetailsPromises = reviews.value.map(async (review) => {
+    const movieDetails = await getMoviesDetails(review.movieId);
+    return movieDetails;
+  });
+  movies.value = await Promise.all(movieDetailsPromises);
+  moviesDetails.value = movies.value[0];
+  selectedReview.value = reviews.value[0];
+  dataLoaded.value = true;
 });
+
+async function deleteReview(id) {
+  let deleteindex;
+  const response = await deleteReviewById(id);
+  if (response.ok) {
+    reviews.value = reviews.value.filter((review, index) => {
+      if (review.id === id) {
+        deleteindex = index;
+      }
+      return review.id !== id;
+    });
+    movies.value.splice(deleteindex, 1);
+  }
+}
+async function updateNewReview(ratingScore, comment) {
+  selectedReview.value.comment = comment;
+  selectedReview.value.rating = ratingScore;
+  const response = await editReview(
+    selectedReview.value,
+    selectedReview.value.rating
+  );
+  if (response.ok) {
+    reviews.value.forEach((review) => {
+      if (review.id === selectedReview.value.id) {
+        review.comment = comment;
+        review.rating = ratingScore;
+      }
+    });
+  }
+  closeModal(false);
+}
+
+function reviewModalHandler(isOpen, index = 0) {
+  moviesDetails.value = movies.value[index];
+  selectedReview.value = reviews.value[index];
+  isReviewModalOpen.value = isOpen;
+}
+
+function closeModal(isOpen) {
+  isReviewModalOpen.value = isOpen;
+}
 </script>
 
 <template>
-  <div class="bg-gradient-to-r from-black to-red-900 min-h-screen">
+  <loadingScreen v-if="!dataLoaded" />
+  <div
+    v-if="dataLoaded"
+    class="bg-gradient-to-r from-black to-red-900 min-h-screen"
+  >
     <NavBar />
 
-    <div
-      class="w-3/4 m-[auto] font-inter text-white px-24 py-8 bg-black bg-opacity-35 rounded-md"
-    >
-      <div class="flex pt-10 pb-10">
-        <div class="mt-1">
-          <RedBar />
-        </div>
-        <div class="font-semibold pr-2 pl-2">
-          <h1 class="text-2xl">Reviewed</h1>
-        </div>
+    <Teleport to="body">
+      <div v-if="isReviewModalOpen">
+        <ReviewPage
+          :movieDetails="moviesDetails"
+          :reviewDetails="selectedReview"
+          @closeModal="closeModal"
+          @updateReview="updateNewReview"
+        />
       </div>
+    </Teleport>
 
-      <!-- Movies -->
-      <div v-for="review in reviews" :key="review.id">
-        <div>
-          <div class="flex m-6">
-            <div class="w-1/5">
-              <h1>
-                {{
-                  movies.find((movie) => movie.id === review.movieId)
-                    .original_title
-                }}
-              </h1>
-            </div>
-            <div class="flex justify-between w-full">
-              <div class="flex">
-                <svg
-                  width="25"
-                  height="25"
-                  viewBox="0 0 53 53"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <circle
-                    cx="26.5"
-                    cy="26.5"
-                    r="26"
-                    fill="#900505"
-                    stroke="#FF0C0C"
-                  />
-                </svg>
-                <p class="mx-2">{{ currnetUser.username }}</p>
-              </div>
-              <div class="flex gap-3">
-                <button
-                  class="underline text-blue-500"
-                  @click="openRewiewModal(review)"
-                >
-                  Edit
-                </button>
-                <button
-                  class="underline text-red-700"
-                  @click="onClickDelete(review.id)"
-                >
-                  Delete
-                </button>
-              </div>
-            </div>
+    <div
+      class="w-[80%] m-[auto] font-istok text-white px-24 py-8 bg-black bg-opacity-35 rounded-md"
+    >
+      <div class="mt-1">
+        <RedBarTopic :topic="'Reviewed'" />
+      </div>
+      <div
+        v-if="reviews"
+        v-for="(review, index) in reviews"
+        :key="review.id"
+        class="w-[100%] h-[auto] min-h-[350px] flex mb-[30px] border-b-2 border-white"
+      >
+        <div class="w-[25%] flex flex-col items-center">
+          <div class="text-[22px] mb-[20px] font-semibold">
+            {{ movies[index].title }}
           </div>
-          <div class="flex h-[225px]">
+          <img
+            class="w-[150px] h-[220px]"
+            :src="
+              'https://image.tmdb.org/t/p/w500/' + movies[index].poster_path
+            "
+          />
+        </div>
+        <div class="w-[75%]">
+          <div class="flex items-center gap-[15px]">
             <img
-              class="w-[175px]"
-              :src="
-                'https://image.tmdb.org/t/p/w500/' +
-                movies.find((movie) => movie.id === review.movieId).poster_path
-              "
+              class="w-[50px] h-[50px] btn-circle"
+              :src="currnetUser.imageUrl"
             />
-            <div class="p-8">
-              <RatingIcon
-                :value1="review.rating.performance"
-                :value2="review.rating.production"
-                :value3="review.rating.movie_Chapter"
-                :value4="review.rating.entertainment"
-                :value5="review.rating.worthiness"
-              />
+            <div class="font-bold text-[22px]">{{ currnetUser.username }}</div>
+            <div class="flex gap-[10px] ml-[auto]">
+              <div
+                @click="reviewModalHandler(true, index)"
+                class="hover:text-gray-300"
+              >
+                <button>Edit</button>
+              </div>
+              <div @click="deleteReview(review.id)" class="hover:text-gray-300">
+                <button>Delete</button>
+              </div>
             </div>
-            <div class="w-2/3 p-10 pb-10">
-              {{ review.comment }}
+          </div>
+          <div v-if="dataLoaded" class="w-full flex flex-row">
+            <RatingPage
+              :rating="[
+                review.rating.entertainment,
+                review.rating.movie_Chapter,
+                review.rating.performance,
+                review.rating.production,
+                review.rating.worthiness,
+              ]"
+              :format="'comment'"
+            />
+            <div class="flex flex-col w-[100%] p-[15px]">
+              <div class="">
+                {{ review.comment }}
+              </div>
+              <div class="flex gap-[10px] mt-[auto] ml-[auto]">
+                <div>Liked {{ review.likeCount }}</div>
+                <div>
+                  <svg
+                    width="18"
+                    height="18"
+                    viewBox="0 0 18 18"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <g clip-path="url(#clip0_90_1697)">
+                      <path
+                        d="M5.625 3C3.34688 3 1.5 4.84688 1.5 7.125C1.5 11.25 6.375 15 9 15.8723C11.625 15 16.5 11.25 16.5 7.125C16.5 4.84688 14.6531 3 12.375 3C10.98 3 9.74625 3.69263 9 4.75275C8.61963 4.21095 8.11431 3.76878 7.52682 3.46368C6.93934 3.15858 6.28699 2.99953 5.625 3Z"
+                        stroke="white"
+                        stroke-width="4"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                    </g>
+                    <defs>
+                      <clipPath id="clip0_90_1697">
+                        <rect width="18" height="18" fill="white" />
+                      </clipPath>
+                    </defs>
+                  </svg>
+                </div>
+              </div>
             </div>
           </div>
         </div>
-        <div class="flex justify-end w-full gap-2">
-          <button type="button" class="flex gap-2 items-center">
-            <div>
-              Liked
-              {{ review.likeCount }}
-            </div>
-            <div>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  fill="currentColor"
-                  d="m12 21l-1.45-1.3q-2.525-2.275-4.175-3.925T3.75 12.812Q2.775 11.5 2.388 10.4T2 8.15Q2 5.8 3.575 4.225T7.5 2.65q1.3 0 2.475.55T12 4.75q.85-1 2.025-1.55t2.475-.55q2.35 0 3.925 1.575T22 8.15q0 1.15-.387 2.25t-1.363 2.412q-.975 1.313-2.625 2.963T13.45 19.7zm0-2.7q2.4-2.15 3.95-3.687t2.45-2.675q.9-1.138 1.25-2.026T20 8.15q0-1.5-1-2.5t-2.5-1q-1.175 0-2.175.662T12.95 7h-1.9q-.375-1.025-1.375-1.687T7.5 4.65q-1.5 0-2.5 1t-1 2.5q0 .875.35 1.763t1.25 2.025q.9 1.137 2.45 2.675T12 18.3m0-6.825"
-                />
-              </svg>
-            </div>
-          </button>
-        </div>
-        <br />
-        <hr />
       </div>
     </div>
   </div>
-  <ReviewPage
-    :open="showReview"
-    :movieName="
-      movies?.find((movie) => movie.id === reviewSelected?.movieId)
-        ?.original_title
-    "
-    :image="
-      'https://image.tmdb.org/t/p/w500/' +
-      movies?.find((movie) => movie.id === reviewSelected?.movieId)?.poster_path
-    "
-    :rating="reviewSelected?.rating"
-    :review="reviewSelected?.comment"
-    :reviewId="reviewSelected?.id"
-    :likeCount="reviewSelected?.likeCount"
-    :movieId="reviewSelected?.movieId"
-    @close="showReview = false"
-    @submitReview="submitReview"
-  />
 </template>
 
 <style scoped></style>
