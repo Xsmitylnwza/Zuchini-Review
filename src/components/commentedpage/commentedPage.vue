@@ -12,7 +12,7 @@ const userStore = useUserStore();
 const showReview = ref(false);
 const reviews = ref([]);
 const movies = ref([]);
-const currentUser = userStore.currentUser;
+const currnetUser = userStore.currnetUser;
 const reviewSelected = ref(null);
 const openRewiewModal = ({ id }) => {
   const review = reviews.value.find((review) => review.id === id);
@@ -25,7 +25,7 @@ const reloadData = async () => {
   const getReviewsResponse = await getReviews();
   movies.value = getMoviesResponse;
   reviews.value = getReviewsResponse.filter(
-    (review) => review.userId === currentUser.id
+    (review) => review.userId === currnetUser.id
   );
 };
 
@@ -91,7 +91,7 @@ onMounted(async () => {
                     stroke="#FF0C0C"
                   />
                 </svg>
-                <p class="mx-2">{{ currentUser.username }}</p>
+                <p class="mx-2">{{ currnetUser.username }}</p>
               </div>
               <div class="flex gap-3">
                 <button

@@ -1,219 +1,137 @@
 <script setup>
-import router from "@/router";
-import RedBar from "../commentedpage/RedBar.vue";
 import ratingIcon from "./ratingIcon.vue";
 import { useUserStore } from "@/store/user";
-import { onMounted, ref, watch } from "vue";
-import { useRoute, useRouter } from "vue-router";
-import { getMovies } from "@/libs/fetchUtils";
-import NavBar from "../Homepage/NavBar.vue";
+import { onMounted, ref } from "vue";
+import { useRoute } from "vue-router";
+import RedBarTopic from "../descriptionpage/RedBarTopic.vue";
 
-const emit = defineEmits(["close", "submitReview"]);
-
-const route = useRoute();
-const id = route.params.id;
-
-const performance_ratio = ref("50");
-const chapter_ratio = ref("50");
-const production_ratio = ref("50");
-const entertainment_ratio = ref("50");
-const worthiness_ratio = ref("50");
-const review = ref("");
-const movies = ref([]);
+defineEmits(["closeModal", "updateReview"]);
 
 const props = defineProps({
-  movieName: {
-    type: String,
-    required: false,
-  },
-  image: {
-    type: String,
-    required: false,
-  },
-  rating: {
+  movieDetails: {
     type: Object,
-    required: false,
   },
-  review: {
-    type: String,
-    required: false,
-  },
-  open: {
-    type: Boolean,
-    default: true,
-  },
-  reviewId: {
-    type: String,
-    required: false,
-  },
-  likeCount: {
-    type: Number,
-    required: false,
-  },
-  movieId: {
-    type: String,
-    required: false,
+  reviewDetails: {
+    type: Object,
+    default: null,
   },
 });
-
-watch(
-  () => props.open,
-  (newProps) => {
-    if (props.open) {
-      performance_ratio.value = props.rating.performance;
-      chapter_ratio.value = props.rating.movie_Chapter;
-      production_ratio.value = props.rating.production;
-      entertainment_ratio.value = props.rating.entertainment;
-      worthiness_ratio.value = props.rating.worthiness;
-      review.value = props.review;
-    }
-  }
-);
-
+const route = useRoute();
 const userStore = useUserStore();
 const currentUserId = userStore.currentUser.id;
-
-async function submitReview() {
-  //แก้ไข
-  if (!id) {
-    await fetch(`http://localhost:5000/reviews/${props.reviewId}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        userId: currentUserId,
-        movieId: props.movieId,
-        rating: {
-          performance: Number(performance_ratio.value),
-          production: Number(production_ratio.value),
-          movie_Chapter: Number(chapter_ratio.value),
-          entertainment: Number(entertainment_ratio.value),
-          worthiness: Number(worthiness_ratio.value),
-        },
-        comment: review.value,
-        id: props.reviewId,
-        likeCount: props.likeCount,
-      }),
-    });
-  } else {
-    //เพิ่ม
-    await fetch("http://localhost:5000/reviews", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        userId: currentUserId,
-        movieId: id,
-        rating: {
-          performance: Number(performance_ratio.value),
-          production: Number(production_ratio.value),
-          movie_Chapter: Number(chapter_ratio.value),
-          entertainment: Number(entertainment_ratio.value),
-          worthiness: Number(worthiness_ratio.value),
-        },
-        comment: review.value,
-        likeCount: 0,
-        toggleColor: props.toggleColor,
-      }),
-    });
-    alert("บันทึกสำเร็จ");
-    router.replace(`/commented`);
-    //go to review page
-  }
-}
-
-onMounted(async () => {
-  const response = await getMovies(import.meta.env.VITE_BASE_URL);
-  console.log("🚀 ~ onMounted ~ response:", response);
-  movies.value = response;
+const ratingScore = ref({
+  entertainment: 50,
+  movie_Chapter: 50,
+  performance: 50,
+  production: 50,
+  worthiness: 50,
 });
+const review = ref("");
+
+onMounted(() => {
+  if (props.reviewDetails !== null) {
+    ratingScore.value.performance = props.reviewDetails.rating.performance;
+    ratingScore.value.production = props.reviewDetails.rating.production;
+    ratingScore.value.movie_Chapter = props.reviewDetails.rating.movie_Chapter;
+    ratingScore.value.entertainment = props.reviewDetails.rating.entertainment;
+    ratingScore.value.worthiness = props.reviewDetails.rating.worthiness;
+    review.value = props.reviewDetails.comment;
+  }
+});
+
+const handleScoreChange = (key, event) => {
+  ratingScore.value[key] = Number(event.target.value);
+};
 </script>
 
 <template>
-  <NavBar v-if="id" />
   <div
-    class="bg-grey-500 backdrop-blur-sm w-full h-full fixed top-0 left-0 py-[175px] overflow-x-hidden overflow-y-auto"
-    v-show="props.open"
+    class="bg-grey-500 backdrop-blur-sm w-screen h-screen fixed top-0 left-0 pt-[100px]"
   >
-    <!-- {{ movies }} -->
-    <div class="flex justify-center text-white">
+    <div class="flex justify-center text-white font-semibold">
       <div
         class="bg-gradient-to-r from-black to-red-900 h-4/5 w-2/3 rounded-md p-4"
       >
         <div class="flex mx-8 my-2">
-          <RedBar class="mt-1.5" />
-          <div class="mx-2 font-semibold text-2xl">Review</div>
+          <RedBarTopic :topic="reviewDetails ? 'Edit Review' : 'Review'" />
+        </div>
+        <div
+          class="relative bottom-[15px] flex justify-center items-center w-full"
+        >
+          <div class="flex flex-col items-center w-[25%] my-8">
+            <div>
+              <img
+                class="mb-[10px]"
+                :src="
+                  'https://image.tmdb.org/t/p/w500/' + movieDetails?.poster_path
+                "
+                width="150px"
+              />
+            </div>
+            <div>
+              {{ movieDetails?.title }}
+            </div>
+          </div>
+          <div class="flex w-[70%] gap-[55px]">
+            <div>
+              <ratingIcon />
+            </div>
+            <div>
+              <input
+                v-model="ratingScor.entertainment"
+                @input="handleScoreChange('entertainment', $event)"
+                id="performance"
+                type="range"
+                min="0"
+                max="100"
+                class="w-4/5 h-3 my-3 bg-black rounded-lg appearance-none cursor-pointer"
+              />
+              {{ ratingScore.entertainment }} %
+              <input
+                v-model="ratingScore.movie_Chapter"
+                @input="handleScoreChange('movie_Chapter', $event)"
+                id="production"
+                type="range"
+                min="0"
+                max="100"
+                class="w-4/5 h-3 my-3 bg-black rounded-lg appearance-none cursor-pointer"
+              />
+              {{ ratingScore.movie_Chapter }} %
+              <input
+                v-model="ratingScore.performance"
+                @input="handleScoreChange('performance', $event)"
+                id="movie-chapter"
+                type="range"
+                min="0"
+                max="100"
+                class="w-4/5 h-3 my-3 bg-black rounded-lg appearance-none cursor-pointer"
+              />
+              {{ ratingScore.performance }} %
+              <input
+                v-model="ratingScore.production"
+                @input="handleScoreChange('production', $event)"
+                id="entertainment"
+                type="range"
+                min="0"
+                max="100"
+                class="w-4/5 h-3 my-3 bg-black rounded-lg appearance-none cursor-pointer"
+              />
+              {{ ratingScore.production }} %
+              <input
+                v-model="ratingScore.worthiness"
+                @input="handleScoreChange('worthiness', $event)"
+                id="worthiness"
+                type="range"
+                min="0"
+                max="100"
+                class="w-4/5 h-3 my-3 bg-black rounded-lg appearance-none cursor-pointer"
+              />
+              {{ ratingScore.worthiness }} %
+            </div>
+          </div>
         </div>
 
-        <div class="flex px-16 w-full gap-12 h-full">
-          <div class="flex w-28 my-8">
-            <img
-              :src="
-                props.image
-                  ? props.image
-                  : 'https://image.tmdb.org/t/p/w500/' +
-                    movies.find((movie) => movie.id === id)?.poster_path
-              "
-              width="200px"
-            />
-          </div>
-
-          <div class="">
-            <ratingIcon />
-          </div>
-          <div class="">
-            <input
-              v-model="performance_ratio"
-              id="performance"
-              type="range"
-              min="0"
-              max="100"
-              class="w-4/5 h-3 my-3 bg-black rounded-lg appearance-none cursor-pointer"
-            />
-            {{ performance_ratio }} %
-            <input
-              v-model="production_ratio"
-              id="production"
-              type="range"
-              min="0"
-              max="100"
-              class="w-4/5 h-3 my-3 bg-black rounded-lg appearance-none cursor-pointer"
-            />
-            {{ production_ratio }} %
-            <input
-              v-model="chapter_ratio"
-              id="movie-chapter"
-              type="range"
-              min="0"
-              max="100"
-              class="w-4/5 h-3 my-3 bg-black rounded-lg appearance-none cursor-pointer"
-            />
-            {{ chapter_ratio }} %
-            <input
-              v-model="entertainment_ratio"
-              id="entertainment"
-              type="range"
-              min="0"
-              max="100"
-              class="w-4/5 h-3 my-3 bg-black rounded-lg appearance-none cursor-pointer"
-            />
-            {{ entertainment_ratio }} %
-            <input
-              v-model="worthiness_ratio"
-              id="worthiness"
-              type="range"
-              min="0"
-              max="100"
-              class="w-4/5 h-3 my-3 bg-black rounded-lg appearance-none cursor-pointer"
-            />
-            {{ worthiness_ratio }} %
-          </div>
-        </div>
-        <div class="px-16">{{ props.movieName }}</div>
-
-        <div class="p-16 pb-2">
+        <div class="px-16 pb-2">
           <textarea
             id="message"
             rows="4"
@@ -225,27 +143,22 @@ onMounted(async () => {
 
         <div class="flex justify-center gap-6 py-4 px-2">
           <button
-            class="flex items-center justify-center gap-[5px] w-[193px] h-[58px] border border-white text-[20px] rounded-[23px] hover:opacity-70 gradient-background bg-red-900"
+            class="flex items-center justify-center gap-[5px] w-[193px] h-[58px] border border-white text-[20px] rounded-[23px] hover:opacity-70 gradient-bg"
             @click="
-              async () => {
-                await submitReview();
-                $emit('submitReview');
-                $emit('close');
-              }
+              $emit(
+                'updateReview',
+                ratingScore,
+                review,
+                route.params.id,
+                currentUserId
+              )
             "
           >
-            Submit
+            {{ reviewDetails ? "Edit" : "Submit" }}
           </button>
           <button
-            class="flex items-center justify-center gap-[5px] w-[193px] h-[58px] border border-white text-[20px] rounded-[23px] hover:opacity-70 gradient-background bg-red-900"
-            @click="
-              () => {
-                if (id) {
-                  router.replace(`/`);
-                }
-                $emit('close');
-              }
-            "
+            class="flex items-center justify-center gap-[5px] w-[193px] h-[58px] border border-white text-[20px] rounded-[23px] hover:opacity-70 gradient-bg"
+            @click="$emit('closeModal', false)"
           >
             Close
           </button>
@@ -255,4 +168,8 @@ onMounted(async () => {
   </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+.gradient-bg {
+  background-image: linear-gradient(90deg, #c60000 0%, #600000 100%);
+}
+</style>
