@@ -1,16 +1,36 @@
 <script setup>
-import { onMounted, ref } from "vue";
+import { watchEffect, ref } from "vue";
 import RatingPage from "./RatingPage.vue";
+import { useUserStore } from "@/store/user";
+const userStore = useUserStore();
+const currentUser = userStore.currentUser;
 
 defineEmits(["incrementLike", "handleOptionChange"]);
 
 const props = defineProps({
   reviews: {
-    type: Object,
-    default: null,
+    type: Array,
+    default: [],
+  },
+  currentUserLikedComments: {
+    type: Array,
+    default: [],
   },
 });
-console.log(props.reviews);
+
+const toggleColor = ref(false);
+
+watchEffect(() => {
+  if (props.reviews) {
+    props.reviews.forEach((review) => {
+      if (props.currentUserLikedComments.includes(review.id)) {
+        toggleColor.value = true;
+      } else {
+        toggleColor.value = false;
+      }
+    });
+  }
+});
 </script>
 
 <template>
@@ -69,7 +89,9 @@ console.log(props.reviews);
               viewBox="0 0 18 18"
               xmlns="http://www.w3.org/2000/svg"
               @click="$emit('incrementLike', review)"
-              :fill="review.toggleColor ? 'red' : 'none'"
+              :fill="
+                toggleColor && userStore.checkUserLoggedIn() ? 'red' : 'none'
+              "
               class="cursor-pointer hover:opacity-50"
             >
               <g clip-path="url(#clip0_90_683)">

@@ -9,7 +9,7 @@ class ReviewManagement {
 
     addReview(review) {
         // this.reviews.push({ userId: review.userId, movieId: review.movieId, rating: review.rating, comment: review.comment, id: review.id, likeCount: review.likeCount })
-        this.reviews.push({ id: review.id, username: review.username, comment: review.comment, rating: review.rating, imageUrl: review.imageUrl, likeCount: review.likeCount, isLiked: review.isLiked, toggleColor: review.toggleColor })
+        this.reviews.push({ id: review.id, username: review.username, comment: review.comment, rating: review.rating, imageUrl: review.imageUrl, likeCount: review.likeCount, isLiked: review.isLiked })
     }
     sortReviewBy(sortBy) {
         console.log(sortBy)
@@ -90,7 +90,6 @@ class ReviewManagement {
         this.reviews.map((review) => {
             if (review.id === reviewId) {
                 review.likeCount = review.likeCount + 1
-                review.toggleColor = true;
             }
         })
     }
@@ -99,7 +98,6 @@ class ReviewManagement {
         this.reviews.map((review) => {
             if (review.id === reviewId) {
                 review.likeCount = review.likeCount - 1
-                review.toggleColor = false;
             }
         })
     }
@@ -107,7 +105,6 @@ class ReviewManagement {
     getReviews() {
         return this.reviews
     }
-
 
 }
 

@@ -7,6 +7,8 @@ import CationValidInput from "@/components/Homepage/CationValidInput.vue";
 import toggleIconShowHidePassword from "@/composable/toggleShowHidePassword";
 import passwordsMatch from "@/composable/passwordsMatch";
 import { useUserStore } from "@/store/user";
+import { ReviewManagement } from "@/libs/ReviewManagement.js";
+const moviesReview = ref(new ReviewManagement());
 
 const userStore = useUserStore();
 
@@ -37,6 +39,7 @@ const login = async () => {
       userInfo.value.imageUrl = data[i].imageUrl;
       userInfo.value.password = data[i].password;
       userInfo.value.id = data[i].id;
+      userInfo.value.likedComments = data[i].likedComments;
       console.log(userStore);
       userStore.setUser(userInfo.value);
       await router.push("/");

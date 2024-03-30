@@ -54,10 +54,6 @@ const props = defineProps({
     type: String,
     required: false,
   },
-  toggleColor: {
-    type: Boolean,
-    required: false,
-  },
 });
 
 watch(
@@ -98,7 +94,6 @@ async function submitReview() {
         comment: review.value,
         id: props.reviewId,
         likeCount: props.likeCount,
-        toggleColor: props.toggleColor,
       }),
     });
   } else {

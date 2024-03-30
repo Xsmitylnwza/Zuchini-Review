@@ -16,7 +16,7 @@ import { useUserStore } from "@/store/user";
 
 const userStore = useUserStore();
 
-const currnetUser = userStore.currentUser;
+const currentUser = userStore.currentUser;
 
 const route = useRoute();
 const router = useRouter();
@@ -48,7 +48,7 @@ onMounted(async () => {
         const { username, imageUrl, likedComments } = await getUsersInfo(
           review.userId
         );
-        const { rating, comment, id, likeCount, toggleColor } = review;
+        const { rating, comment, id, likeCount } = review;
         const userReview = {
           username,
           rating,
@@ -56,11 +56,9 @@ onMounted(async () => {
           imageUrl,
           id,
           likeCount,
-          toggleColor,
           isLiked: likedComments.includes(review.userId),
         };
         moviesReview.value.addReview(userReview);
-        console.log(moviesReview.value);
       })
     );
     dataLoaded.value = true;
@@ -125,7 +123,7 @@ async function incrementLike(review) {
   if (userStore.checkUserLoggedIn()) {
     const [resReview, resUser] = await Promise.all([
       fetch(`${import.meta.env.VITE_BASE_URL}/reviews/${review.id}`),
-      fetch(`${import.meta.env.VITE_BASE_URL}/users/${currnetUser.id}`),
+      fetch(`${import.meta.env.VITE_BASE_URL}/users/${currentUser.id}`),
     ]);
     const reviewUpdate = await resReview.json();
     const userData = await resUser.json();
@@ -139,11 +137,10 @@ async function incrementLike(review) {
           },
           body: JSON.stringify({
             ...reviewUpdate,
-            toggleColor: true,
             likeCount: reviewUpdate.likeCount + 1,
           }),
         }),
-        fetch(`${import.meta.env.VITE_BASE_URL}/users/${currnetUser.id}`, {
+        fetch(`${import.meta.env.VITE_BASE_URL}/users/${currentUser.id}`, {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
@@ -164,11 +161,10 @@ async function incrementLike(review) {
           },
           body: JSON.stringify({
             ...reviewUpdate,
-            toggleColor: false,
             likeCount: reviewUpdate.likeCount - 1,
           }),
         }),
-        fetch(`${import.meta.env.VITE_BASE_URL}/users/${currnetUser.id}`, {
+        fetch(`${import.meta.env.VITE_BASE_URL}/users/${currentUser.id}`, {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
@@ -183,8 +179,6 @@ async function incrementLike(review) {
       ]);
       moviesReview.value.decrementLike(review.id);
     }
-  } else {
-    console.log("User is not logged in");
   }
 }
 function handleOptionChange(option) {
@@ -378,6 +372,7 @@ function handleOptionChange(option) {
             :reviews="moviesReview.getReviewByPage(currentPage)"
             @incrementLike="incrementLike"
             @handleOptionChange="handleOptionChange"
+            :currentUserLikedComments="currentUser.likedComments"
           />
           <div class="flex justify-center gap-[5px] mt-[20px]">
             <div
