@@ -1,10 +1,11 @@
 <script setup>
-import { ref, onMounted } from 'vue'
-import { getMovies } from '../../libs/fetchUtils.js'
-import NavBar from './NavBar.vue'
-import MovieRecom from './MovieRecom.vue'
-import ListModels from '../sortGenre/ListModels.vue'
-import { useUserStore } from '@/store/user'
+import { ref, onMounted } from "vue"
+import { getMovies } from "../../libs/fetchUtils.js"
+import NavBar from "./NavBar.vue"
+import MovieRecom from "./MovieRecom.vue"
+import ListModels from "../sortGenre/ListModels.vue"
+import { useUserStore } from "@/store/user"
+import footers from "../footer/footer.vue"
 
 const userStore = useUserStore()
 const movies = ref([])
@@ -41,17 +42,22 @@ async function test(review) {
     ratingArr[3] += re.rating.production
     ratingArr[4] += re.rating.worthiness
   }
-  const reviewSumEach = ratingArr.map(rev => review.length !== 0 ? rev / review.length : 0);
+  const reviewSumEach = ratingArr.map((rev) =>
+    review.length !== 0 ? rev / review.length : 0
+  )
   ratingSum.value.push(reviewSumEach)
 }
 </script>
 
 <template>
-  <div class="bg-cover h-full max-w-[100%] section-with-smooth-scroll" :style="{
-    'background-image': 'url(/image/avenger.jpg)',
-    'background-attachment': 'fixed',
-    'background-repeat': 'no-repeat',
-  }">
+  <div
+    class="bg-cover h-full max-w-[100%] section-with-smooth-scroll"
+    :style="{
+      'background-image': 'url(/image/avenger.jpg)',
+      'background-attachment': 'fixed',
+      'background-repeat': 'no-repeat'
+    }"
+  >
     <NavBar />
     <div class="text-white text-2xl ml-[5%] font-istok font-bold">
       RECOMMENT
@@ -72,6 +78,7 @@ async function test(review) {
     <div class="relative">
       <ListModels v-if="dataLoaded" :dataMovies="NotSliceMovies" />
     </div>
+    <footers></footers>
   </div>
 </template>
 
