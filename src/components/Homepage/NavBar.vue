@@ -1,14 +1,26 @@
 <script setup>
 import { RouterLink, RouterView } from 'vue-router'
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import { useUserStore } from '@/store/user'
 import { getMoviesByName } from '@/libs/fetchUtils.js'
+import { getGenre } from '../../libs/fetchUtils.js'
 
 const userStore = useUserStore()
 const currnetUser = userStore.currnetUser
 const movieSearched = ref([])
 const searchQuery = ref()
+const genres = ref([])
+const dataLoaded = ref(true)
 
+onMounted(async () => {
+  try {
+    genres.value = await getGenre(import.meta.env.VITE_BASE_URL)
+    dataLoaded.value = true
+  } catch (error) {
+    console.error(`${error}+kuy`)
+  }
+})
+console.log(genres.value)
 async function searchMovies() {
   const trimmedQuery = searchQuery.value.trim()
   const encodedQuery = trimmedQuery.replaceAll(' ', '%20')
@@ -16,8 +28,8 @@ async function searchMovies() {
   console.log(movie)
   movieSearched.value = movie
 }
-function clearSearchQuery() {
-  searchQuery.value = ''
+function refreshPage() {
+  window.location.reload()
 }
 </script>
 
@@ -67,6 +79,7 @@ function clearSearchQuery() {
               v-for="movie in movieSearched.results"
               :key="movie.id"
               class="w-60"
+              @click="refreshPage"
             >
               <router-link :to="'/movie/' + movie.id">
                 <img
@@ -84,7 +97,10 @@ function clearSearchQuery() {
           </ul>
         </div>
       </div>
-      <button class="hover:opacity-80 btn btn-ghost rounded-btn">
+      <button
+        class="hover:opacity-80 btn btn-ghost rounded-btn"
+        @click="refreshPage"
+      >
         <RouterLink to="/">Home</RouterLink>
       </button>
       <div>
@@ -98,27 +114,20 @@ function clearSearchQuery() {
           </div>
           <ul
             tabindex="0"
-            class="menu dropdown-content z-[1] p-2 shadow bg-slate-950 rounded-box w-56 mt-2"
+            class="menu dropdown-content z-[1] p-2 shadow bg-slate-950 rounded-box w-[500px] mt-2 overflow-y-auto max-h-80"
           >
-            <li><a>Action</a></li>
-            <li><a>Adventure</a></li>
-            <li><a>Animation</a></li>
-            <li><a>Comedy</a></li>
-            <li><a>Drama</a></li>
-            <li><a>Documentary</a></li>
-            <li><a>Family</a></li>
-            <li><a>Fantasy</a></li>
-            <li><a>History</a></li>
-            <li><a>Horror</a></li>
-            <li><a>Music</a></li>
-            <li><a>Mystery</a></li>
-            <li><a>Romance</a></li>
-            <li><a>TV Movie</a></li>
-            <li><a>Thriller</a></li>
-            <li><a>War</a></li>
-            <li><a>Western</a></li>
+            <li v-for="genre in genres" :key="genre" class="movie-bg">
+              <a :href="'http://localhost:5173/#' + genre.id">{{
+                genre.name
+              }}</a>
+            </li>
           </ul>
         </div>
+      </div>
+      <div v-if="userStore.checkUserLoggedIn()">
+        <button class="hover:opacity-80 btn btn-ghost rounded-btn">
+          <RouterLink to="/commented">Commented</RouterLink>
+        </button>
       </div>
       <div>
         <div v-if="userStore.checkUserLoggedIn()" class="flex">

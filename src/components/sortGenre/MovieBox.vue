@@ -39,9 +39,7 @@ const props = defineProps({
                             <circle cx="29.5" cy="17.5" r="17" stroke="#B00000" />
                             <circle cx="17.5" cy="17.5" r="17" fill="#B20707" stroke="#FF0404" />
                         </svg>
-                        <button class="text-white rounded-[7px] text-[15px] px-2 border-2 border-white">
-                            icon of top review
-                        </button>
+                        
                     </div>
                 </div>
             </div>
