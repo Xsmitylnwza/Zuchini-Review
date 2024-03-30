@@ -94,6 +94,14 @@ class ReviewManagement {
         })
     }
 
+    decrementLike(reviewId) {
+        this.reviews.map((review) => {
+            if (review.id === reviewId) {
+                review.likeCount = review.likeCount - 1
+            }
+        })
+    }
+
     getReviews() {
         return this.reviews
     }

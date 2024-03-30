@@ -1,35 +1,35 @@
 <script setup>
-import { RouterLink, RouterView } from 'vue-router'
-import { ref, onMounted } from 'vue'
-import { useUserStore } from '@/store/user'
-import { getMoviesByName } from '@/libs/fetchUtils.js'
-import { getGenre } from '../../libs/fetchUtils.js'
+import { RouterLink, RouterView } from "vue-router";
+import { ref, onMounted } from "vue";
+import { useUserStore } from "@/store/user";
+import { getMoviesByName } from "@/libs/fetchUtils.js";
+import { getGenre } from "../../libs/fetchUtils.js";
 
-const userStore = useUserStore()
-const currnetUser = userStore.currnetUser
-const movieSearched = ref([])
-const searchQuery = ref()
-const genres = ref([])
-const dataLoaded = ref(true)
+const userStore = useUserStore();
+const currentUser = userStore.currentUser;
+const movieSearched = ref([]);
+const searchQuery = ref();
+const genres = ref([]);
+const dataLoaded = ref(true);
 
 onMounted(async () => {
   try {
-    genres.value = await getGenre(import.meta.env.VITE_BASE_URL)
-    dataLoaded.value = true
+    genres.value = await getGenre(import.meta.env.VITE_BASE_URL);
+    dataLoaded.value = true;
   } catch (error) {
-    console.error(`${error}+kuy`)
+    console.error(`${error}+kuy`);
   }
-})
-console.log(genres.value)
+});
+console.log(genres.value);
 async function searchMovies() {
-  const trimmedQuery = searchQuery.value.trim()
-  const encodedQuery = trimmedQuery.replaceAll(' ', '%20')
-  const movie = await getMoviesByName(encodeURIComponent(encodedQuery))
-  console.log(movie)
-  movieSearched.value = movie
+  const trimmedQuery = searchQuery.value.trim();
+  const encodedQuery = trimmedQuery.replaceAll(" ", "%20");
+  const movie = await getMoviesByName(encodeURIComponent(encodedQuery));
+  console.log(movie);
+  movieSearched.value = movie;
 }
 function refreshPage() {
-  window.location.reload()
+  window.location.reload();
 }
 </script>
 
@@ -131,28 +131,28 @@ function refreshPage() {
       </div>
       <div>
         <div v-if="userStore.checkUserLoggedIn()" class="flex">
-          <div class="flex items-center pr-3">{{ currnetUser.username }}</div>
+          <div class="flex items-center pr-3">{{ currentUser.username }}</div>
           <div class="dropdown dropdown-end">
             <img
               tabindex="0"
               role="button"
               class="btn btn-circle"
-              :src="currnetUser.imageUrl"
+              :src="currentUser.imageUrl"
             />
             <ul
               tabindex="0"
               class="dropdown-content z-[1] menu p-2 shadow rounded-box w-52 bg-black bg-opacity-75"
             >
               <div class="flex justify-center pt-5">
-                <img :src="currnetUser.imageUrl" class="w-[30%]" />
+                <img :src="currentUser.imageUrl" class="w-[30%]" />
               </div>
               <div class="flex justify-center pt-3 pb-4">
-                {{ currnetUser.username }}
+                {{ currentUser.username }}
               </div>
               <li>
                 <a>
                   <div class="flex items-center">
-                    <img :src="currnetUser.imageUrl" class="w-[25%] pr-3" />
+                    <img :src="currentUser.imageUrl" class="w-[25%] pr-3" />
                     <div>Myprofile</div>
                   </div>
                 </a>

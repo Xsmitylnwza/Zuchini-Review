@@ -3330,9 +3330,7 @@
       "password": "9159b9232d5afd9776ae11939ddcc1bb48b64e04a35846ce74904e6a947ab5da",
       "confirmPassword": "9159b9232d5afd9776ae11939ddcc1bb48b64e04a35846ce74904e6a947ab5da",
       "likedComments": [
-        "fac1",
         "fac9",
-        "80bc",
         "67e3",
         "1835",
         "c5d7",
@@ -3342,7 +3340,10 @@
         "ec39",
         "223a",
         "f607",
-        "4e42"
+        "4e42",
+        "80bc",
+        "4f6c",
+        "fac1"
       ]
     },
     {
@@ -3398,7 +3399,7 @@
         "worthiness": 99
       },
       "comment": "I found 'No Way Up' to be a thrilling survival story with intense moments throughout. The character dynamics were well-developed, and the tension kept me on the edge of my seat.",
-      "likeCount": 5
+      "likeCount": 4
     },
     {
       "id": "fac9",
@@ -3595,6 +3596,20 @@
       },
       "comment": "I LOVE MY MATE NATE",
       "likeCount": 0
+    },
+    {
+      "userId": "c08b",
+      "movieId": "1096197",
+      "rating": {
+        "entertainment": 68,
+        "movie_Chapter": 69,
+        "performance": 23,
+        "production": 61,
+        "worthiness": 19
+      },
+      "comment": "nongtestz1a23zazazaza",
+      "likeCount": 1,
+      "id": "4f6c"
     }
   ],
   "api-key": [

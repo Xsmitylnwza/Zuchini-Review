@@ -1,6 +1,6 @@
 <script setup>
-import { RouterLink } from 'vue-router'
-import RatingPage from '../descriptionpage/RatingPage.vue'
+import { RouterLink } from "vue-router";
+import RatingPage from "../descriptionpage/RatingPage.vue";
 
 const props = defineProps({
   movie: {
@@ -19,9 +19,9 @@ const props = defineProps({
     type: Number,
     default: 0,
   },
-})
+});
 
-console.log(props.reviewer)
+console.log(props.reviewer);
 </script>
 
 <template>
@@ -45,9 +45,7 @@ console.log(props.reviewer)
           :src="'https://image.tmdb.org/t/p/w500/' + movie.poster_path"
         />
       </div>
-      <div
-        class="flex flex-col font-istok w-[800px] ml-8 text-white font-bold border"
-      >
+      <div class="flex flex-col font-istok w-[800px] ml-8 text-white font-bold">
         <h1 class="text-[40px]">{{ movie.title }}</h1>
         <p class="text-[16px] mb-[10px]">Rating</p>
         <div class="w-[500px] justify-center border">
