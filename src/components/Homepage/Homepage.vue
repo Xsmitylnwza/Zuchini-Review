@@ -54,7 +54,7 @@ async function test(review) {
   }">
     <NavBar />
     <div class="text-white text-2xl ml-[5%] font-istok font-bold">
-      RECCOMMENT
+      RECOMMENT
     </div>
     <div class="h-[700px]">
       <div class="carousel w-full relative bottom-[150px]">
