@@ -155,32 +155,40 @@ async function deleteReviewById(id) {
 }
 
 async function getReviewsAndUsers(reviewId, currentUser) {
-  const [resReview, resUser] = await Promise.all([
-    fetch(`${import.meta.env.VITE_BASE_URL}/reviews/${reviewId}`),
-    fetch(`${import.meta.env.VITE_BASE_URL}/users/${currentUser.id}`),
-  ]);
-  const reviewUpdate = await resReview.json();
-  const userData = await resUser.json();
-  return { reviewUpdate, userData };
+  try {
+    const [resReview, resUser] = await Promise.all([
+      fetch(`${import.meta.env.VITE_BASE_URL}/reviews/${reviewId}`),
+      fetch(`${import.meta.env.VITE_BASE_URL}/users/${currentUser.id}`),
+    ]);
+    const reviewUpdate = await resReview.json();
+    const userData = await resUser.json();
+    return { reviewUpdate, userData };
+  } catch (e) {
+    console.log(`error: ${e}`)
+  }
 }
 
 async function updateReviewAndUser(reviewId, reviewUpdate, userDataUpdate, currentUser) {
-  await Promise.all([
-    fetch(`${import.meta.env.VITE_BASE_URL}/reviews/${reviewId}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(reviewUpdate),
-    }),
-    fetch(`${import.meta.env.VITE_BASE_URL}/users/${currentUser.id}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(userDataUpdate),
-    }),
-  ]);
+  try {
+    await Promise.all([
+      fetch(`${import.meta.env.VITE_BASE_URL}/reviews/${reviewId}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(reviewUpdate),
+      }),
+      fetch(`${import.meta.env.VITE_BASE_URL}/users/${currentUser.id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(userDataUpdate),
+      }),
+    ]);
+  } catch (e) {
+    console.log(`error: ${e}`)
+  }
 }
 
 

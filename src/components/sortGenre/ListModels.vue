@@ -1,30 +1,30 @@
 <script setup>
-import { ref, onMounted } from 'vue'
-import { getGenre } from '../../libs/fetchUtils.js'
-import SortGenre from './SortGenre.vue'
+import { ref, onMounted } from "vue";
+import { getGenre } from "../../libs/fetchUtils.js";
+import SortGenre from "./SortGenre.vue";
 const prop = defineProps({
   dataMovies: {
     type: Array,
     default: [],
   },
-})
+});
 onMounted(async () => {
   try {
-    genres.value = await getGenre(import.meta.env.VITE_BASE_URL)
-    dataLoaded.value = true
+    genres.value = await getGenre(import.meta.env.VITE_BASE_URL);
+    dataLoaded.value = true;
   } catch (error) {
-    console.error(error)
+    console.error(error);
   }
-})
+});
 
-const genres = ref([])
-const dataLoaded = ref(true)
-const DataMovies = ref(prop.dataMovies)
+const genres = ref([]);
+const dataLoaded = ref(true);
+const DataMovies = ref(prop.dataMovies);
 </script>
 
 <template>
   <div v-for="genre in genres" :key="genre" class="movie-bg">
-    <div :id="`${genre.id}`">
+    <div ref="genreSection" :id="`${genre.id}`">
       <h1 class="text-white font-semibold mb-[15px] text-3xl p-3">
         {{ genre.name }}
       </h1>

@@ -21,7 +21,7 @@ const props = defineProps({
   },
 });
 
-console.log(props.reviewer);
+// console.log(props.reviewer);
 </script>
 
 <template>

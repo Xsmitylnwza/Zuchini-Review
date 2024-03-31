@@ -1,9 +1,8 @@
 <script setup>
-import { watchEffect, ref } from "vue";
+import { ref, watchEffect } from "vue";
 import RatingPage from "./RatingPage.vue";
 import { useUserStore } from "@/store/user";
 const userStore = useUserStore();
-const currentUser = userStore.currentUser;
 
 defineEmits(["toggleStatusLike", "handleOptionChange"]);
 
@@ -18,18 +17,14 @@ const props = defineProps({
   },
 });
 
-const toggleColor = ref(false);
+const toggleColor = ref({});
 
 watchEffect(() => {
-  if (props.reviews) {
-    props.reviews.forEach((review) => {
-      if (props.currentUserLikedComments.includes(review.id)) {
-        toggleColor.value = true;
-      } else {
-        toggleColor.value = false;
-      }
-    });
+  const colorMap = {};
+  for (const review of props.reviews) {
+    colorMap[review.id] = props.currentUserLikedComments.includes(review.id);
   }
+  toggleColor.value = colorMap;
 });
 </script>
 
@@ -90,7 +85,9 @@ watchEffect(() => {
               xmlns="http://www.w3.org/2000/svg"
               @click="$emit('toggleStatusLike', review)"
               :fill="
-                toggleColor && userStore.checkUserLoggedIn() ? 'red' : 'none'
+                toggleColor[review.id] && userStore.checkUserLoggedIn()
+                  ? 'red'
+                  : 'none'
               "
               class="cursor-pointer hover:opacity-50"
             >

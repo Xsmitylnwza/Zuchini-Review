@@ -3330,19 +3330,6 @@
       "password": "9159b9232d5afd9776ae11939ddcc1bb48b64e04a35846ce74904e6a947ab5da",
       "confirmPassword": "9159b9232d5afd9776ae11939ddcc1bb48b64e04a35846ce74904e6a947ab5da",
       "likedComments": [
-        "fac9",
-        "67e3",
-        "1835",
-        "c5d7",
-        "322b",
-        "sc29",
-        "fsd2",
-        "ec39",
-        "223a",
-        "f607",
-        "4e42",
-        "80bc",
-        "4f6c",
         "fac1"
       ]
     },
@@ -3399,7 +3386,7 @@
         "worthiness": 99
       },
       "comment": "I found 'No Way Up' to be a thrilling survival story with intense moments throughout. The character dynamics were well-developed, and the tension kept me on the edge of my seat.",
-      "likeCount": 4
+      "likeCount": 5
     },
     {
       "id": "fac9",
@@ -3413,7 +3400,7 @@
         "worthiness": 64
       },
       "comment": "Monkey king is hero that strong you can't kill it alone please call friend hellooooooo",
-      "likeCount": 5
+      "likeCount": 4
     },
     {
       "id": "fsd2",
@@ -3427,7 +3414,7 @@
         "worthiness": 64
       },
       "comment": "Monkey king is hero that strong you can't kill it alone please call friend hellooooooo (2)",
-      "likeCount": 4
+      "likeCount": 5
     },
     {
       "id": "fac1",
@@ -3441,7 +3428,7 @@
         "worthiness": 64
       },
       "comment": "profile projai",
-      "likeCount": 7
+      "likeCount": 10
     },
     {
       "id": "67e3",
@@ -3608,7 +3595,7 @@
         "worthiness": 19
       },
       "comment": "nongtestz1a23zazazaza",
-      "likeCount": 1,
+      "likeCount": 2,
       "id": "4f6c"
     }
   ],

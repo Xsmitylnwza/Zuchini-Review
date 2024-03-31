@@ -1,29 +1,29 @@
 <script setup>
-import { ref } from "vue"
-import router from "@/router"
-import { RouterLink } from "vue-router"
-import hashPassword from "@/composable/hashPassword"
-import CationValidInput from "@/components/Homepage/CationValidInput.vue"
-import toggleIconShowHidePassword from "@/composable/toggleShowHidePassword"
-import passwordsMatch from "@/composable/passwordsMatch"
-import { useUserStore } from "@/store/user"
+import { ref } from "vue";
+import router from "@/router";
+import { RouterLink } from "vue-router";
+import hashPassword from "@/composable/hashPassword";
+import CationValidInput from "@/components/CationValidInput.vue";
+import toggleIconShowHidePassword from "@/composable/toggleShowHidePassword";
+import passwordsMatch from "@/composable/passwordsMatch";
+import { useUserStore } from "@/store/user";
 
-const userStore = useUserStore()
+const userStore = useUserStore();
 
 const userInfo = ref({
   id: "",
   username: "",
   email: "",
   imageUrl: "",
-  password: ""
-})
+  password: "",
+});
 
-const passwordField = ref(null)
-const isSuccess = ref(true)
+const passwordField = ref(null);
+const isSuccess = ref(true);
 
 const login = async () => {
-  const res = await fetch("http://localhost:5000/users")
-  const data = await res.json()
+  const res = await fetch("http://localhost:5000/users");
+  const data = await res.json();
   for (let i = 0; i < data.length; i++) {
     if (
       data[i].username === userInfo.value.username &&
@@ -32,18 +32,18 @@ const login = async () => {
         await hashPassword(userInfo.value.password)
       )
     ) {
-      userInfo.value.username = data[i].username
-      userInfo.value.email = data[i].email
-      userInfo.value.imageUrl = data[i].imageUrl
-      userInfo.value.password = data[i].password
-      userInfo.value.id = data[i].id
-      console.log(userStore)
-      userStore.setUser(userInfo.value)
-      await router.push("/")
+      userInfo.value.username = data[i].username;
+      userInfo.value.email = data[i].email;
+      userInfo.value.imageUrl = data[i].imageUrl;
+      userInfo.value.password = data[i].password;
+      userInfo.value.id = data[i].id;
+      userInfo.value.likedComments = data[i].likedComments;
+      userStore.setUser(userInfo.value);
+      await router.push("/");
     }
   }
-  isSuccess.value = false
-}
+  isSuccess.value = false;
+};
 </script>
 
 <template>

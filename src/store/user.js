@@ -26,6 +26,10 @@ export const useUserStore = defineStore('user', {
       const userJson = localStorage.getItem('currentUser')
       if (userJson) {
         this.currentUser = JSON.parse(userJson)
+        const storedLikedComments = JSON.parse(localStorage.getItem('likedComments'));
+        if (storedLikedComments) {
+          this.currentUser.likedComments = storedLikedComments;
+        }
       }
     },
   },
