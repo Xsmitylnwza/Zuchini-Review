@@ -4,16 +4,13 @@ import { getMovies } from "../../libs/fetchUtils.js";
 import NavBar from "./NavBar.vue";
 import MovieRecom from "./MovieRecom.vue";
 import ListModels from "../sortGenre/ListModels.vue";
-import { useUserStore } from "@/store/user";
 import footers from "../footer/footer.vue";
 
-const userStore = useUserStore();
 const movies = ref([]);
 const NotSliceMovies = ref([]);
 const ratingSum = ref([]);
 const reviewer = ref([]);
 const dataLoaded = ref(false);
-userStore.loadUserFromLocalStorage();
 
 onMounted(async () => {
   const movieData = await getMovies(import.meta.env.VITE_BASE_URL);
