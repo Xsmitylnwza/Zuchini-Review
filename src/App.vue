@@ -1,5 +1,4 @@
 <script setup>
-import { RouterLink, RouterView } from "vue-router";
 import { useUserStore } from "@/store/user";
 
 const userStore = useUserStore();
@@ -11,9 +10,6 @@ userStore.loadUserFromLocalStorage();
     <RouterView />
   </div>
 </template>
-
-
-
 
 <style scoped>
 html {

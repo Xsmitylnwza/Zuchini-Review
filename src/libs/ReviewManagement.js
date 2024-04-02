@@ -11,7 +11,6 @@ class ReviewManagement {
         this.reviews.push({ id: review.id, username: review.username, comment: review.comment, rating: review.rating, imageUrl: review.imageUrl, likeCount: review.likeCount, isLiked: review.isLiked })
     }
     sortReviewBy(sortBy) {
-        console.log(sortBy)
         if (sortBy === 'most-liked') {
             this.reviews.sort((a, b) => b.likeCount - a.likeCount)
         }
@@ -39,7 +38,6 @@ class ReviewManagement {
         const resultRating = rating.reduce((sum, rating) => sum + rating, 0) / rating.length
         return resultRating.toFixed(2)
     }
-
 
     getAllRating() {
         if (this.reviews.length == 0) {
@@ -85,6 +83,7 @@ class ReviewManagement {
             currentPage * 3
         );
     }
+
     incrementLike(reviewId) {
         this.reviews.map((review) => {
             if (review.id === reviewId) {
@@ -104,7 +103,6 @@ class ReviewManagement {
     getReviews() {
         return this.reviews
     }
-
 
 }
 

@@ -3330,8 +3330,8 @@
       "password": "9159b9232d5afd9776ae11939ddcc1bb48b64e04a35846ce74904e6a947ab5da",
       "confirmPassword": "9159b9232d5afd9776ae11939ddcc1bb48b64e04a35846ce74904e6a947ab5da",
       "likedComments": [
-        "fac9",
-        "80bc"
+        "80bc",
+        "fac9"
       ]
     },
     {
@@ -3384,7 +3384,9 @@
       "likedComments": [
         "288f",
         "9182",
-        "80bc"
+        "80bc",
+        "fac1",
+        "fac9"
       ]
     }
   ],
@@ -3415,7 +3417,7 @@
         "worthiness": 64
       },
       "comment": "Monkey king is hero that strong you can't kill it alone please call friend hellooooooo",
-      "likeCount": 5
+      "likeCount": 6
     },
     {
       "id": "fsd2",
@@ -3436,14 +3438,14 @@
       "userId": "c08b",
       "movieId": "1096197",
       "rating": {
-        "entertainment": 13,
-        "movie_Chapter": 22,
-        "performance": 77,
+        "entertainment": 54,
+        "movie_Chapter": 48,
+        "performance": 55,
         "production": 24,
         "worthiness": 64
       },
-      "comment": "profile projai",
-      "likeCount": 9
+      "comment": "profile projaieiei",
+      "likeCount": 10
     },
     {
       "id": "67e3",
@@ -3598,34 +3600,6 @@
       },
       "comment": "I LOVE MY MATE NATE",
       "likeCount": 0
-    },
-    {
-      "userId": "c08b",
-      "movieId": "1096197",
-      "rating": {
-        "entertainment": 68,
-        "movie_Chapter": 69,
-        "performance": 23,
-        "production": 61,
-        "worthiness": 19
-      },
-      "comment": "nongtestz1a23zazazaza",
-      "likeCount": 2,
-      "id": "4f6c"
-    },
-    {
-      "id": "9182",
-      "userId": "c08b",
-      "movieId": "932420",
-      "rating": {
-        "entertainment": 59,
-        "movie_Chapter": 59,
-        "performance": 45,
-        "production": 62,
-        "worthiness": 24
-      },
-      "comment": "code 8 is the best",
-      "likeCount": 1
     }
   ],
   "api-key": [

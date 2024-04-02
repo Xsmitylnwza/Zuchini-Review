@@ -31,20 +31,8 @@ function isValidImageFile(filename) {
 }
 
 function validateUsername(username) {
-  if (!username.trim()) {
-    return false;
-  }
-
-  const regex = /^[a-zA-Z0-9_-]+$/;
-  if (!regex.test(username)) {
-    return false;
-  }
-
-  if (username.length < 3 || username.length > 20) {
-    return false;
-  }
-
-  return true;
+  const regex = /^[a-zA-Z0-9_-]{3,20}$/;
+  return regex.test(username);
 }
 
 function validateEmail(email) {
@@ -197,7 +185,9 @@ const openImageUpload = () => {
           :check="isPasswordValid"
         />
         <CationValidInput
-          v-else-if="userInfo.password !== userInfo.confirmPassword"
+          v-else-if="
+            !passwordsMatch(userInfo.password, userInfo.confirmPassword)
+          "
           text="password dont match"
           :check="isPasswordValid"
         />
@@ -222,7 +212,9 @@ const openImageUpload = () => {
           :check="isPasswordValid"
         />
         <CationValidInput
-          v-else-if="userInfo.password !== userInfo.confirmPassword"
+          v-else-if="
+            !passwordsMatch(userInfo.password, userInfo.confirmPassword)
+          "
           text="password dont match"
           :check="isPasswordValid"
         />

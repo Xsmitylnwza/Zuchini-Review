@@ -7,7 +7,7 @@ import ListModels from "./ListModels.vue";
 import Footer from "./Footer.vue";
 
 const movies = ref([]);
-const NotSliceMovies = ref([]);
+const notSliceMovies = ref([]);
 const ratingSum = ref([]);
 const reviewer = ref([]);
 const dataLoaded = ref(false);
@@ -15,7 +15,7 @@ const dataLoaded = ref(false);
 onMounted(async () => {
   const movieData = await getMovies(import.meta.env.VITE_BASE_URL);
   movies.value = movieData.slice(0, 5);
-  NotSliceMovies.value = movieData;
+  notSliceMovies.value = movieData;
   await movies.value.forEach(async (movie) => {
     const respone = await fetch(
       `${import.meta.env.VITE_BASE_URL}/reviews?movieId=${movie.id}`
@@ -72,7 +72,7 @@ async function reviewRate(reviews) {
       </div>
     </div>
     <div class="relative">
-      <ListModels v-if="dataLoaded" :dataMovies="NotSliceMovies" />
+      <ListModels v-if="dataLoaded" :dataMovies="notSliceMovies" />
     </div>
     <Footer />
   </div>

@@ -18,24 +18,29 @@ onMounted(async () => {
     console.error(error);
   }
 });
-
 </script>
 
 <template>
-  <div v-for="genre in genres" :key="genre" class="movie-bg" >
-    <div ref="genreSection" :id="`${genre.id}`">
+  <div v-for="genre in genres" :key="genre" class="movie-bg">
+    <div :id="`${genre.id}`">
       <h1 class="text-white font-semibold mb-[15px] text-3xl p-3">
         {{ genre.name }}
       </h1>
-      <SortGenre v-if="dataLoaded" :dataMovies="dataMovies" :genreId="genre.id" />
+      <SortGenre
+        v-if="dataLoaded"
+        :dataMovies="dataMovies"
+        :genreId="genre.id"
+      />
     </div>
   </div>
 </template>
 <style scoped>
 .movie-bg {
   background: rgb(0, 0, 0);
-  background: linear-gradient(180deg,
-      rgba(0, 0, 0, 0.85) 0%,
-      rgba(0, 0, 0, 0.85) 100%);
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0.85) 0%,
+    rgba(0, 0, 0, 0.85) 100%
+  );
 }
 </style>

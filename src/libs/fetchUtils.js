@@ -116,13 +116,11 @@ async function addReview(ratingScore, review, movieId, currentUserId) {
 async function editReview(review, ratingScore) {
   try {
     const response = await fetch(`http://localhost:5000/reviews/${review.id}`, {
-      method: 'PUT',
+      method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        userId: review.userId,
-        movieId: review.movieId,
         rating: {
           entertainment: Number(ratingScore.entertainment),
           movie_Chapter: Number(ratingScore.movie_Chapter),
@@ -131,8 +129,6 @@ async function editReview(review, ratingScore) {
           worthiness: Number(ratingScore.worthiness),
         },
         comment: review.comment,
-        id: review.reviewId,
-        likeCount: review.likeCount,
       }),
     })
     return response
@@ -172,14 +168,14 @@ async function updateReviewAndUser(reviewId, reviewUpdate, userDataUpdate, curre
   try {
     await Promise.all([
       fetch(`${import.meta.env.VITE_BASE_URL}/reviews/${reviewId}`, {
-        method: "PUT",
+        method: "PATCH",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(reviewUpdate),
       }),
       fetch(`${import.meta.env.VITE_BASE_URL}/users/${currentUser.id}`, {
-        method: "PUT",
+        method: "PATCH",
         headers: {
           "Content-Type": "application/json",
         },

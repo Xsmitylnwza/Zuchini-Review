@@ -75,7 +75,6 @@ onMounted(async () => {
       trailer: moviesTrailer.value.key,
     };
     movieCaster.value = getCastData();
-    console.log(moviesDetails.value);
     dataLoaded.value = true;
   } catch (error) {
     console.error(error);
@@ -140,12 +139,10 @@ async function incrementLike(review) {
   );
 
   const updatedReview = {
-    ...reviewUpdate,
     likeCount: reviewUpdate.likeCount + 1,
   };
 
   const updatedUser = {
-    ...userData,
     likedComments: [...userData.likedComments, review.id],
   };
 
@@ -164,12 +161,10 @@ async function decrementLike(review) {
   );
 
   const updatedReview = {
-    ...reviewUpdate,
     likeCount: reviewUpdate.likeCount - 1,
   };
 
   const updatedUser = {
-    ...userData,
     likedComments: userData.likedComments.filter(
       (commentId) => commentId !== review.id
     ),
@@ -208,7 +203,7 @@ async function addNewReview(
   currentUserId,
   isAdd
 ) {
-  const newratinhscore = { ...ratingScore };
+  const newRatingScore = { ...ratingScore };
   const response = await addReview(
     ratingScore,
     review,
@@ -222,7 +217,7 @@ async function addNewReview(
       id: responseReview.id,
       username: currentUser.username,
       comment: review,
-      rating: newratinhscore,
+      rating: newRatingScore,
       imageUrl: currentUser.imageUrl,
       likeCount: 0,
       isLiked: false,
