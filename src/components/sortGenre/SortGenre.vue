@@ -11,13 +11,14 @@ const prop = defineProps({
     }
 })
 const dataGenreId = ref(prop.genreId)
-const dataLoaded = ref(false)
 const dataMovies = ref(prop.dataMovies)
+const dataLoaded = ref(false)
+const containerRef = ref(null);
 const sortByCategory = ref([])
 onMounted(async () => {
     try {
-        dataLoaded.value = true
         sortGenres()
+        dataLoaded.value = true
     } catch (error) {
         console.error(error)
     }
@@ -32,10 +33,6 @@ function sortGenres() {
     }
 }
 
-
-
-const containerRef = ref(null);
-
 function scrollLeft() {
     const container = containerRef.value;
     const scrollAmount = 1000;
@@ -44,6 +41,7 @@ function scrollLeft() {
         behavior: 'smooth'
     });
 }
+
 function scrollRight() {
     const container = containerRef.value;
     const scrollAmount = 1000;
