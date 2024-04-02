@@ -135,8 +135,6 @@ async function editReview(review, ratingScore) {
   } catch (e) {
     console.log(`error: ${e}`)
   }
-
-
 }
 
 async function deleteReviewById(id) {

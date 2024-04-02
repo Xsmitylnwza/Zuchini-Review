@@ -1,34 +1,45 @@
 import { defineStore, acceptHMRUpdate } from 'pinia'
+import { ref } from 'vue'
 
-export const useUserStore = defineStore('user', {
-  state: () => ({
-    currentUser: {},
-  }),
-  actions: {
-    setUser(user) {
-      this.currentUser = user
-      this.saveUserToLocalStorage(user)
-    },
-    logout() {
-      this.currentUser = {}
-      this.clearUserFromLocalStorage()
-    },
-    checkUserLoggedIn() {
-      return Object.keys(this.currentUser).length !== 0
-    },
-    saveUserToLocalStorage(user) {
-      localStorage.setItem('currentUser', JSON.stringify(user))
-    },
-    clearUserFromLocalStorage() {
-      localStorage.removeItem('currentUser')
-    },
-    loadUserFromLocalStorage() {
-      const userJson = localStorage.getItem('currentUser')
-      if (userJson) {
-        this.currentUser = JSON.parse(userJson)
-      }
-    },
-  },
+export const useUserStore = defineStore('user', () => {
+  const currentUser = ref({})
+
+  const setUser = (user) => {
+    currentUser.value = user
+    saveUserToLocalStorage(user)
+  }
+
+  const logout = () => {
+    currentUser.value = {}
+    clearUserFromLocalStorage()
+  }
+
+  const checkUserLoggedIn = () => {
+    return Object.keys(currentUser.value).length !== 0
+  }
+
+  const saveUserToLocalStorage = (user) => {
+    localStorage.setItem('currentUser', JSON.stringify(user))
+  }
+
+  const clearUserFromLocalStorage = () => {
+    localStorage.removeItem('currentUser')
+  }
+
+  const loadUserFromLocalStorage = () => {
+    const userJson = localStorage.getItem('currentUser')
+    if (userJson) {
+      currentUser.value = JSON.parse(userJson)
+    }
+  }
+
+  return {
+    currentUser,
+    setUser,
+    logout,
+    checkUserLoggedIn,
+    loadUserFromLocalStorage
+  }
 })
 
 if (import.meta.hot) {
