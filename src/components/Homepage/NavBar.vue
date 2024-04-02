@@ -1,35 +1,35 @@
 <script setup>
-import { RouterLink, RouterView } from "vue-router";
-import { ref, onMounted } from "vue";
-import { useUserStore } from "@/store/user";
-import { getMoviesByName } from "@/libs/fetchUtils.js";
-import { getGenre } from "../../libs/fetchUtils.js";
+import { RouterLink, RouterView } from 'vue-router'
+import { ref, onMounted } from 'vue'
+import { useUserStore } from '@/store/user'
+import { getMoviesByName } from '@/libs/fetchUtils.js'
+import { getGenre } from '../../libs/fetchUtils.js'
 
-const userStore = useUserStore();
-const currentUser = userStore.currentUser;
-const movieSearched = ref([]);
-const searchQuery = ref();
-const genres = ref([]);
-const dataLoaded = ref(true);
+const userStore = useUserStore()
+const currentUser = userStore.currentUser
+const movieSearched = ref([])
+const searchQuery = ref()
+const genres = ref([])
+const dataLoaded = ref(true)
 
 onMounted(async () => {
   try {
-    genres.value = await getGenre(import.meta.env.VITE_BASE_URL);
-    dataLoaded.value = true;
+    genres.value = await getGenre(import.meta.env.VITE_BASE_URL)
+    dataLoaded.value = true
   } catch (error) {
-    console.error(`${error}+kuy`);
+    console.error(`${error}+kuy`)
   }
-});
-console.log(genres.value);
+})
+console.log(genres.value)
 async function searchMovies() {
-  const trimmedQuery = searchQuery.value.trim();
-  const encodedQuery = trimmedQuery.replaceAll(" ", "%20");
-  const movie = await getMoviesByName(encodeURIComponent(encodedQuery));
-  console.log(movie);
-  movieSearched.value = movie;
+  const trimmedQuery = searchQuery.value.trim()
+  const encodedQuery = trimmedQuery.replaceAll(' ', '%20')
+  const movie = await getMoviesByName(encodeURIComponent(encodedQuery))
+  console.log(movie)
+  movieSearched.value = movie
 }
 function refreshPage() {
-  window.location.reload();
+  window.location.reload()
 }
 </script>
 
@@ -38,7 +38,11 @@ function refreshPage() {
     class="sticky top-0 z-10 font-inter laptop:flex justify-between px-[40px] py-[10px] h-[120px] bg-gradient-to-b from-black via-black to-transparent"
   >
     <div>
-      <img src="/image/logo.png" class="w-[271px] h-[82px]" />
+      <RouterLink to="/">
+        <img
+          src="/image/logo.png"
+          class="w-[271px] h-[82px] hover:animate-rotate-y  "
+      /></RouterLink>
     </div>
     <div class="flex gap-[35px] items-center text-white font-semibold">
       <div>
@@ -68,7 +72,7 @@ function refreshPage() {
           </div>
           <ul
             tabindex="0"
-            class="dropdown-content flex flex-row z-[1] menu p-2 shadow bg-base-100 rounded-box mt-12 overflow-y-auto max-h-96"
+            class="dropdown-content flex flex-row z-[1] menu p-2 shadow rounded-box mt-12 overflow-y-auto max-h-96 bg-black"
           >
             <li
               v-if="
@@ -78,7 +82,7 @@ function refreshPage() {
               "
               v-for="movie in movieSearched.results"
               :key="movie.id"
-              class="w-60"
+              class="w-60 hover:text-red-500"
               @click="refreshPage"
             >
               <router-link :to="'/movie/' + movie.id">
@@ -108,7 +112,7 @@ function refreshPage() {
           <div
             tabindex="0"
             role="button"
-            class="btn btn-ghost rounded-btn hover:opacity-10"
+            class="btn btn-ghost rounded-btn hover:opacity-90"
           >
             Categories
           </div>

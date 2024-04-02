@@ -23,7 +23,7 @@ const DataMovies = ref(prop.dataMovies);
 </script>
 
 <template>
-  <div v-for="genre in genres" :key="genre" class="movie-bg">
+  <div v-for="genre in genres" :key="genre" class="movie-bg" >
     <div ref="genreSection" :id="`${genre.id}`">
       <h1 class="text-white font-semibold mb-[15px] text-3xl p-3">
         {{ genre.name }}
