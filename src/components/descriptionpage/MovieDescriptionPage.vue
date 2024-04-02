@@ -1,6 +1,6 @@
 <script setup>
 import { useRoute, useRouter } from "vue-router";
-import { ref, onMounted, computed, onBeforeUnmount } from "vue";
+import { ref, onMounted, computed, onUnmounted } from "vue";
 import NavBar from "../Homepage/NavBar.vue";
 import RedBarTopic from "./RedBarTopic.vue";
 import RatingPage from "./RatingPage.vue";
@@ -70,13 +70,6 @@ onMounted(async () => {
   } catch (error) {
     console.error(error);
   }
-});
-
-onBeforeUnmount(() => {
-  localStorage.setItem(
-    "likedComments",
-    JSON.stringify(currentUser.likedComments)
-  );
 });
 
 function getmoviesTrailer(videos) {
@@ -151,6 +144,10 @@ async function incrementLike(review) {
   if (!currentUser.likedComments.includes(review.id)) {
     currentUser.likedComments.push(review.id);
   }
+  localStorage.setItem(
+    "likedComments",
+    JSON.stringify(currentUser.likedComments)
+  );
 }
 
 async function decrementLike(review) {
@@ -175,6 +172,10 @@ async function decrementLike(review) {
   moviesReview.value.decrementLike(review.id);
   currentUser.likedComments = currentUser.likedComments.filter(
     (commentId) => commentId !== review.id
+  );
+  localStorage.setItem(
+    "likedComments",
+    JSON.stringify(currentUser.likedComments)
   );
 }
 
