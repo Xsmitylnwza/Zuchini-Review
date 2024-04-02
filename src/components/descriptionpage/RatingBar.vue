@@ -12,7 +12,9 @@ const props = defineProps({
     default: [0, 0, 0, 0, 0],
   },
   format: {
-    type: String,
+    validator(value) {
+      return ['rating', 'comment'].includes(value)
+    },
     default: 'rating',
   },
   reviewer: {
@@ -38,8 +40,8 @@ function getOverAllScore() {
 
 <template>
   <div class="flex flex-row flex-wrap" :class="format === 'comment'
-      ? 'w-[350px] gap-x-[20px]'
-      : 'justify-between font-semibold'
+    ? 'w-[350px] gap-x-[20px]'
+    : 'justify-between font-semibold'
     ">
     <div class="flex flex-row items-center transition ease-in-out delay-150 hover:scale-105 duration-300"
       :class="format === 'comment' ? 'w-[100%] ' : ''">
