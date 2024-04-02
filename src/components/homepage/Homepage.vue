@@ -3,8 +3,8 @@ import { ref, onMounted } from "vue";
 import { getMovies } from "../../libs/fetchUtils.js";
 import NavBar from "./NavBar.vue";
 import MovieRecom from "./MovieRecom.vue";
-import ListModels from "../sortGenre/ListModels.vue";
-import footers from "../footer/footer.vue";
+import ListModels from "./ListModels.vue";
+import Footer from "./Footer.vue";
 
 const movies = ref([]);
 const NotSliceMovies = ref([]);
@@ -22,25 +22,22 @@ onMounted(async () => {
     );
     const review = await respone.json();
     reviewer.value.push(review.length);
-    test(review);
+    reviewRate(review);
   });
   dataLoaded.value = true;
 });
 
-async function test(review) {
+async function reviewRate(reviews) {
   const ratingArr = [0, 0, 0, 0, 0];
-  review.forEach((re) => {
-    // console.log(re)
-  });
-  for (const re of review) {
-    ratingArr[0] += re.rating.entertainment;
-    ratingArr[1] += re.rating.entertainment;
-    ratingArr[2] += re.rating.performance;
-    ratingArr[3] += re.rating.production;
-    ratingArr[4] += re.rating.worthiness;
+  for (const review of reviews) {
+    ratingArr[0] += review.rating.entertainment;
+    ratingArr[1] += review.rating.entertainment;
+    ratingArr[2] += review.rating.performance;
+    ratingArr[3] += review.rating.production;
+    ratingArr[4] += review.rating.worthiness;
   }
   const reviewSumEach = ratingArr.map((rev) =>
-    review.length !== 0 ? rev / review.length : 0
+    reviews.length !== 0 ? rev / reviews.length : 0
   );
   ratingSum.value.push(reviewSumEach);
 }
@@ -60,7 +57,9 @@ async function test(review) {
       RECOMMENT
     </div>
     <div class="h-[700px]">
-      <div class="carousel w-full relative bottom-[150px]">
+      <div
+        class="carousel w-full relative bottom-[150px] animate-fade-up animate-once"
+      >
         <MovieRecom
           v-if="dataLoaded && ratingSum.length === 5"
           v-for="(movie, index) in movies"
@@ -75,7 +74,7 @@ async function test(review) {
     <div class="relative">
       <ListModels v-if="dataLoaded" :dataMovies="NotSliceMovies" />
     </div>
-    <footers></footers>
+    <Footer />
   </div>
 </template>
 

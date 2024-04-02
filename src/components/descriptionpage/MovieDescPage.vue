@@ -1,12 +1,13 @@
 <script setup>
 import { useRoute, useRouter } from "vue-router";
-import { ref, onMounted, computed, onUnmounted } from "vue";
-import NavBar from "../Homepage/NavBar.vue";
-import RedBarTopic from "./RedBarTopic.vue";
-import RatingPage from "./RatingPage.vue";
+import { ref, onMounted } from "vue";
+import NavBar from "@/components/homepage/NavBar.vue";
+import RedBarTopic from "@/components/sharedcomponents/RedBarTopic.vue";
+import RatingBar from "./RatingBar.vue";
 import Review from "./Review.vue";
-import LoadingScreen from "./LoadingScreen.vue";
-import ReviewPage from "../reviewpage/ReviewPage.vue";
+import LoadingScreen from "@/components/sharedcomponents/LoadingScreen.vue";
+import ReviewModal from "../reviewpage/ReviewModal.vue";
+import MovieDetail from "./MovieDetail.vue";
 import { ReviewManagement } from "@/libs/ReviewManagement.js";
 import {
   getMoviesDetails,
@@ -19,14 +20,13 @@ import {
 import { useUserStore } from "@/store/user";
 
 const userStore = useUserStore();
-
 const currentUser = userStore.currentUser;
-
 const route = useRoute();
 const router = useRouter();
 const moviesDetails = ref([]);
 const moviesCredits = ref([]);
 const moviesTrailer = ref([]);
+const movieCaster = ref([]);
 const currentPage = ref(1);
 const moviesReview = ref(new ReviewManagement());
 const isShowAllCrew = ref(false);
@@ -65,7 +65,17 @@ onMounted(async () => {
         moviesReview.value.addReview(userReview);
       })
     );
-    console.log(moviesReview.value.getReviews());
+    moviesDetails.value = {
+      ...moviesDetails.value,
+      director: crewFilter("Director"),
+      producer: crewFilter("Producer"),
+      budget: revenueFormat(moviesDetails.value.budget),
+      revenue: revenueFormat(moviesDetails.value.revenue),
+      runtime: timeFormat(),
+      trailer: moviesTrailer.value.key,
+    };
+    movieCaster.value = getCastData();
+    console.log(moviesDetails.value);
     dataLoaded.value = true;
   } catch (error) {
     console.error(error);
@@ -144,10 +154,7 @@ async function incrementLike(review) {
   if (!currentUser.likedComments.includes(review.id)) {
     currentUser.likedComments.push(review.id);
   }
-  localStorage.setItem(
-    "likedComments",
-    JSON.stringify(currentUser.likedComments)
-  );
+  localStorage.setItem("currentUser", JSON.stringify(currentUser));
 }
 
 async function decrementLike(review) {
@@ -173,10 +180,7 @@ async function decrementLike(review) {
   currentUser.likedComments = currentUser.likedComments.filter(
     (commentId) => commentId !== review.id
   );
-  localStorage.setItem(
-    "likedComments",
-    JSON.stringify(currentUser.likedComments)
-  );
+  localStorage.setItem("currentUser", JSON.stringify(currentUser));
 }
 
 async function toggleStatusLike(review) {
@@ -247,7 +251,7 @@ async function addNewReview(
       <NavBar />
       <Teleport to="body">
         <div v-show="isReviewModalOpen">
-          <ReviewPage
+          <ReviewModal
             @closeModal="reviewModalHandler"
             @updateReview="addNewReview"
             :movieDetails="moviesDetails"
@@ -255,100 +259,15 @@ async function addNewReview(
         </div>
       </Teleport>
       <div
-        class="w-[75%] m-[auto] font-istok text-white px-[45px] py-[10px] movieDetails-bg fade-up"
+        class="w-[75%] m-[auto] font-istok text-white px-[25px] py-[10px] movieDetails-bg fade-up"
       >
-        <div class="text-[40px] font-bold">{{ moviesDetails.title }}</div>
-        <div class="flex justify-between mb-[20px]">
-          <div class="w-[22%] mr-[3%] flex flex-col items-center">
-            <img
-              class="w-[225px]"
-              :src="
-                'https://image.tmdb.org/t/p/w500/' + moviesDetails.poster_path
-              "
-            />
-            <label
-              for="my_modal_7"
-              class="btn font-bold text-[22px] mt-[10px] pt-[2px] text-white font-istok gradient-bg border hover:opacity-70"
-              @click="handleVideo"
-              >Trailer</label
-            >
-            <input type="checkbox" id="my_modal_7" class="modal-toggle" />
-            <div class="modal" role="dialog">
-              <div
-                class="modal-box min-w-[200px] max-w-[1024px] h-[600px] p-0 flex items-center justify-center gradient-bg"
-              >
-                <iframe
-                  v-if="isPlayVideo && moviesTrailer?.key"
-                  class="w-[100%] h-[100%]"
-                  :src="
-                    'https://www.youtube.com/embed/' +
-                    moviesTrailer?.key +
-                    '?stop=1'
-                  "
-                  frameborder=" 0"
-                  allowfullscreen
-                  autoplay
-                ></iframe>
-                <div v-else class="text-[50px] text-white relative font-bold">
-                  Trailer not found
-                </div>
-              </div>
-              <label
-                class="modal-backdrop border border-black"
-                for="my_modal_7"
-                @click="handleVideo"
-              ></label>
-            </div>
-          </div>
-          <div class="w-[75%] ml-[8px] font-semibold">
-            <RedBarTopic :topic="'Movie info'" />
-            <div class="mb-[5px] font-medium">{{ moviesDetails.overview }}</div>
-            <div class="flex flex-wrap gap-[8px] items-center mb-[7px]">
-              <div
-                class="py-[4px] px-[15px] border-white border-2 rounded-[10px]"
-                v-for="genere in moviesDetails.genres"
-                :key="genere"
-              >
-                {{ genere.name }}
-              </div>
-            </div>
-            <div>
-              Original Language:
-              <span class="font-medium">{{
-                (moviesDetails.original_language = "en" ? "English" : "IDK")
-              }}</span>
-            </div>
-            <div>
-              Director:
-              <span class="font-medium">{{ crewFilter("Director") }}</span>
-            </div>
-            <div>
-              Producer:
-              <span class="font-medium">{{ crewFilter("Producer") }}</span>
-            </div>
-            <div>
-              Release Data:
-              <span class="font-medium">{{ moviesDetails.release_date }}</span>
-            </div>
-            <div>
-              Budget:
-              <span class="font-medium">{{
-                revenueFormat(moviesDetails.budget)
-              }}</span>
-            </div>
-            <div>
-              Box Office:
-              <span class="font-medium">{{
-                revenueFormat(moviesDetails.revenue)
-              }}</span>
-            </div>
-            <div>
-              Runtime: <span class="font-medium"> {{ timeFormat() }}</span>
-            </div>
-          </div>
-        </div>
+        <MovieDetail
+          :movieDetails="moviesDetails"
+          :isPlayVideo="isPlayVideo"
+          @handleVideo="handleVideo"
+        />
         <div class="Menu">
-          <div class="">
+          <div class="caster">
             <RedBarTopic :topic="'Casts & Crews'" />
             <div class="flex flex-wrap justify-center gap-[20px]">
               <div
@@ -381,7 +300,7 @@ async function addNewReview(
           <div class="Rating mb-[20px]">
             <RedBarTopic :topic="'Rating'" />
             <div class="pr-[30px]">
-              <RatingPage
+              <RatingBar
                 v-if="dataLoaded"
                 :rating="moviesReview.getAllRating()"
                 :reviewer="moviesReview.getReviews().length"
@@ -423,6 +342,7 @@ async function addNewReview(
             :reviews="moviesReview.getReviewByPage(currentPage)"
             @toggleStatusLike="toggleStatusLike"
             @handleOptionChange="handleOptionChange"
+            @setCurrentPage="setCurrentPage"
             :currentUserLikedComments="currentUser.likedComments"
           />
           <div class="flex justify-center gap-[5px] mt-[20px]">

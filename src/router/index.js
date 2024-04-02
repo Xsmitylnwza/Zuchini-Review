@@ -1,11 +1,11 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import Homepage from '@/components/Homepage/Homepage.vue'
+import Homepage from '@/components/homepage/Homepage.vue'
 import RegisterView from '@/views/RegisterView.vue'
 import LoginView from '@/views/LoginView.vue'
-import MovieDes from '@/components/descriptionpage/MovieDescriptionPage.vue'
+import MovieDescPage from '@/components/descriptionpage/MovieDescPage.vue'
 import NotFound from '@/views/NotFound.vue'
-import ReviewPage from '@/components/reviewpage/ReviewPage.vue'
-import CommentedPage from '@/components/commentedpage/CommentedPage.vue'
+import ReviewModal from '@/components/reviewpage/ReviewModal.vue'
+import CommentedView from '@/views/CommentedView.vue'
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
@@ -27,7 +27,7 @@ const router = createRouter({
         },
         {
             path: '/movie/:id',
-            component: MovieDes,
+            component: MovieDescPage,
         },
         {
             path: '/:notfound(.*)',
@@ -36,12 +36,12 @@ const router = createRouter({
         {
             name: 'review',
             path: '/review/:id',
-            component: ReviewPage,
+            component: ReviewModal,
         },
         {
             path: '/commented',
             name: 'commented',
-            component: CommentedPage,
+            component: CommentedView,
         },
     ]
 
