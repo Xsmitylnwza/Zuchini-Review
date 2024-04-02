@@ -1,5 +1,5 @@
 <script setup>
-import ratingIcon from "./RatingIcon.vue";
+import ratingIcon from "./ratingIcon.vue";
 import { useUserStore } from "@/store/user";
 import { onMounted, ref } from "vue";
 import { useRoute } from "vue-router";
