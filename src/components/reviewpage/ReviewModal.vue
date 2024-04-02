@@ -3,7 +3,7 @@ import ratingIcon from "./ratingIcon.vue";
 import { useUserStore } from "@/store/user";
 import { onMounted, ref } from "vue";
 import { useRoute } from "vue-router";
-import RedBarTopic from "../descriptionpage/RedBarTopic.vue";
+import RedBarTopic from "@/components/sharedcomponents/RedBarTopic.vue";
 
 defineEmits(["closeModal", "updateReview"]);
 

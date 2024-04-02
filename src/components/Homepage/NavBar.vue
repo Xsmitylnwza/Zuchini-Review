@@ -1,34 +1,35 @@
 <script setup>
-import { RouterLink, RouterView } from "vue-router";
-import { ref, onMounted } from "vue";
-import { useUserStore } from "@/store/user";
-import { getMoviesByName } from "@/libs/fetchUtils.js";
-import { getGenre } from "../../libs/fetchUtils.js";
+import { RouterLink } from 'vue-router'
+import { ref, onMounted } from 'vue'
+import { useUserStore } from '@/store/user'
+import { getMoviesByName } from '@/libs/fetchUtils.js'
+import { getGenre } from '../../libs/fetchUtils.js'
 
-const userStore = useUserStore();
-const currentUser = userStore.currentUser;
-const movieSearched = ref([]);
-const searchQuery = ref();
-const genres = ref([]);
-const dataLoaded = ref(true);
+const userStore = useUserStore()
+const currentUser = userStore.currentUser
+const movieSearched = ref([])
+const searchQuery = ref()
+const genres = ref([])
+const dataLoaded = ref(true)
 
 onMounted(async () => {
   try {
-    genres.value = await getGenre(import.meta.env.VITE_BASE_URL);
-    dataLoaded.value = true;
+    genres.value = await getGenre(import.meta.env.VITE_BASE_URL)
+    dataLoaded.value = true
   } catch (error) {
-    console.error(`${error}`);
+    console.error(`${error}`)
   }
-});
+})
 
 async function searchMovies() {
-  const trimmedQuery = searchQuery.value.trim();
-  const encodedQuery = trimmedQuery.replaceAll(" ", "%20");
-  const movie = await getMoviesByName(encodeURIComponent(encodedQuery));
-  movieSearched.value = movie;
+  const trimmedQuery = searchQuery.value.trim()
+  const encodedQuery = trimmedQuery.replaceAll(' ', '%20')
+  const movie = await getMoviesByName(encodeURIComponent(encodedQuery))
+  console.log(movie)
+  movieSearched.value = movie
 }
 function refreshPage() {
-  window.location.reload();
+  window.location.reload()
 }
 </script>
 
@@ -36,14 +37,16 @@ function refreshPage() {
   <div
     class="sticky top-0 z-10 font-inter laptop:flex justify-between px-[40px] py-[10px] h-[120px] bg-gradient-to-b from-black via-black to-transparent">
     <div>
-      <img src="/image/logo.png" class="w-[271px] h-[82px]" />
+      <RouterLink to="/">
+        <img src="/image/logo.png" class="w-[271px] h-[82px] hover:animate-rotate-y  " />
+      </RouterLink>
     </div>
     <div class="flex gap-[35px] items-center text-white font-semibold">
       <div>
         <div class="dropdown opacity-90 flex">
           <div class="relative">
             <input type="text" v-model="searchQuery" @input="searchMovies" placeholder="Search Movie here..."
-              class="w-full pl-10 pr-4 py-2 rounded-2xl focus:outline-none focus:border-red-500 opacity-50" />
+              class="w-full pl-10 pr-4 py-2 rounded-2xl text-black focus:outline-none focus:border-red-500 opacity-50" />
             <div class="absolute inset-y-0 left-0 pl-3 flex items-center">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor"
                 class="w-6 h-6 opacity-70">
@@ -54,15 +57,16 @@ function refreshPage() {
             </div>
           </div>
           <ul tabindex="0"
-            class="dropdown-content flex flex-row z-[1] menu p-2 shadow bg-base-100 rounded-box mt-12 overflow-y-auto max-h-96">
+            class="dropdown-content flex flex-row z-[1] menu p-2 shadow rounded-box mt-12 overflow-y-auto max-h-96 bg-black">
             <li v-if="movieSearched &&
               movieSearched.results &&
               movieSearched.results.length > 0
-              " v-for="movie in movieSearched.results" :key="movie.id" class="w-60" @click="refreshPage">
+              " v-for="movie in movieSearched.results" :key="movie.id" class="w-60 hover:text-red-500"
+              @click="refreshPage">
               <router-link :to="'/movie/' + movie.id">
                 <img class="w-[70px] h-[100px] rounded-[5px]" :src="movie.poster_path
-                ? 'https://image.tmdb.org/t/p/w500/' + movie.poster_path
-                : '../icons/noimageavailable.png'
+              ? 'https://image.tmdb.org/t/p/w500/' + movie.poster_path
+              : '../icons/noimageavailable.png'
               " />
                 <h2>{{ movie.title }}</h2>
               </router-link>
@@ -78,7 +82,7 @@ function refreshPage() {
       </button>
       <div>
         <div class="dropdown dropdown-end">
-          <div tabindex="0" role="button" class="btn btn-ghost rounded-btn hover:opacity-10">
+          <div tabindex="0" role="button" class="btn btn-ghost rounded-btn hover:opacity-90">
             Categories
           </div>
           <ul tabindex="0"

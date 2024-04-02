@@ -1,6 +1,6 @@
 <script setup>
 import { ref, watchEffect } from "vue";
-import RatingPage from "./RatingPage.vue";
+import RatingBar from "./RatingBar.vue";
 import { useUserStore } from "@/store/user";
 const userStore = useUserStore();
 
@@ -43,14 +43,15 @@ watchEffect(() => {
         <option value="low-rating">Low rating</option>
       </select>
     </div>
-    <div class="w-[100%] border-y border-white py-[10px] font-istok" v-for="review in reviews" :key="review.id">
+    <div class="w-[100%] border-y border-white py-[10px] pt-[15px] font-istok" v-for="review in reviews"
+      :key="review.id">
       <div class="flex flex-row gap-[15px] items-center pl-2">
-        <img class="w-[70px] rounded-full" :src="review.imageUrl" />
+        <img class="w-[60px] h-[60px] rounded-full" :src="review.imageUrl" />
         <p class="text-[32px] font-bold">{{ review.username }}</p>
       </div>
       <div class="flex flex-row gap-[15px] w-[100%]">
         <div class="flex p-[15px] border-r border-gray-600 w-[33%]">
-          <RatingPage :rating="[
+          <RatingBar :rating="[
     review.rating.entertainment,
     review.rating.movie_Chapter,
     review.rating.performance,
