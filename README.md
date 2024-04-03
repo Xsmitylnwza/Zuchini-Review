@@ -19,7 +19,7 @@ The web-based project, "Zucchini Review" is review-aggregation website for film,
 
 ### Home Page
 
-<p align="center"><img src="" width="700" height="350"></p>
+<p align="center"><img src="https://github.com/Xsmitylnwza/PROJECT2-SEC-2-WeLoveReact/blob/main/public/image/gif/homepage.gif" width="650" height="350"></p>
 
 <p>Select the movie you want to review. </p>
 <p>For ease of searching, you can use search bar or select movies category. </p>
@@ -29,7 +29,7 @@ The web-based project, "Zucchini Review" is review-aggregation website for film,
 
 ### Login and Registration Page
 
-<p align="center"><img src="" width="700" height="350"></p>
+<p align="center"><img src="https://github.com/Xsmitylnwza/PROJECT2-SEC-2-WeLoveReact/blob/main/public/image/gif/register.gif" width="650" height="350"></p>
 
 <p>You must register your account first. </p>
 <p>In the registration page you can add your profile picture. </p>
@@ -48,7 +48,7 @@ The web-based project, "Zucchini Review" is review-aggregation website for film,
 
 ### Description Page and Review
 
-<p align="center"><img src="" width="700" height="350"></p>
+<p align="center"><img src="https://github.com/Xsmitylnwza/PROJECT2-SEC-2-WeLoveReact/blob/main/public/image/gif/review.gif" width="650" height="350"></p>
 
 <p>You can see the movie's description, movie score and review from others on this page also you can write your review! </p>
 
@@ -58,7 +58,7 @@ The web-based project, "Zucchini Review" is review-aggregation website for film,
 
 ### Commented Page
 
-<p align="center"><img src="" width="700" height="350"></p>
+<p align="center"><img src="https://github.com/Xsmitylnwza/PROJECT2-SEC-2-WeLoveReact/blob/main/public/image/gif/commented.gif" width="650" height="350"></p>
 
 You can view, edit and delete comments you've reviewed.
 
