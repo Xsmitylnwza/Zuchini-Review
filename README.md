@@ -65,6 +65,7 @@ You can view, edit and delete comments you've reviewed.
 ## References
 
 -  Inspiration by [Rotten Tomatoes](https://www.rottentomatoes.com/)
+-  Movie Database by [The Movie Database](https://www.themoviedb.org/)
 
 ## Members
 
