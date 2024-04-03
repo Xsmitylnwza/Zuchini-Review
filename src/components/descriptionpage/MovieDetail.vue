@@ -28,7 +28,7 @@ const props = defineProps({
         >🎞️ Trailer</label
       >
       <input type="checkbox" id="my_modal_7" class="modal-toggle" />
-      <div class="modal" role="dialog">
+      <div class="modal" role="dialog" @click="$emit('handleVideo')">
         <div
           class="modal-box min-w-[200px] max-w-[1024px] h-[600px] p-0 flex items-center justify-center gradient-bg"
         >

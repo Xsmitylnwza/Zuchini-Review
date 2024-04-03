@@ -5,6 +5,7 @@ import {
   getReviews,
   getMoviesDetails,
   deleteReviewById,
+<<<<<<< HEAD
 } from '@/libs/fetchUtils'
 import { editReview } from '@/libs/fetchUtils'
 import NavBar from '../components/homepage/NavBar.vue'
@@ -12,6 +13,15 @@ import RedBarTopic from '@/components/sharedcomponents/RedBarTopic.vue'
 import RatingBar from '@/components/descriptionpage/RatingBar.vue'
 import ReviewModal from '@/components/reviewpage/ReviewModal.vue'
 import LoadingScreen from '@/components/sharedcomponents/LoadingScreen.vue'
+=======
+} from "@/libs/fetchUtils";
+import { editReview } from "@/libs/fetchUtils";
+import NavBar from "../components/sharedcomponents/NavBar.vue";
+import RedBarTopic from "@/components/sharedcomponents/RedBarTopic.vue";
+import RatingBar from "@/components/descriptionpage/RatingBar.vue";
+import ReviewModal from "@/components/reviewpage/ReviewModal.vue";
+import LoadingScreen from "@/components/sharedcomponents/LoadingScreen.vue";
+>>>>>>> 416ebd196d574e234cfb5ee162925a7898889787
 
 const userStore = useUserStore()
 const currentUser = userStore.currentUser

@@ -23,6 +23,7 @@ const props = defineProps({
   },
 })
 
+
 const reviewItems = [
   { icon: reviewIconWatching, label: 'Entertainment' },
   { icon: reviewIconChapter, label: 'Movie Chapter' },
