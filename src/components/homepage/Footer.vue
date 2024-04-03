@@ -5,7 +5,7 @@
     <div class="flex flex-col font-bold">
       <img
         src="/image/logo.png"
-        class="w-[432px] h-[120px] hover:animate-rotate-y"
+        class="w-[400px] h-[120px] hover:animate-rotate-y"
       />
       <h1 class="flex justify-center text-white">
         This is project to submit INT203 subject
@@ -62,23 +62,43 @@
         >
       </div>
     </div>
-    <div class="flex flex-col mt-2 w-[20%] h-full">
-      <h1 class="text-white font-bold text-xl">Referance</h1>
+    <div class="flex flex-col mt-2 w-[35%] h-full">
+      <h1 class="text-white font-bold text-xl">Reference</h1>
       <div
-        class="flex flex-col justify-center items-center h-full transition ease-in-out delay-150 hover:scale-105 duration-300"
+        class="flex flex-row justify-center items-center h-full w-full gap-10"
       >
-        <a
-          href="https://developer.themoviedb.org/reference/intro/getting-started"
+        <div
+          class="transition ease-in-out delay-150 hover:scale-105 duration-300"
         >
-          <img
-            src="/icons/movieapi.png"
-            class="flex w-[150px] rounded-md m-[auto]"
-          />
+          <a
+            href="https://developer.themoviedb.org/reference/intro/getting-started"
+          >
+            <img
+              src="/icons/movieapi.png"
+              class="flex w-[150px] rounded-md m-[auto] h-[80px]"
+            />
 
-          <h2 class="text-white hover:text-red-500 font-bold">
-            The Movie Database (TMDB)
-          </h2></a
+            <h2 class="text-white hover:text-red-500 font-bold">
+              The Movie Database (TMDB)
+            </h2></a
+          >
+        </div>
+        <div
+          class="transition ease-in-out delay-150 hover:scale-105 duration-300 flex"
         >
+          <a href="https://www.rottentomatoes.com/">
+            <img
+              src="/icons/rottentomatoes.png"
+              class="flex w-[150px] rounded-md m-[auto] h-[80px]"
+            />
+
+            <h2
+              class="text-white hover:text-red-500 font-bold justify-center flex"
+            >
+              Rotten Tomatoes
+            </h2></a
+          >
+        </div>
       </div>
     </div>
   </div>

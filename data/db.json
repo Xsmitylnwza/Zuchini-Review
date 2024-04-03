@@ -3391,6 +3391,17 @@
         "4c25",
         "c534"
       ]
+    },
+    {
+      "id": "de0f",
+      "username": "Tiskas02",
+      "email": "moss.sst@gmail.com",
+      "imageUrl": "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png",
+      "password": "8c859087c9e89673d0bd2337b64c32c5e3ca12b224a17984f6b4e6ee4da448cc",
+      "confirmPassword": "8c859087c9e89673d0bd2337b64c32c5e3ca12b224a17984f6b4e6ee4da448cc",
+      "likedComments": [
+        "80bc"
+      ]
     }
   ],
   "reviews": [
@@ -3406,7 +3417,7 @@
         "worthiness": 99
       },
       "comment": "I found 'No Way Up' to be a thrilling survival story with intense moments throughout. The character dynamics were well-developed, and the tension kept me on the edge of my seat.",
-      "likeCount": 7
+      "likeCount": 8
     },
     {
       "id": "fac9",
@@ -3617,6 +3628,34 @@
       },
       "comment": "ez moneyy",
       "likeCount": 1
+    },
+    {
+      "id": "c444",
+      "userId": "de0f",
+      "movieId": "1096197",
+      "rating": {
+        "entertainment": 34,
+        "movie_Chapter": 34,
+        "performance": 15,
+        "production": 14,
+        "worthiness": 0
+      },
+      "comment": "\"No Way Up\" is a thrilling rollercoaster of a novel that keeps readers on the edge of their seats from start to finish. Authored by suspense master Michael Connelly, this gripping tale follows protagonist Jack McEvoy, a journalist on the hunt for truth in a sea of lies.\n\nSet against the backdrop of the fast-paced world of modern journalism, Connelly deftly explores themes of technology, ethics, and the relentless pursuit of justice. McEvoy's character is compellingly complex, grappling with personal demons while navigating the dangerous waters of investigative reporting.\n\nThe plot is intricately woven, with twists and turns that keep readers guessing until the very end. Connelly's meticulous attention to detail creates a vivid and immersive reading experience, drawing readers into a world of high-stakes journalism and deadly secrets.\n\nThe pacing is relentless, driving the narrative forward with relentless momentum. Each chapter ends with a tantalizing cliffhanger, ensuring that readers will find it difficult to put the book down.\n\nOverall, \"No Way Up\" is a masterfully crafted thriller that showcases Michael Connelly at the top of his game. With its gripping plot, complex characters, and thought-provoking themes, this novel is sure to satisfy fans of suspense and intrigue alike.",
+      "likeCount": 0
+    },
+    {
+      "id": "e05a",
+      "userId": "de0f",
+      "movieId": "932420",
+      "rating": {
+        "entertainment": 50,
+        "movie_Chapter": 20,
+        "performance": 50,
+        "production": 50,
+        "worthiness": 50
+      },
+      "comment": "code here",
+      "likeCount": 0
     }
   ],
   "api-key": [

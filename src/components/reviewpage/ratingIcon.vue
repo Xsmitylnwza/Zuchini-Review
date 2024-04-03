@@ -7,11 +7,11 @@ import reviewIconMoney from '/image/review-icon/money.png'
 
 const reviewItems = [
   { icon: reviewIconWatching, description: 'Entertainment' },
-  { icon: reviewIconChapter, description: 'Movie Chapter' },
+  { icon: reviewIconChapter, description: 'MovieChapter' },
   { icon: reviewIconCamera, description: 'Performance' },
   { icon: reviewIconCinema, description: 'Production' },
   { icon: reviewIconMoney, description: 'Worthiness' },
-];
+]
 </script>
 
 <template>

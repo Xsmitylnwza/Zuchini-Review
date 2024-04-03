@@ -25,7 +25,7 @@ const props = defineProps({
         for="my_modal_7"
         class="btn font-bold text-[22px] mt-[10px] pt-[2px] text-white font-istok gradient-bg border hover:opacity-70"
         @click="$emit('handleVideo')"
-        >Trailer</label
+        >🎞️ Trailer</label
       >
       <input type="checkbox" id="my_modal_7" class="modal-toggle" />
       <div class="modal" role="dialog">

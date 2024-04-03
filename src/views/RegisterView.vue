@@ -1,71 +1,71 @@
 <script setup>
-import { ref, onMounted } from "vue";
-import router from "@/router";
-import { RouterLink } from "vue-router";
-import CationValidInput from "@/components/CationValidInput.vue";
-import hashPassword from "@/composable/hashPassword";
-import toggleIconShowHidePassword from "@/composable/toggleShowHidePassword";
-import passwordsMatch from "@/composable/passwordsMatch";
+import { ref, onMounted } from 'vue'
+import router from '@/router'
+import { RouterLink } from 'vue-router'
+import CationValidInput from '@/components/CationValidInput.vue'
+import hashPassword from '@/composable/hashPassword'
+import toggleIconShowHidePassword from '@/composable/toggleShowHidePassword'
+import passwordsMatch from '@/composable/passwordsMatch'
 
 const userInfo = ref({
-  username: "".trim(),
-  email: "",
+  username: ''.trim(),
+  email: '',
   imageUrl:
-    "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png",
-  password: "",
-  confirmPassword: "",
-});
+    'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png',
+  password: '',
+  confirmPassword: '',
+})
 
-const profileImageUpload = ref(null);
-const isUsernameValid = ref(true);
-const isEmailValid = ref(true);
-const isPasswordValid = ref(true);
+const profileImageUpload = ref(null)
+const isUsernameValid = ref(true)
+const isEmailValid = ref(true)
+const isPasswordValid = ref(true)
 
-const passwordField = ref(null);
-const confirmPasswordField = ref(null);
+const passwordField = ref(null)
+const confirmPasswordField = ref(null)
 
 function isValidImageFile(filename) {
-  const allowedExtensions = ["jpg", "jpeg", "png", "gif", "bmp"];
-  const extension = filename.split(".").pop().toLowerCase();
-  return allowedExtensions.includes(extension);
+  const allowedExtensions = ['jpg', 'jpeg', 'png', 'gif', 'bmp']
+  const extension = filename.split('.').pop().toLowerCase()
+  return allowedExtensions.includes(extension)
 }
 
 function validateUsername(username) {
-  const regex = /^[a-zA-Z0-9_-]{3,20}$/;
-  return regex.test(username);
+  const regex = /^[a-zA-Z0-9_-]{3,20}$/
+  return regex.test(username)
 }
 
 function validateEmail(email) {
-  const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  return regex.test(email);
+  const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+  return regex.test(email)
 }
 
 function validatePassword(password) {
   const regex =
-    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-  return regex.test(password);
+    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/
+  return regex.test(password)
 }
 
 function checkUserExists(users) {
-  return users.find((user) => user.username === userInfo.value.username);
+  return users.find((user) => user.username === userInfo.value.username)
 }
 
 function resetCorrectData() {
-  isUsernameValid.value = true;
-  isEmailValid.value = true;
-  isPasswordValid.value = true;
+  isUsernameValid.value = true
+  isEmailValid.value = true
+  isPasswordValid.value = true
 }
 
 const register = async () => {
-  const res = await fetch("http://localhost:5000/users");
-  const users = await res.json();
-  resetCorrectData();
+  const res = await fetch('http://localhost:5000/users')
+  const users = await res.json()
+  resetCorrectData()
   if (res.status === 200) {
     if (checkUserExists(users) || !validateUsername(userInfo.value.username)) {
-      isUsernameValid.value = false;
+      isUsernameValid.value = false
     } else if (!validateEmail(userInfo.value.email)) {
-      isUsernameValid.value = true;
-      isEmailValid.value = false;
+      isUsernameValid.value = true
+      isEmailValid.value = false
     } else if (
       !passwordsMatch(
         userInfo.value.password,
@@ -74,17 +74,17 @@ const register = async () => {
       !validatePassword(userInfo.value.password) ||
       !validatePassword(userInfo.value.confirmPassword)
     ) {
-      isUsernameValid.value = true;
-      isEmailValid.value = true;
-      isPasswordValid.value = false;
+      isUsernameValid.value = true
+      isEmailValid.value = true
+      isPasswordValid.value = false
     } else {
-      isUsernameValid.value = true;
-      isEmailValid.value = true;
-      isPasswordValid.value = true;
-      await fetch("http://localhost:5000/users", {
-        method: "POST",
+      isUsernameValid.value = true
+      isEmailValid.value = true
+      isPasswordValid.value = true
+      await fetch('http://localhost:5000/users', {
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify({
           username: userInfo.value.username,
@@ -94,28 +94,28 @@ const register = async () => {
           confirmPassword: await hashPassword(userInfo.value.password),
           likedComments: [],
         }),
-      });
-      await router.push("/login");
+      })
+      await router.push('/login')
     }
   }
-};
+}
 
 const handleFileChange = (event) => {
-  const file = event.target.files[0];
+  const file = event.target.files[0]
   if (file) {
     if (isValidImageFile(file.name)) {
-      const reader = new FileReader();
+      const reader = new FileReader()
       reader.onload = (e) => {
-        userInfo.value.imageUrl = e.target.result;
-      };
-      reader.readAsDataURL(file);
+        userInfo.value.imageUrl = e.target.result
+      }
+      reader.readAsDataURL(file)
     }
   }
-};
+}
 
 const openImageUpload = () => {
-  profileImageUpload.value.click();
-};
+  profileImageUpload.value.click()
+}
 </script>
 
 <template>
@@ -126,7 +126,7 @@ const openImageUpload = () => {
       class="bg-color mx-auto w-3/5 flex justify-around py-4 px-12 rounded-lg"
     >
       <div class="flex flex-col gap-y-2 w-2/5">
-        <h1 class="text-3xl text-white pl-24 font-bold">Register</h1>
+        <h1 class="text-3xl text-white pl-24 font-bold mb-2">Register</h1>
         <div>
           <div class="w-20 ml-28">
             <img
