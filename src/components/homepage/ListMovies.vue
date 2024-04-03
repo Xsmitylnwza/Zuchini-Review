@@ -26,7 +26,7 @@ onMounted(async () => {
       <h1 class="text-white font-semibold mb-[15px] text-3xl p-3">
         {{ genre.name }}
       </h1>
-      <SortGenre v-if="dataLoaded" :dataMovies="dataMovies" :genreId="genre.id" />
+      <MovieGenreFilter v-if="dataLoaded" :dataMovies="dataMovies" :genreId="genre.id" />
     </div>
   </div>
 </template>

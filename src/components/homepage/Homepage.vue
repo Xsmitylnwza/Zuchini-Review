@@ -29,7 +29,6 @@ onMounted(async () => {
 
 async function reviewRate(reviews) {
   const ratingArr = [0, 0, 0, 0, 0];
-  console.log(reviews)
   for (const review of reviews) {
     ratingArr[0] += review.rating.entertainment;
     ratingArr[1] += review.rating.movie_Chapter;
