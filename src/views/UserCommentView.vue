@@ -25,6 +25,10 @@ const moviesDetails = ref(false);
 const dataLoaded = ref(false);
 
 onMounted(async () => {
+  if (currentUser.id == undefined) {
+    alert("You need to login first !!!")
+    router.push('/login')
+  }
   reviews.value = await getReviews(`?userId=${currentUser.id}`);
   const movieDetailsPromises = reviews.value.map(async (review) => {
     const movieDetails = await getMoviesDetails(review.movieId);
