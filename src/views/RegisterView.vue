@@ -130,7 +130,7 @@ const openImageUpload = () => {
         <div>
           <div class="w-20 ml-28">
             <img
-              class="rounded-full cursor-pointer"
+              class="rounded-full cursor-pointer w-[300px] h-[300px]"
               :src="userInfo.imageUrl"
               @click="openImageUpload"
             />

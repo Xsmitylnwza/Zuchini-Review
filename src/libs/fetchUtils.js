@@ -184,6 +184,20 @@ async function updateReviewAndUser(reviewId, reviewUpdate, userDataUpdate, curre
     console.log(`error: ${e}`)
   }
 }
+async function updateUser(userDataUpdate, currentUser) {
+  try {
+    const respon = await fetch(`${import.meta.env.VITE_BASE_URL}/users/${currentUser.id}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(userDataUpdate),
+      })
+      return respon
+  } catch (e) {
+    console.log(`error: ${e}`)
+  }
+}
 
 
-export { getMovies, getGenre, getMoviesDetails, getMoviesReviews, getUsersInfo, getMoviesByName, getReviews, getReviewsAndUsers, updateReviewAndUser, addReview, editReview, deleteReviewById }
+export { getMovies, getGenre, getMoviesDetails, getMoviesReviews, getUsersInfo, getMoviesByName, getReviews, getReviewsAndUsers, updateReviewAndUser, addReview, editReview, deleteReviewById,updateUser }

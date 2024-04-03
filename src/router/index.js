@@ -6,6 +6,7 @@ import MovieDescPage from '@/components/descriptionpage/MovieDescPage.vue'
 import NotFound from '@/views/NotFound.vue'
 import ReviewModal from '@/components/reviewpage/ReviewModal.vue'
 import UserCommentView from '@/views/UserCommentView.vue'
+import EditUserProfile from '@/views/EditUserProfile.vue'
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
@@ -42,6 +43,11 @@ const router = createRouter({
             path: '/commented',
             name: 'commented',
             component: UserCommentView,
+        },
+        {
+            path: '/edituserprofile',
+            name: 'edituserprofile',
+            component: EditUserProfile,
         },
     ]
 

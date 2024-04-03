@@ -1,3 +1,5 @@
+
+import router from '@/router'
 import { defineStore, acceptHMRUpdate } from 'pinia'
 import { ref } from 'vue'
 
@@ -7,11 +9,13 @@ export const useUserStore = defineStore('user', () => {
   const setUser = (user) => {
     currentUser.value = user
     saveUserToLocalStorage(user)
+    router.go(-1)
   }
 
   const logout = () => {
     currentUser.value = {}
     clearUserFromLocalStorage()
+    router.push("/")
   }
 
   const checkUserLoggedIn = () => {
