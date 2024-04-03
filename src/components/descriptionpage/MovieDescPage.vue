@@ -1,16 +1,4 @@
 <script setup>
-<<<<<<< HEAD
-import { useRoute, useRouter } from 'vue-router'
-import { ref, onMounted } from 'vue'
-import NavBar from '@/components/homepage/NavBar.vue'
-import RedBarTopic from '@/components/sharedcomponents/RedBarTopic.vue'
-import RatingBar from './RatingBar.vue'
-import Review from './Review.vue'
-import LoadingScreen from '@/components/sharedcomponents/LoadingScreen.vue'
-import ReviewModal from '../reviewpage/ReviewModal.vue'
-import MovieDetail from './MovieDetail.vue'
-import { ReviewManagement } from '@/libs/ReviewManagement.js'
-=======
 import { useRoute, useRouter } from "vue-router";
 import { ref, onMounted } from "vue";
 import NavBar from "@/components/sharedcomponents/NavBar.vue";
@@ -22,7 +10,6 @@ import ReviewModal from "../reviewpage/ReviewModal.vue";
 import MovieDetail from "./MovieDetail.vue";
 import MovieCaster from "./MovieCaster.vue";
 import { ReviewManagement } from "@/libs/ReviewManagement.js";
->>>>>>> 416ebd196d574e234cfb5ee162925a7898889787
 import {
   getMoviesDetails,
   getMoviesReviews,
@@ -33,22 +20,6 @@ import {
 } from '@/libs/fetchUtils.js'
 import { useUserStore } from '@/store/user'
 
-<<<<<<< HEAD
-const userStore = useUserStore()
-const currentUser = userStore.currentUser
-const route = useRoute()
-const router = useRouter()
-const moviesDetails = ref([])
-const moviesCredits = ref([])
-const moviesTrailer = ref([])
-const movieCaster = ref([])
-const currentPage = ref(1)
-const moviesReview = ref(new ReviewManagement())
-const isShowAllCrew = ref(false)
-const isPlayVideo = ref(false)
-const dataLoaded = ref(false)
-const isReviewModalOpen = ref(false)
-=======
 const userStore = useUserStore();
 const currentUser = userStore.currentUser;
 const route = useRoute();
@@ -63,7 +34,6 @@ const isShowAllCrew = ref(false);
 const isPlayVideo = ref(false);
 const dataLoaded = ref(false);
 const isReviewModalOpen = ref(false);
->>>>>>> 416ebd196d574e234cfb5ee162925a7898889787
 
 onMounted(async () => {
   try {
@@ -103,17 +73,10 @@ onMounted(async () => {
       budget: revenueFormat(moviesDetails.value.budget),
       revenue: revenueFormat(moviesDetails.value.revenue),
       runtime: timeFormat(),
-<<<<<<< HEAD
-      trailer: moviesTrailer.value.key,
-    }
-    movieCaster.value = getCastData()
-    dataLoaded.value = true
-=======
       trailer: moviesTrailer.value?.key,
     };
     movieCasters.value = getCastData();
     dataLoaded.value = true;
->>>>>>> 416ebd196d574e234cfb5ee162925a7898889787
   } catch (error) {
     console.error(error)
   }
@@ -150,12 +113,8 @@ function getCastData() {
   } else return data?.splice(0, 8)
 }
 function handleShowAllCrew() {
-<<<<<<< HEAD
-  isShowAllCrew.value = !isShowAllCrew.value
-=======
   isShowAllCrew.value = !isShowAllCrew.value;
   movieCasters.value = getCastData()
->>>>>>> 416ebd196d574e234cfb5ee162925a7898889787
 }
 function setCurrentPage(page) {
   currentPage.value = page
@@ -291,41 +250,8 @@ async function addNewReview(
       <div class="w-[75%] m-[auto] font-istok text-white px-[25px] py-[10px] movieDetails-bg fade-up">
         <MovieDetail :movieDetails="moviesDetails" :isPlayVideo="isPlayVideo" @handleVideo="handleVideo" />
         <div class="Menu">
-<<<<<<< HEAD
-          <div class="caster">
-            <RedBarTopic :topic="'Casts & Crews'" />
-            <div class="flex flex-wrap justify-center gap-[20px]">
-              <div
-                class="w-[100px]"
-                v-for="cast in getCastData()"
-                :key="cast.id"
-              >
-                <img
-                  class="rounded-[3px] mb-[5px]"
-                  width="100px"
-                  height="1px"
-                  :src="'https://image.tmdb.org/t/p/w500/' + cast.profile_path"
-                />
-                <a href="#" class="w-[50%] text-blue-500 hover:text-blue-600">{{
-                  cast.original_name
-                }}</a>
-                <div class="text-[14px]">{{ cast.character }}</div>
-              </div>
-            </div>
-            <div class="my-[15px]">
-              <div class="ml-[auto] w-[100px]">
-                <button @click="handleShowAllCrew">
-                  <span class="hover:text-gray-400">{{
-                    isShowAllCrew ? 'Hide' : 'Show All'
-                  }}</span>
-                </button>
-              </div>
-            </div>
-          </div>
-=======
           <MovieCaster :movieCasters="movieCasters" :isShowAllCrew="isShowAllCrew"
             @handleShowAllCrew="handleShowAllCrew" />
->>>>>>> 416ebd196d574e234cfb5ee162925a7898889787
           <div class="Rating mb-[20px]">
             <RedBarTopic :topic="'Rating'" />
             <div class="pr-[30px]">
@@ -339,30 +265,11 @@ async function addNewReview(
               <p class="mb-[15px]">Review form is here!! Check to Enter form</p>
               <div @click="reviewModalHandler(true)">
                 <button
-<<<<<<< HEAD
-                  class="flex items-center justify-center gap-[5px] w-[193px] h-[58px] text-[20px] rounded-xl hover:opacity-90 gradient-bg transition ease-in-out delay-150 hover:scale-110 duration-300 hover:shadow-md hover:shadow-red-500"
-                >
-                  <svg
-                    width="25"
-                    height="24"
-                    viewBox="0 0 25 24"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M7.83333 7.88235H17.1667M7.83333 12.5882H14.8333M19.5 2C20.4283 2 21.3185 2.37185 21.9749 3.03374C22.6313 3.69563 23 4.59335 23 5.52941V14.9412C23 15.8772 22.6313 16.775 21.9749 17.4368C21.3185 18.0987 20.4283 18.4706 19.5 18.4706H13.6667L7.83333 22V18.4706H5.5C4.57174 18.4706 3.6815 18.0987 3.02513 17.4368C2.36875 16.775 2 15.8772 2 14.9412V5.52941C2 4.59335 2.36875 3.69563 3.02513 3.03374C3.6815 2.37185 4.57174 2 5.5 2H19.5Z"
-                      stroke="white"
-                      stroke-width="2"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                    />
-=======
                   class="flex items-center justify-center gap-[5px] w-[193px] h-[58px] border border-white text-[20px] rounded-[23px] hover:opacity-70 gradient-bg">
                   <svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path
                       d="M7.83333 7.88235H17.1667M7.83333 12.5882H14.8333M19.5 2C20.4283 2 21.3185 2.37185 21.9749 3.03374C22.6313 3.69563 23 4.59335 23 5.52941V14.9412C23 15.8772 22.6313 16.775 21.9749 17.4368C21.3185 18.0987 20.4283 18.4706 19.5 18.4706H13.6667L7.83333 22V18.4706H5.5C4.57174 18.4706 3.6815 18.0987 3.02513 17.4368C2.36875 16.775 2 15.8772 2 14.9412V5.52941C2 4.59335 2.36875 3.69563 3.02513 3.03374C3.6815 2.37185 4.57174 2 5.5 2H19.5Z"
                       stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
->>>>>>> 416ebd196d574e234cfb5ee162925a7898889787
                   </svg>
                   REVIEW
                 </button>
@@ -375,7 +282,6 @@ async function addNewReview(
             @toggleStatusLike="toggleStatusLike" @handleOptionChange="handleOptionChange"
             @setCurrentPage="setCurrentPage" :currentUserLikedComments="currentUser.likedComments" />
           <div class="flex justify-center gap-[5px] mt-[20px]">
-<<<<<<< HEAD
             <div
               class="flex rounded-full border-opacity-65 w-[25px] bg-black items-center"
               :class="
@@ -390,13 +296,6 @@ async function addNewReview(
                 class="w-[100%] mt-[2px] flex justify-center"
                 @click="setCurrentPage(page)"
               >
-=======
-            <div class="border rounded-md w-[25px] bg-black" :class="currentPage === page
-    ? 'bg-red-600 hover:bg-red-800'
-    : 'hover:bg-gray-700'
-    " v-for="page in Math.ceil(moviesReview.getReviews().length / 3)" :key="page.length">
-              <button class="w-[100%] m-[auto]" @click="setCurrentPage(page)">
->>>>>>> 416ebd196d574e234cfb5ee162925a7898889787
                 {{ page }}
               </button>
             </div>
