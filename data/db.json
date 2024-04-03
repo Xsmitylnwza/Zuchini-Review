@@ -3563,48 +3563,6 @@
       "likeCount": 5
     },
     {
-      "id": "3a8a",
-      "userId": "4ed7",
-      "movieId": "438631",
-      "rating": {
-        "entertainment": 50,
-        "movie_Chapter": 50,
-        "performance": 50,
-        "production": 50,
-        "worthiness": 50
-      },
-      "comment": "I LIKE TRAINS",
-      "likeCount": 0
-    },
-    {
-      "userId": "4ed7",
-      "movieId": "693134",
-      "rating": {
-        "entertainment": 0,
-        "movie_Chapter": 0,
-        "performance": 75,
-        "production": 74,
-        "worthiness": 100
-      },
-      "comment": "asdasd",
-      "likeCount": 1,
-      "id": "4e42"
-    },
-    {
-      "id": "af8f",
-      "userId": "4ed7",
-      "movieId": "569094",
-      "rating": {
-        "entertainment": 39,
-        "movie_Chapter": 38,
-        "performance": 38,
-        "production": 32,
-        "worthiness": 24
-      },
-      "comment": "I LOVE MY MATE NATE",
-      "likeCount": 0
-    },
-    {
       "id": "4c25",
       "userId": "381e",
       "movieId": "932420",
@@ -3617,6 +3575,34 @@
       },
       "comment": "ez moneyy",
       "likeCount": 1
+    },
+    {
+      "id": "42a9",
+      "userId": "4ed7",
+      "movieId": "569094",
+      "rating": {
+        "entertainment": 100,
+        "movie_Chapter": 87,
+        "performance": 88,
+        "production": 85,
+        "worthiness": 99
+      },
+      "comment": "I really enjoy this spider man milorales is the spicial character that uniquest I have ever seen and I also love the maltiverse of spider man it really fun to watch it I'cant wait to see next episode ",
+      "likeCount": 0
+    },
+    {
+      "id": "7be9",
+      "userId": "4ed7",
+      "movieId": "693134",
+      "rating": {
+        "entertainment": 69,
+        "movie_Chapter": 77,
+        "performance": 85,
+        "production": 87,
+        "worthiness": 94
+      },
+      "comment": "Dune: Part Two is the best Movie i have ever seen",
+      "likeCount": 0
     }
   ],
   "api-key": [
