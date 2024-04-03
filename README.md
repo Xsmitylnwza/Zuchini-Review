@@ -15,7 +15,7 @@ The web-based project, "Zucchini Review" is review-aggregation website for film,
 - Search for movies.
 - Login and Registration.
 
-## How to Use
+## Manual
 
 ### Home Page
 
