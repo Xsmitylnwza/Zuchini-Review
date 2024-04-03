@@ -38,7 +38,6 @@ onMounted(async () => {
   moviesDetails.value = movies.value[0];
   selectedReview.value = reviews.value[0];
   dataLoaded.value = true;
-
 });
 
 async function deleteReview(id) {
