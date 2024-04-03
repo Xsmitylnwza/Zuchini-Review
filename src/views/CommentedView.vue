@@ -7,7 +7,7 @@ import {
   deleteReviewById,
 } from "@/libs/fetchUtils";
 import { editReview } from "@/libs/fetchUtils";
-import NavBar from "../components/homepage/NavBar.vue";
+import NavBar from "../components/sharedcomponents/NavBar.vue";
 import RedBarTopic from "@/components/sharedcomponents/RedBarTopic.vue";
 import RatingBar from "@/components/descriptionpage/RatingBar.vue";
 import ReviewModal from "@/components/reviewpage/ReviewModal.vue";

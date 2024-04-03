@@ -1,13 +1,14 @@
 <script setup>
 import { useRoute, useRouter } from "vue-router";
 import { ref, onMounted } from "vue";
-import NavBar from "@/components/homepage/NavBar.vue";
+import NavBar from "@/components/sharedcomponents/NavBar.vue";
 import RedBarTopic from "@/components/sharedcomponents/RedBarTopic.vue";
 import RatingBar from "./RatingBar.vue";
 import Review from "./Review.vue";
 import LoadingScreen from "@/components/sharedcomponents/LoadingScreen.vue";
 import ReviewModal from "../reviewpage/ReviewModal.vue";
 import MovieDetail from "./MovieDetail.vue";
+import MovieCaster from "./MovieCaster.vue";
 import { ReviewManagement } from "@/libs/ReviewManagement.js";
 import {
   getMoviesDetails,
@@ -26,7 +27,7 @@ const router = useRouter();
 const moviesDetails = ref([]);
 const moviesCredits = ref([]);
 const moviesTrailer = ref([]);
-const movieCaster = ref([]);
+const movieCasters = ref([]);
 const currentPage = ref(1);
 const moviesReview = ref(new ReviewManagement());
 const isShowAllCrew = ref(false);
@@ -74,7 +75,7 @@ onMounted(async () => {
       runtime: timeFormat(),
       trailer: moviesTrailer.value?.key,
     };
-    movieCaster.value = getCastData();
+    movieCasters.value = getCastData();
     dataLoaded.value = true;
   } catch (error) {
     console.error(error);
@@ -113,6 +114,7 @@ function getCastData() {
 }
 function handleShowAllCrew() {
   isShowAllCrew.value = !isShowAllCrew.value;
+  movieCasters.value = getCastData()
 }
 function setCurrentPage(page) {
   currentPage.value = page;
@@ -248,28 +250,8 @@ async function addNewReview(
       <div class="w-[75%] m-[auto] font-istok text-white px-[25px] py-[10px] movieDetails-bg fade-up">
         <MovieDetail :movieDetails="moviesDetails" :isPlayVideo="isPlayVideo" @handleVideo="handleVideo" />
         <div class="Menu">
-          <div class="caster">
-            <RedBarTopic :topic="'Casts & Crews'" />
-            <div class="flex flex-wrap justify-center gap-[20px]">
-              <div class="w-[100px]" v-for="cast in getCastData()" :key="cast.id">
-                <img class="rounded-[3px] mb-[5px]" width="100px" height="1px"
-                  :src="'https://image.tmdb.org/t/p/w500/' + cast.profile_path" />
-                <a href="#" class="w-[50%] text-blue-500 hover:text-blue-600">{{
-    cast.original_name
-  }}</a>
-                <div class="text-[14px]">{{ cast.character }}</div>
-              </div>
-            </div>
-            <div class="my-[15px]">
-              <div class="ml-[auto] w-[100px]">
-                <button @click="handleShowAllCrew">
-                  <span class="hover:text-gray-400">{{
-    isShowAllCrew ? "Hide" : "Show All"
-  }}</span>
-                </button>
-              </div>
-            </div>
-          </div>
+          <MovieCaster :movieCasters="movieCasters" :isShowAllCrew="isShowAllCrew"
+            @handleShowAllCrew="handleShowAllCrew" />
           <div class="Rating mb-[20px]">
             <RedBarTopic :topic="'Rating'" />
             <div class="pr-[30px]">

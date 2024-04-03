@@ -43,6 +43,16 @@ class ReviewManagement {
         if (this.reviews.length == 0) {
             return;
         } else {
+            const entertainmentScore =
+                this.reviews.reduce(
+                    (sum, review) => sum + review.rating.entertainment,
+                    0
+                ) / this.reviews.length;
+            const movieChapterScore =
+                this.reviews.reduce(
+                    (sum, review) => sum + review.rating.movie_Chapter,
+                    0
+                ) / this.reviews.length;
             const performanceScore =
                 this.reviews.reduce(
                     (sum, review) => sum + review.rating.performance,
@@ -53,26 +63,16 @@ class ReviewManagement {
                     (sum, review) => sum + review.rating.production,
                     0
                 ) / this.reviews.length;
-            const movieChapterScore =
-                this.reviews.reduce(
-                    (sum, review) => sum + review.rating.movie_Chapter,
-                    0
-                ) / this.reviews.length;
-            const entertainmentScore =
-                this.reviews.reduce(
-                    (sum, review) => sum + review.rating.entertainment,
-                    0
-                ) / this.reviews.length;
             const worthinessScore =
                 this.reviews.reduce(
                     (sum, review) => sum + review.rating.worthiness,
                     0
                 ) / this.reviews.length;
             return [
+                entertainmentScore,
+                movieChapterScore,
                 performanceScore,
                 productionScore,
-                movieChapterScore,
-                entertainmentScore,
                 worthinessScore,
             ];
         }
