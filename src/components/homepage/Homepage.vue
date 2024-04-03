@@ -56,7 +56,7 @@ async function reviewRate(reviews) {
   >
     <NavBar />
     <div class="text-white text-2xl ml-[5%] font-istok font-bold">
-      RECOMMENT
+      RECOMMEND
     </div>
     <div class="h-[700px]">
       <div
