@@ -3,7 +3,7 @@ import { useRoute, useRouter } from "vue-router";
 import { ref, onMounted } from "vue";
 import NavBar from "@/components/sharedcomponents/NavBar.vue";
 import RedBarTopic from "@/components/sharedcomponents/RedBarTopic.vue";
-import RatingBar from "./RatingBar.vue";
+import RatingBar from "@/components/sharedcomponents/RatingBar.vue";
 import Review from "./Review.vue";
 import LoadingScreen from "@/components/sharedcomponents/LoadingScreen.vue";
 import ReviewModal from "../reviewpage/ReviewModal.vue";
@@ -265,7 +265,7 @@ async function addNewReview(
               <p class="mb-[15px]">Review form is here!! Check to Enter form</p>
               <div @click="reviewModalHandler(true)">
                 <button
-                  class="flex items-center justify-center gap-[5px] w-[193px] h-[58px] border border-white text-[20px] rounded-[23px] hover:opacity-70 gradient-bg">
+                  class="flex items-center justify-center gap-[5px] w-[193px] h-[58px] text-[20px] rounded-[23px] hover:opacity-70 gradient-bg">
                   <svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path
                       d="M7.83333 7.88235H17.1667M7.83333 12.5882H14.8333M19.5 2C20.4283 2 21.3185 2.37185 21.9749 3.03374C22.6313 3.69563 23 4.59335 23 5.52941V14.9412C23 15.8772 22.6313 16.775 21.9749 17.4368C21.3185 18.0987 20.4283 18.4706 19.5 18.4706H13.6667L7.83333 22V18.4706H5.5C4.57174 18.4706 3.6815 18.0987 3.02513 17.4368C2.36875 16.775 2 15.8772 2 14.9412V5.52941C2 4.59335 2.36875 3.69563 3.02513 3.03374C3.6815 2.37185 4.57174 2 5.5 2H19.5Z"
@@ -282,20 +282,11 @@ async function addNewReview(
             @toggleStatusLike="toggleStatusLike" @handleOptionChange="handleOptionChange"
             @setCurrentPage="setCurrentPage" :currentUserLikedComments="currentUser.likedComments" />
           <div class="flex justify-center gap-[5px] mt-[20px]">
-            <div
-              class="flex rounded-full border-opacity-65 w-[25px] bg-black items-center"
-              :class="
-                currentPage === page
-                  ? 'bg-red-600 hover:bg-red-800'
-                  : 'hover:bg-gray-900 bg-gray-700'
-              "
-              v-for="page in Math.ceil(moviesReview.getReviews().length / 3)"
-              :key="page.length"
-            >
-              <button
-                class="w-[100%] mt-[2px] flex justify-center"
-                @click="setCurrentPage(page)"
-              >
+            <div class="flex rounded-full border-opacity-65 w-[25px] bg-black items-center" :class="currentPage === page
+    ? 'bg-red-600 hover:bg-red-800'
+    : 'hover:bg-gray-900 bg-gray-700'
+    " v-for="page in Math.ceil(moviesReview.getReviews().length / 3)" :key="page.length">
+              <button class="w-[100%] mt-[2px] flex justify-center" @click="setCurrentPage(page)">
                 {{ page }}
               </button>
             </div>

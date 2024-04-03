@@ -18,7 +18,7 @@ const props = defineProps({
 
 <template>
   <RedBarTopic :topic="'Casts & Crews'" />
-  <div class="flex flex-wrap justify-center gap-[20px]">
+  <div class="flex flex-wrap justify-center gap-[20px] px-[60px]">
     <div class="w-[100px]" v-for="cast in movieCasters" :key="cast.id">
       <img class="rounded-[3px] mb-[5px]" width="100px" height="1px"
         :src="'https://image.tmdb.org/t/p/w500/' + cast.profile_path" />

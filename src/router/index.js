@@ -5,7 +5,7 @@ import LoginView from '@/views/LoginView.vue'
 import MovieDescPage from '@/components/descriptionpage/MovieDescPage.vue'
 import NotFound from '@/views/NotFound.vue'
 import ReviewModal from '@/components/reviewpage/ReviewModal.vue'
-import CommentedView from '@/views/CommentedView.vue'
+import UserCommentView from '@/views/UserCommentView.vue'
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
@@ -41,7 +41,7 @@ const router = createRouter({
         {
             path: '/commented',
             name: 'commented',
-            component: CommentedView,
+            component: UserCommentView,
         },
     ]
 

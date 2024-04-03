@@ -1,6 +1,6 @@
 <script setup>
 import { RouterLink } from 'vue-router'
-import RatingBar from '../descriptionpage/RatingBar.vue'
+import RatingBar from '@/components/sharedcomponents/RatingBar.vue'
 
 const props = defineProps({
   movie: {
