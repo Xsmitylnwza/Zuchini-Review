@@ -2,6 +2,8 @@
 
 # PROJECT2-SEC-2-WeLoveReact💕
 
+##  Demo Video : [Click to see the Demo Video](https://youtu.be/F3LuG6S7fa0?si=N1s8-prEUH-3yUSz)
+
 # Zucchini Review
 
 The web-based project, "Zucchini Review" is review-aggregation website for film, inspiration from Rotten Tomatoes.
