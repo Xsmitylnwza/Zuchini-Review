@@ -9,4 +9,5 @@ async function hashPassword(plain) {
   return hashHex;
 }
 
-export default hashPassword
+
+export default hashPassword 

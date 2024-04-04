@@ -9,7 +9,6 @@ export const useUserStore = defineStore('user', () => {
   const setUser = (user) => {
     currentUser.value = user
     saveUserToLocalStorage(user)
-    router.go(-1)
   }
 
   const logout = () => {
