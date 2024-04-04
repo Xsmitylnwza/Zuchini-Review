@@ -70,12 +70,12 @@ You can view, edit and delete comments you've reviewed.
 ## Members
 
 - 65130500067 : [Monthon Mukkun](https://github.com/carrynong2) 😎
-> 
+> 20% : Design user, review json, Clean Code, Register, Login,  Manage UserStore, Like Review
 - 65130500078 : [Saksit Tatitrisakul](https://github.com/Tiskas02)💵
-> 
+> 20% : Navbar[search,categories,home,logout],EditUserProfile,UX/UI,Recommend movie(carousel),CSS and animation All page ,Footer
 - 65130500082 : [Soranut Sangroongruang](https://github.com/c3b22) 😊
-> 
+> 20% : Sortgenre, เพิ่ม routerlink กลับมาที่ homepage ในหน้า login and register
 - 65130500099 : [Chaimongkon Sokgampang](https://github.com/Xsmitylnwza)😉
-> 
+> 20% : api research,movie description page,object design,refactor code,coaching team,clean code,utillizer
 - 65130500118 : [Saksaran Akramethawong](https://github.com/saksaran)😀
-> 
+> 20% : ReviewModal (Create), CommentPage (Update, Delete)
