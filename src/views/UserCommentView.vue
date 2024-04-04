@@ -98,7 +98,7 @@ function closeModal(isOpen) {
       <div class="mt-1">
         <RedBarTopic :topic="'Reviewed'" />
       </div>
-      <ListComment v-if="reviews.legth != 0" :items="reviews">
+      <ListComment v-if="reviews?.length !== 0" :items="reviews">
         <template #default="slotProps">
           <div
             class="w-[100%] h-[auto] min-h-[350px] flex mb-[30px] hover:bg-slate-700 hover:bg-opacity-35 p-3 rounded-xl">
@@ -113,7 +113,7 @@ function closeModal(isOpen) {
         </template>
       </ListComment>
       <div v-else class="flex justify-center">
-        <div class="text-[24px]">You don't have any comment ...</div>
+        <div class="text-[24px]">🚨You didn't have any review right now ...</div>
       </div>
     </div>
   </div>
