@@ -1,16 +1,18 @@
 <script setup>
+import { useUserStore } from "@/store/user";
 
-import { RouterLink, RouterView } from "vue-router";
+const userStore = useUserStore();
+userStore.loadUserFromLocalStorage();
 </script>
 
 <template>
   <div>
     <RouterView />
   </div>
-
 </template>
 
-
-
-
-<style scoped></style>
+<style scoped>
+html {
+  scroll-behavior: smooth;
+}
+</style>

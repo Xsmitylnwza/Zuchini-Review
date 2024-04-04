@@ -8,11 +8,9 @@ class ReviewManagement {
     }
 
     addReview(review) {
-        // this.reviews.push({ userId: review.userId, movieId: review.movieId, rating: review.rating, comment: review.comment, id: review.id, likeCount: review.likeCount })
         this.reviews.push({ id: review.id, username: review.username, comment: review.comment, rating: review.rating, imageUrl: review.imageUrl, likeCount: review.likeCount, isLiked: review.isLiked })
     }
     sortReviewBy(sortBy) {
-        console.log(sortBy)
         if (sortBy === 'most-liked') {
             this.reviews.sort((a, b) => b.likeCount - a.likeCount)
         }
@@ -41,11 +39,20 @@ class ReviewManagement {
         return resultRating.toFixed(2)
     }
 
-
     getAllRating() {
         if (this.reviews.length == 0) {
             return;
         } else {
+            const entertainmentScore =
+                this.reviews.reduce(
+                    (sum, review) => sum + review.rating.entertainment,
+                    0
+                ) / this.reviews.length;
+            const movieChapterScore =
+                this.reviews.reduce(
+                    (sum, review) => sum + review.rating.movie_Chapter,
+                    0
+                ) / this.reviews.length;
             const performanceScore =
                 this.reviews.reduce(
                     (sum, review) => sum + review.rating.performance,
@@ -56,26 +63,16 @@ class ReviewManagement {
                     (sum, review) => sum + review.rating.production,
                     0
                 ) / this.reviews.length;
-            const movieChapterScore =
-                this.reviews.reduce(
-                    (sum, review) => sum + review.rating.movie_Chapter,
-                    0
-                ) / this.reviews.length;
-            const entertainmentScore =
-                this.reviews.reduce(
-                    (sum, review) => sum + review.rating.entertainment,
-                    0
-                ) / this.reviews.length;
             const worthinessScore =
                 this.reviews.reduce(
                     (sum, review) => sum + review.rating.worthiness,
                     0
                 ) / this.reviews.length;
             return [
+                entertainmentScore,
+                movieChapterScore,
                 performanceScore,
                 productionScore,
-                movieChapterScore,
-                entertainmentScore,
                 worthinessScore,
             ];
         }
@@ -86,6 +83,7 @@ class ReviewManagement {
             currentPage * 3
         );
     }
+
     incrementLike(reviewId) {
         this.reviews.map((review) => {
             if (review.id === reviewId) {
@@ -94,10 +92,17 @@ class ReviewManagement {
         })
     }
 
+    decrementLike(reviewId) {
+        this.reviews.map((review) => {
+            if (review.id === reviewId) {
+                review.likeCount = review.likeCount - 1
+            }
+        })
+    }
+
     getReviews() {
         return this.reviews
     }
-
 
 }
 

@@ -1,5 +1,14 @@
 <script setup>
-const props = defineProps(["text", "check"]);
+const props = defineProps({
+  check: {
+    type: Boolean,
+    require: true,
+  },
+  text: {
+    type: String,
+    require: true,
+  },
+});
 const cationIcon =
   "https://api.iconify.design/ep:warning-filled.svg?color=%23FF0000";
 </script>
