@@ -91,6 +91,13 @@ class ReviewManagement {
             }
         })
     }
+    updateIsLiked(reviewId) {
+        this.reviews.map((review) => {
+            if (review.id === reviewId) {
+                review.isLiked = !review.isLiked
+            }
+        })
+    }
 
     decrementLike(reviewId) {
         this.reviews.map((review) => {

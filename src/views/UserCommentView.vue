@@ -2,7 +2,7 @@
 import { ref, onMounted } from "vue";
 import { useUserStore } from "@/store/user";
 import {
-  getReviews,
+  getReviewsByUserId,
   getMoviesDetails,
   deleteReviewById,
 } from "@/libs/fetchUtils";
@@ -17,7 +17,7 @@ import CommentDetail from "@/components/commentpage/CommentDetail.vue"
 
 const userStore = useUserStore();
 const currentUser = userStore.currentUser;
-const reviews = ref({});
+const reviews = ref([]);
 const movies = ref([]);
 const selectedReview = ref("");
 const isReviewModalOpen = ref(false);
@@ -29,7 +29,7 @@ onMounted(async () => {
     alert("You need to login first !!!")
     router.push('/login')
   }
-  reviews.value = await getReviews(`?userId=${currentUser.id}`);
+  reviews.value = await getReviewsByUserId(currentUser.id);
   const movieDetailsPromises = reviews.value.map(async (review) => {
     const movieDetails = await getMoviesDetails(review.movieId);
     return movieDetails;
@@ -38,36 +38,35 @@ onMounted(async () => {
   moviesDetails.value = movies.value[0];
   selectedReview.value = reviews.value[0];
   dataLoaded.value = true;
+
 });
 
 async function deleteReview(id) {
-  let deleteindex;
-  const response = await deleteReviewById(id);
-  if (response.ok) {
+  if (window.confirm("Are you sure to delete this review?")) {
+    await deleteReviewById(id);
     reviews.value = reviews.value.filter((review, index) => {
-      if (review.id === id) {
-        deleteindex = index;
-      }
-      return review.id !== id;
+      if (review.id === id) movies.value.splice(index, 1)
+      return review.id !== id
     });
-    movies.value.splice(deleteindex, 1);
+
   }
 }
 async function updateNewReview(ratingScore, comment) {
   selectedReview.value.comment = comment;
-  selectedReview.value.rating = ratingScore;
-  const response = await editReview(
+  selectedReview.value.ratings = ratingScore;
+  const { rating } = await editReview(
     selectedReview.value,
-    selectedReview.value.rating
+    selectedReview.value.ratings
   );
-  if (response.ok) {
-    reviews.value.forEach((review) => {
-      if (review.id === selectedReview.value.id) {
-        review.comment = comment;
-        review.rating = ratingScore;
-      }
-    });
-  }
+
+  reviews.value.forEach((review) => {
+    if (review.id === selectedReview.value.id) {
+
+      review.comment = comment;
+      review.ratings = rating;
+    }
+  });
+
   closeModal(false);
 }
 

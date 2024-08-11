@@ -13,10 +13,10 @@ import { ReviewManagement } from "@/libs/ReviewManagement.js";
 import {
   getMoviesDetails,
   getMoviesReviews,
-  getUsersInfo,
   addReview,
-  getReviewsAndUsers,
   updateReviewAndUser,
+  getReviewByReviewId,
+  getUserByUserId,
 } from '@/libs/fetchUtils.js'
 import { useUserStore } from '@/store/user'
 
@@ -41,19 +41,19 @@ onMounted(async () => {
     const dataCredits = await getMoviesDetails(route.params.id, '/credits')
     const dataVideos = await getMoviesDetails(route.params.id, '/videos')
     const dataReview = await getMoviesReviews(
-      import.meta.env.VITE_BASE_URL,
       route.params.id
     )
+
     const reviews = dataReview
     moviesDetails.value = dataDetails
     moviesCredits.value = dataCredits
     moviesTrailer.value = getmoviesTrailer(dataVideos)
     await Promise.all(
       reviews.map(async (review) => {
-        const { username, imageUrl, likedComments } = await getUsersInfo(
+        const { username, imageUrl, likedComments } = await getUserByUserId(
           review.userId
         )
-        const { rating, comment, id, likeCount } = review
+        const { ratings: rating, comment, id, likeCount } = review
         const userReview = {
           username,
           rating,
@@ -61,7 +61,7 @@ onMounted(async () => {
           imageUrl,
           id,
           likeCount,
-          isLiked: likedComments && likedComments.includes(review.userId),
+          isLiked: likedComments.includes(review.id),
         }
         moviesReview.value.addReview(userReview)
       })
@@ -76,6 +76,7 @@ onMounted(async () => {
       trailer: moviesTrailer.value?.key,
     };
     movieCasters.value = getCastData();
+
     dataLoaded.value = true;
   } catch (error) {
     console.error(error)
@@ -135,21 +136,21 @@ function reviewModalHandler(value) {
 }
 
 async function incrementLike(review) {
-  const { reviewUpdate, userData } = await getReviewsAndUsers(
-    review.id,
-    currentUser
-  )
+  const reviewUpdate = await getReviewByReviewId(review.id);
+  const userData = await getUserByUserId(currentUser.id);
 
   const updatedReview = {
     likeCount: reviewUpdate.likeCount + 1,
   }
 
   const updatedUser = {
-    likedComments: [...userData.likedComments, review.id],
+    userId: userData.id,
+    reviewId: review.id
   }
 
-  await updateReviewAndUser(review.id, updatedReview, updatedUser, currentUser)
+  await updateReviewAndUser(review.id, updatedReview, updatedUser, currentUser, "increment")
   moviesReview.value.incrementLike(review.id)
+  moviesReview.value.updateIsLiked(review.id)
   if (!currentUser.likedComments.includes(review.id)) {
     currentUser.likedComments.push(review.id)
   }
@@ -157,10 +158,8 @@ async function incrementLike(review) {
 }
 
 async function decrementLike(review) {
-  const { reviewUpdate, userData } = await getReviewsAndUsers(
-    review.id,
-    currentUser
-  )
+  const reviewUpdate = await getReviewByReviewId(review.id);
+  const userData = await getUserByUserId(currentUser.id);
 
   const updatedReview = {
     likeCount: reviewUpdate.likeCount - 1,
@@ -172,8 +171,9 @@ async function decrementLike(review) {
     ),
   }
 
-  await updateReviewAndUser(review.id, updatedReview, updatedUser, currentUser)
+  await updateReviewAndUser(review.id, updatedReview, updatedUser, currentUser, "decrement")
   moviesReview.value.decrementLike(review.id)
+  moviesReview.value.updateIsLiked(review.id)
   currentUser.likedComments = currentUser.likedComments.filter(
     (commentId) => commentId !== review.id
   )
@@ -181,13 +181,16 @@ async function decrementLike(review) {
 }
 
 async function toggleStatusLike(review) {
+  const url = import.meta.env.VITE_BASE_URL
   if (userStore.checkUserLoggedIn()) {
     const resUser = await fetch(
-      `${import.meta.env.VITE_BASE_URL}/users/${currentUser.id}`
+      `${url}/users/${currentUser.id}`
     )
     const userData = await resUser.json()
-
-    if (!review.isLiked && !userData.likedComments.includes(review.id)) {
+    const isLiked = userData.likedComments.filter(element => {
+      return Number(element) === Number(review.id)
+    });
+    if (!review.isLiked && isLiked.length === 0) {
       await incrementLike(review)
     } else {
       await decrementLike(review)
@@ -213,21 +216,20 @@ async function addNewReview(
     currentUserId,
     isAdd
   )
-  const responseReview = await response.json()
-  if (response.ok) {
-    const newReview = {
-      id: responseReview.id,
-      username: currentUser.username,
-      comment: review,
-      rating: newRatingScore,
-      imageUrl: currentUser.imageUrl,
-      likeCount: 0,
-      isLiked: false,
-    }
-    moviesReview.value.addReview(newReview)
-    reviewModalHandler(false)
+
+  const newReview = {
+    id: response.id,
+    username: currentUser.username,
+    comment: review,
+    rating: newRatingScore,
+    imageUrl: currentUser.imageUrl,
+    likeCount: 0,
+    isLiked: false,
   }
+  moviesReview.value.addReview(newReview)
+  reviewModalHandler(false)
 }
+
 </script>
 
 <template>
@@ -243,7 +245,7 @@ async function addNewReview(
     <div class="bg-layer h-[100%]">
       <NavBar />
       <Teleport to="body">
-        <div v-show="isReviewModalOpen">
+        <div v-if="isReviewModalOpen">
           <ReviewModal @closeModal="reviewModalHandler" @updateReview="addNewReview" :movieDetails="moviesDetails" />
         </div>
       </Teleport>
@@ -283,9 +285,9 @@ async function addNewReview(
             @setCurrentPage="setCurrentPage" :currentUserLikedComments="currentUser.likedComments" />
           <div class="flex justify-center gap-[5px] mt-[20px]">
             <div class="flex rounded-full border-opacity-65 w-[25px] bg-black items-center" :class="currentPage === page
-    ? 'bg-red-600 hover:bg-red-800'
-    : 'hover:bg-gray-900 bg-gray-700'
-    " v-for="page in Math.ceil(moviesReview.getReviews().length / 3)" :key="page.length">
+              ? 'bg-red-600 hover:bg-red-800'
+              : 'hover:bg-gray-900 bg-gray-700'
+              " v-for="page in Math.ceil(moviesReview.getReviews().length / 3)" :key="page.length">
               <button class="w-[100%] mt-[2px] flex justify-center" @click="setCurrentPage(page)">
                 {{ page }}
               </button>

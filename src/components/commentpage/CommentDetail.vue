@@ -1,5 +1,6 @@
 <script setup>
 import RatingBar from '@/components/sharedcomponents/RatingBar.vue';
+import { reactive } from 'vue';
 
 defineEmits(["reviewModalHandler", "deleteReview"])
 
@@ -18,6 +19,10 @@ const props = defineProps({
     }
 });
 
+
+
+
+
 </script>
 
 <template>
@@ -33,12 +38,12 @@ const props = defineProps({
             <div class="flex flex-col gap-[15px]">
                 <div class="flex w-[full] h-[full] ml-3 p-3 pr-5 pb-5 bg-gray-600 bg-opacity-20 rounded-xl">
                     <RatingBar :rating="[
-                review.rating.entertainment,
-                review.rating.movie_Chapter,
-                review.rating.performance,
-                review.rating.production,
-                review.rating.worthiness,
-            ]" :format="'comment'" />
+                        review.ratings.entertainment,
+                        review.ratings.movie_Chapter,
+                        review.ratings.performance,
+                        review.ratings.production,
+                        review.ratings.worthiness,
+                    ]" :format="'comment'" />
                 </div>
             </div>
         </div>

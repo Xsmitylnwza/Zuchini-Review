@@ -25,7 +25,10 @@ watchEffect(() => {
     colorMap[review.id] = props.currentUserLikedComments.includes(review.id)
   }
   toggleColor.value = colorMap
-})
+});
+
+
+
 </script>
 
 <template>
@@ -51,12 +54,12 @@ watchEffect(() => {
           <div class="flex flex-col gap-[15px]">
             <div class="flex w-[full] h-[full] ml-3 p-3 pr-5 pb-5 bg-gray-600 bg-opacity-20 rounded-xl">
               <RatingBar :rating="[
-    review.rating.entertainment,
-    review.rating.movie_Chapter,
-    review.rating.performance,
-    review.rating.production,
-    review.rating.worthiness,
-  ]" :format="'comment'" />
+                review.rating.entertainment,
+                review.rating.movie_Chapter,
+                review.rating.performance,
+                review.rating.production,
+                review.rating.worthiness,
+              ]" :format="'comment'" />
             </div>
           </div>
         </div>
@@ -75,9 +78,9 @@ watchEffect(() => {
         <span class="mt-1">Liked {{ review.likeCount ? review.likeCount : '0' }}</span>
         <svg width="23" height="23" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg"
           @click="$emit('toggleStatusLike', review)" :fill="toggleColor[review.id] && userStore.checkUserLoggedIn()
-      ? 'red'
-      : 'none'
-    " class="cursor-pointer hover:opacity-50">
+            ? 'red'
+            : 'none'
+            " class="cursor-pointer hover:opacity-50">
           <g clip-path="url(#clip0_90_683)">
             <path
               d="M5.625 3C3.34688 3 1.5 4.84688 1.5 7.125C1.5 11.25 6.375 15 9 15.8723C11.625 15 16.5 11.25 16.5 7.125C16.5 4.84688 14.6531 3 12.375 3C10.98 3 9.74625 3.69263 9 4.75275C8.61963 4.21095 8.11431 3.76878 7.52682 3.46368C6.93934 3.15858 6.28699 2.99953 5.625 3Z"

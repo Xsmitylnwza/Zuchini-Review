@@ -7,6 +7,7 @@ import CationValidInput from "@/components/CationValidInput.vue";
 import toggleIconShowHidePassword from "@/composable/toggleShowHidePassword";
 import passwordsMatch from "@/composable/passwordsMatch";
 import { useUserStore } from "@/store/user";
+import { getUsers } from "@/libs/fetchUtils";
 
 const userStore = useUserStore();
 
@@ -22,8 +23,7 @@ const passwordField = ref(null);
 const isSuccess = ref(true);
 
 const login = async () => {
-  const res = await fetch(`${import.meta.env.VITE_BASE_URL}/users`);
-  const data = await res.json();
+  const data = await getUsers();
   for (let i = 0; i < data.length; i++) {
     if (
       data[i].username === userInfo.value.username &&

@@ -17,6 +17,7 @@ const userInfo = ref({
   confirmPassword: '',
 })
 
+
 const profileImageUpload = ref(null)
 const isUsernameValid = ref(true)
 const isEmailValid = ref(true)
@@ -53,6 +54,7 @@ function resetCorrectData() {
 
 const register = async () => {
   const res = await fetch(`${import.meta.env.VITE_BASE_URL}/users`)
+  // const res = await fetch(`${import.meta.env.API_BASE_URL}/users`);
   const users = await res.json()
   resetCorrectData()
   if (res.status === 200) {
@@ -76,7 +78,7 @@ const register = async () => {
       isUsernameValid.value = true
       isEmailValid.value = true
       isPasswordValid.value = true
-      await fetch(`${import.meta.env.VITE_BASE_URL}/users`, {
+      await fetch(`http://localhost:8080/api/users`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

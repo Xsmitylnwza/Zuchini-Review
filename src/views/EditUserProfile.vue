@@ -1,12 +1,14 @@
 <script setup>
 import NavBar from '@/components/sharedcomponents/NavBar.vue'
 import { useUserStore } from '@/store/user'
+import { supabaseUrl } from "../libs/supabase";
 import { updateUser } from '@/libs/fetchUtils.js'
 import { ref } from 'vue'
 import hashPassword from '@/composable/hashPassword'
 import isValidImageFile from '@/composable/isValidImageFile'
 
 const isEditing = ref(false)
+const hovering = ref(false)
 const userStore = useUserStore()
 const currentUser = userStore.currentUser
 const openModal = ref(false)
@@ -41,15 +43,21 @@ async function saveEditUser() {
       ? await hashPassword(userInfo.value.oldPassword)
       : currentUser.password === currentUser.password
   ) {
-    const response = await updateUser(newPasswordHashed, currentUser)
-    userStore.setUser({ ...userStore.currentUser, ...newPasswordHashed })
-    if (response.ok) {
+    const data = await updateUser(newPasswordHashed, currentUser)
+    if (data) {
+      userStore.setUser({ ...userStore.currentUser, ...newPasswordHashed })
       alert('Succesful')
+      location.reload();
     }
   }
 }
 
+function handleHover(isOpen) {
+  hovering.value = isOpen
+}
+
 const handleFileChange = (event) => {
+
   const file = event.target.files[0]
   if (file) {
     if (isValidImageFile(file.name)) {
@@ -77,9 +85,10 @@ const openImageUpload = () => {
         <div class="flex w-full justify-center">
           <div class="text-xl font-bold">MyProfile</div>
         </div>
-        <div class="flex flex-row">
-          <div :class="isEditing ? '' : 'opacity-50'" class="flex w-[50%] items-center justify-center">
-            <img class="rounded-full cursor-pointer w-[300px] h-[300px]" :src="userInfo.imageUrl"
+        <div class="flex flex-row" @mouseover=handleHover(true) @mouseleave=handleHover(false)>
+          <div :class="isEditing ? '' : 'opacity-50'"
+            class="flex w-[50%] h-[50%] items-center justify-center rounded-[50%]">
+            <img class="rounded-full cursor-pointer w-[300px] h-[300px] hover:opacity-70" :src="userInfo.imageUrl"
               @click="openImageUpload" />
             <input class="hidden" type="file" ref="profileImageUpload" @change="handleFileChange"
               :disabled="!isEditing" />
@@ -93,7 +102,7 @@ const openImageUpload = () => {
               </div>
             </div>
 
-            <form @submit.prevent="submitForm" class="max-w-md mx-auto mt-4">
+            <form @submit.prevent="submitForm" class="max-w-md mx-auto mt-4 text text-gray-500">
               <div class="mb-4">
                 <label class="text-white mr-5">Username</label>
                 <input type="text" placeholder="Enter username here..." v-model="userInfo.username"
