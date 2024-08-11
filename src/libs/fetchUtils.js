@@ -281,12 +281,6 @@ export async function updateReviewAndUser(reviewId, reviewUpdate, userDataUpdate
 
 }
 export async function updateUser(userDataUpdate, currentUser) {
-  // const imageNmae = `${Math.random()}-${newCabin.image.name}`.replaceAll(
-  //   "/",
-  //   ""
-  // );
-
-  // const imagePath = `${supabaseUrl}/storage/v1/object/public/cabin-images/${imageNmae}`;
 
   const { data, error } = await supabase
     .from('users')
