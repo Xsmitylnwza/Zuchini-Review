@@ -1,14 +1,15 @@
 <script setup>
-import NavBar from '@/components/sharedcomponents/NavBar.vue'
 import { useUserStore } from '@/store/user'
-import { supabaseUrl } from "../libs/supabase";
+import { useRouter } from 'vue-router';
 import { updateUser } from '@/libs/fetchUtils.js'
 import { ref } from 'vue'
+import NavBar from '@/components/sharedcomponents/NavBar.vue'
 import hashPassword from '@/composable/hashPassword'
 import isValidImageFile from '@/composable/isValidImageFile'
 
 const isEditing = ref(false)
 const hovering = ref(false)
+const router = useRouter();
 const userStore = useUserStore()
 const currentUser = userStore.currentUser
 const openModal = ref(false)
@@ -47,7 +48,7 @@ async function saveEditUser() {
     if (data) {
       userStore.setUser({ ...userStore.currentUser, ...newPasswordHashed })
       alert('Succesful')
-      location.reload();
+      router.push("/")
     }
   }
 }
