@@ -63,8 +63,8 @@ function refreshPage() {
               movieSearched &&
               movieSearched.results &&
               movieSearched.results.length > 0
-            " v-for="movie in movieSearched.results" :key="movie.id"
-              class="w-60 hover:text-red-500 border border-red-500" @click="refreshPage">
+            " v-for="movie in movieSearched.results" :key="movie.id" class="w-60 hover:text-red-500"
+              @click="refreshPage">
               <router-link :to="'/movie/' + movie.id" @click.native="refreshPage">
                 <img class="w-[70px] h-[100px] rounded-[5px]" :src="movie.poster_path
                   ? 'https://image.tmdb.org/t/p/w500/' + movie.poster_path
