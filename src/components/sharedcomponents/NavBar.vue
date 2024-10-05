@@ -79,9 +79,11 @@ function refreshPage() {
           </ul>
         </div>
       </div>
-      <button class="hover:opacity-80 btn btn-ghost rounded-btn">
-        <RouterLink to="/" class=" text-center">Home</RouterLink>
-      </button>
+      <RouterLink to="/" class=" w-auto">
+        <button class="hover:opacity-80 btn btn-ghost rounded-btn">
+          Home
+        </button>
+      </RouterLink>
       <div>
         <div class="dropdown dropdown-end">
           <div tabindex="0" role="button" class="btn btn-ghost rounded-btn hover:opacity-90">
@@ -98,9 +100,11 @@ function refreshPage() {
         </div>
       </div>
       <div v-if="userStore.checkUserLoggedIn()">
-        <button class="hover:opacity-80 btn btn-ghost rounded-btn">
-          <RouterLink to="/commented">Commented</RouterLink>
-        </button>
+        <RouterLink to="/commented" class="w-auto">
+          <button class="hover:opacity-80 btn btn-ghost rounded-btn">
+            Commented
+          </button>
+        </RouterLink>
       </div>
       <div>
         <div v-if="userStore.checkUserLoggedIn()" class="flex">

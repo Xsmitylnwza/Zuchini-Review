@@ -49,7 +49,6 @@ async function saveEditUser() {
     const data = await updateUser(newPasswordHashed, currentUser)
     if (data) {
       userStore.setUser({ ...userStore.currentUser, ...newPasswordHashed })
-      // alert('Succesful')
       router.push("/")
       toast.success('Update user successfully !!!')
     }

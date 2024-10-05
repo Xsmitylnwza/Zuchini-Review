@@ -41,6 +41,7 @@ onMounted(async () => {
   selectedReview.value = reviews.value[0];
   dataLoaded.value = true;
 
+
 });
 
 async function deleteReview(id) {
