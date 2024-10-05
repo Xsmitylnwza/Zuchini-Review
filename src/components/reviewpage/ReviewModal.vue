@@ -48,7 +48,7 @@ const handleScoreChange = (key, event) => {
 </script>
 
 <template>
-  <div class="bg-grey-500 backdrop-blur-sm w-screen h-screen fixed top-0 left-0 pt-[100px]">
+  <div class="fade-in bg-grey-500 backdrop-blur-sm w-screen h-screen fixed top-0 left-0 pt-[100px]">
     <div class="flex justify-center text-white font-semibold">
       <div class="bg-gradient-to-r from-black to-red-900 h-4/5 w-2/3 rounded-md p-4">
         <div class="flex flex-row mx-8 my-2 w-11/12">
@@ -138,5 +138,21 @@ const handleScoreChange = (key, event) => {
 <style scoped>
 .gradient-bg {
   background-image: linear-gradient(90deg, #c60000 0%, #600000 100%);
+}
+
+.fade-in {
+  animation: fadeInAnimation ease-in-out 0.5s;
+}
+
+@keyframes fadeInAnimation {
+  0% {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 </style>

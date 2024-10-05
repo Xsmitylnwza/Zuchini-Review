@@ -7,6 +7,7 @@ import hashPassword from '@/composable/hashPassword'
 import isValidImageFile from '@/composable/isValidImageFile'
 import toggleIconShowHidePassword from '@/composable/toggleShowHidePassword'
 import passwordsMatch from '@/composable/passwordsMatch'
+import { registerUser } from '@/libs/fetchUtils'
 
 const userInfo = ref({
   username: ''.trim(),
@@ -52,9 +53,9 @@ function resetCorrectData() {
   isPasswordValid.value = true
 }
 
-const register = async () => {
+async function register() {
+
   const res = await fetch(`${import.meta.env.VITE_BASE_URL}/users`)
-  // const res = await fetch(`${import.meta.env.API_BASE_URL}/users`);
   const users = await res.json()
   resetCorrectData()
   if (res.status === 200) {
@@ -78,21 +79,9 @@ const register = async () => {
       isUsernameValid.value = true
       isEmailValid.value = true
       isPasswordValid.value = true
-      await fetch(`http://localhost:8080/api/users`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          username: userInfo.value.username,
-          email: userInfo.value.email,
-          imageUrl: userInfo.value.imageUrl,
-          password: await hashPassword(userInfo.value.password),
-          confirmPassword: await hashPassword(userInfo.value.password),
-          likedComments: [],
-        }),
-      })
-      await router.push('/login')
+      const data = await registerUser(userInfo.value)
+
+      router.push('/login')
     }
   }
 }
@@ -146,7 +135,7 @@ const openImageUpload = () => {
         <CationValidInput v-if="!validatePassword(userInfo.password)" text="password should valid password format"
           :check="isPasswordValid" />
         <CationValidInput v-else-if="!passwordsMatch(userInfo.password, userInfo.confirmPassword)
-              " text="password dont match" :check="isPasswordValid" />
+        " text="password dont match" :check="isPasswordValid" />
         <label class="text-white">Confirm Password</label>
         <div class="relative">
           <input type="password" placeholder="Enter password here..." v-model="userInfo.confirmPassword"
@@ -158,7 +147,7 @@ const openImageUpload = () => {
         <CationValidInput v-if="!validatePassword(userInfo.confirmPassword)"
           text="password should valid password format" :check="isPasswordValid" />
         <CationValidInput v-else-if="!passwordsMatch(userInfo.password, userInfo.confirmPassword)
-              " text="password dont match" :check="isPasswordValid" />
+        " text="password dont match" :check="isPasswordValid" />
         <button class="btn btn-black py-2 w-80 text-white border-none hover:bg-stone-700" @click="register">
           Register
         </button>

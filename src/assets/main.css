@@ -26,3 +26,8 @@
     rgba(142, 0, 0, 1) 100%
   );
 }
+
+.my-success-toast {
+  background-color: #fff; /* สีเขียว */
+  color: white; /* สีข้อความ */
+}

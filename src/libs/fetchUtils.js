@@ -1,3 +1,4 @@
+import hashPassword from "@/composable/hashPassword";
 import supabase from "./supabase";
 
 async function getMoviesFromApi(page) {
@@ -280,6 +281,37 @@ export async function updateReviewAndUser(reviewId, reviewUpdate, userDataUpdate
   }
 
 }
+
+export async function registerUser(userInfo) {
+  try {
+    // Hash รหัสผ่านก่อนที่จะบันทึก
+    const hashedPassword = await hashPassword(userInfo.password);
+
+    // Insert ข้อมูลผู้ใช้เข้าไปใน Supabase
+    const { data, error } = await supabase
+      .from('users')
+      .insert([
+        {
+          username: userInfo.username,
+          email: userInfo.email,
+          imageUrl: userInfo.imageUrl,
+          password: hashedPassword,
+          confirmPassword: hashedPassword,
+          likedComments: [],
+        },
+      ])
+      .select();
+
+    if (error) {
+      throw error;
+    }
+
+    return data;
+  } catch (error) {
+    return { error };
+  }
+}
+
 export async function updateUser(userDataUpdate, currentUser) {
 
   const { data, error } = await supabase
@@ -290,11 +322,18 @@ export async function updateUser(userDataUpdate, currentUser) {
 
   if (error) throw new Error("User could not be update")
 
-  console.log(data);
 
   return data;
 
 }
 
+export async function getUserFromId(currentUser) {
+  const { data, error } = await supabase
+    .from('users')
+    .eq('id', currentUser.id)
+
+  return data
+
+}
 
 export { getMoviesFromApi }

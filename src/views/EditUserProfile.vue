@@ -6,10 +6,12 @@ import { ref } from 'vue'
 import NavBar from '@/components/sharedcomponents/NavBar.vue'
 import hashPassword from '@/composable/hashPassword'
 import isValidImageFile from '@/composable/isValidImageFile'
+import { useToast } from 'vue-toastification';
 
 const isEditing = ref(false)
 const hovering = ref(false)
 const router = useRouter();
+const toast = useToast()
 const userStore = useUserStore()
 const currentUser = userStore.currentUser
 const openModal = ref(false)
@@ -47,8 +49,9 @@ async function saveEditUser() {
     const data = await updateUser(newPasswordHashed, currentUser)
     if (data) {
       userStore.setUser({ ...userStore.currentUser, ...newPasswordHashed })
-      alert('Succesful')
+      // alert('Succesful')
       router.push("/")
+      toast.success('Update user successfully !!!')
     }
   }
 }

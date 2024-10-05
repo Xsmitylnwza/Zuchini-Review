@@ -47,7 +47,7 @@ function refreshPage() {
         <div class="dropdown opacity-90 flex">
           <div class="relative">
             <input type="text" v-model="searchQuery" @input="searchMovies" placeholder="Search Movie here..."
-              class="w-full pl-10 pr-4 py-2 rounded-2xl text-black focus:outline-none focus:border-red-500 opacity-50" />
+              class="w-full pl-10 pr-4 py-2 rounded-2xl text-white focus:outline-none focus:border-red-500 opacity-50" />
             <div class="absolute inset-y-0 left-0 pl-3 flex items-center">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor"
                 class="w-6 h-6 opacity-70">
@@ -80,7 +80,7 @@ function refreshPage() {
         </div>
       </div>
       <button class="hover:opacity-80 btn btn-ghost rounded-btn">
-        <RouterLink to="/">Home</RouterLink>
+        <RouterLink to="/" class=" text-center">Home</RouterLink>
       </button>
       <div>
         <div class="dropdown dropdown-end">

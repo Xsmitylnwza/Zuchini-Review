@@ -14,6 +14,7 @@ import LoadingScreen from "@/components/sharedcomponents/LoadingScreen.vue";
 import ListComment from "@/components/commentpage/ListComment.vue"
 import CommentBanner from "@/components/commentpage/CommentBanner.vue"
 import CommentDetail from "@/components/commentpage/CommentDetail.vue"
+import { useToast } from "vue-toastification";
 
 const userStore = useUserStore();
 const currentUser = userStore.currentUser;
@@ -23,6 +24,7 @@ const selectedReview = ref("");
 const isReviewModalOpen = ref(false);
 const moviesDetails = ref(false);
 const dataLoaded = ref(false);
+const toast = useToast();
 
 onMounted(async () => {
   if (currentUser.id == undefined) {
@@ -49,6 +51,8 @@ async function deleteReview(id) {
       return review.id !== id
     });
 
+    toast.success("Delete review successfully !!!");
+
   }
 }
 async function updateNewReview(ratingScore, comment) {
@@ -67,6 +71,7 @@ async function updateNewReview(ratingScore, comment) {
     }
   });
 
+  toast.success("Update review successfully !!!");
   closeModal(false);
 }
 

@@ -19,6 +19,7 @@ import {
   getUserByUserId,
 } from '@/libs/fetchUtils.js'
 import { useUserStore } from '@/store/user'
+import { useToast } from "vue-toastification";
 
 const userStore = useUserStore();
 const currentUser = userStore.currentUser;
@@ -34,6 +35,7 @@ const isShowAllCrew = ref(false);
 const isPlayVideo = ref(false);
 const dataLoaded = ref(false);
 const isReviewModalOpen = ref(false);
+const toast = useToast()
 
 onMounted(async () => {
   try {
@@ -181,12 +183,8 @@ async function decrementLike(review) {
 }
 
 async function toggleStatusLike(review) {
-  const url = import.meta.env.VITE_BASE_URL
   if (userStore.checkUserLoggedIn()) {
-    const resUser = await fetch(
-      `${url}/users/${currentUser.id}`
-    )
-    const userData = await resUser.json()
+    const userData = await getUserByUserId(currentUser.id)
     const isLiked = userData.likedComments.filter(element => {
       return Number(element) === Number(review.id)
     });
@@ -228,6 +226,7 @@ async function addNewReview(
   }
   moviesReview.value.addReview(newReview)
   reviewModalHandler(false)
+  toast.success("Review added successfully")
 }
 
 </script>
