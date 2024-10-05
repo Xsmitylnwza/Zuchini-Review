@@ -11,6 +11,7 @@ const searchQuery = ref()
 const genres = ref([])
 const dataLoaded = ref(true)
 
+
 onMounted(async () => {
   try {
     genres.value = await getGenre(import.meta.env.VITE_BASE_URL)
@@ -25,6 +26,10 @@ async function searchMovies() {
   const encodedQuery = trimmedQuery.replaceAll(' ', '%20')
   const movie = await getMoviesByName(encodeURIComponent(encodedQuery))
   movieSearched.value = movie
+}
+
+function refreshPage() {
+  window.location.reload();
 }
 
 </script>
@@ -58,9 +63,9 @@ async function searchMovies() {
               movieSearched &&
               movieSearched.results &&
               movieSearched.results.length > 0
-            " v-for="movie in movieSearched.results" :key="movie.id" class="w-60 hover:text-red-500"
-              @click="refreshPage">
-              <router-link :to="'/movie/' + movie.id">
+            " v-for="movie in movieSearched.results" :key="movie.id"
+              class="w-60 hover:text-red-500 border border-red-500" @click="refreshPage">
+              <router-link :to="'/movie/' + movie.id" @click.native="refreshPage">
                 <img class="w-[70px] h-[100px] rounded-[5px]" :src="movie.poster_path
                   ? 'https://image.tmdb.org/t/p/w500/' + movie.poster_path
                   : '../icons/noimageavailable.png'
