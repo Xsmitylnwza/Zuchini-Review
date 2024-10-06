@@ -84,7 +84,9 @@ function refreshPage() {
           Home
         </button>
       </RouterLink>
-      <div>
+      <!-- still implementing -->
+
+      <!-- <div>
         <div class="dropdown dropdown-end">
           <div tabindex="0" role="button" class="btn btn-ghost rounded-btn hover:opacity-90">
             Categories
@@ -98,7 +100,7 @@ function refreshPage() {
             </li>
           </ul>
         </div>
-      </div>
+      </div> -->
       <div v-if="userStore.checkUserLoggedIn()">
         <RouterLink to="/commented" class="w-auto">
           <button class="hover:opacity-80 btn btn-ghost rounded-btn">
