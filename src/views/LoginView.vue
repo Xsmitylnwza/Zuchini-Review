@@ -13,10 +13,10 @@ const userStore = useUserStore();
 
 const userInfo = ref({
   id: "",
-  username: "",
+  username: "Xsmity",
   email: "",
   imageUrl: "",
-  password: "",
+  password: "0867801103zZ*",
 });
 
 const passwordField = ref(null);
