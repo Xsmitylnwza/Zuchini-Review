@@ -7,6 +7,8 @@ export const useUserStore = defineStore('user', () => {
   const currentUser = ref({})
 
   const setUser = (user) => {
+    console.log(user);
+
     currentUser.value = user
     saveUserToLocalStorage(user)
   }

@@ -183,6 +183,16 @@ export async function addRating(ratingScore) {
   return rating
 }
 
+export async function getLikedComment(id) {
+  const { data, error } = await supabase
+    .from('likedcomments')
+    .select('*')
+    .eq('userId', id);
+
+  return data
+
+}
+
 export async function addReview(ratingScore, comment, movieId, currentUserId) {
   // CREATE RATINGS
   const rating = await addRating(ratingScore)

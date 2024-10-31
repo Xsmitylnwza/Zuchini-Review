@@ -7,7 +7,7 @@ import CationValidInput from "@/components/CationValidInput.vue";
 import toggleIconShowHidePassword from "@/composable/toggleShowHidePassword";
 import passwordsMatch from "@/composable/passwordsMatch";
 import { useUserStore } from "@/store/user";
-import { getUsers } from "@/libs/fetchUtils";
+import { getLikedComment, getUsers } from "@/libs/fetchUtils";
 
 const userStore = useUserStore();
 
@@ -32,12 +32,14 @@ const login = async () => {
         await hashPassword(userInfo.value.password)
       )
     ) {
+
       userInfo.value.username = data[i].username;
       userInfo.value.email = data[i].email;
       userInfo.value.imageUrl = data[i].imageUrl;
       userInfo.value.password = data[i].password;
       userInfo.value.id = data[i].id;
-      userInfo.value.likedComments = data[i].likedComments;
+      const likedCommetData = await getLikedComment(data[i].id);
+      userInfo.value.likedComments = likedCommetData
       userStore.setUser(userInfo.value);
       await router.push("/");
     }

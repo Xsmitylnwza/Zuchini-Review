@@ -176,6 +176,7 @@ async function decrementLike(review) {
   await updateReviewAndUser(review.id, updatedReview, updatedUser, currentUser, "decrement")
   moviesReview.value.decrementLike(review.id)
   moviesReview.value.updateIsLiked(review.id)
+
   currentUser.likedComments = currentUser.likedComments.filter(
     (commentId) => commentId !== review.id
   )

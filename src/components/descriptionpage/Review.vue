@@ -22,7 +22,7 @@ const toggleColor = ref({})
 watchEffect(() => {
   const colorMap = {}
   for (const review of props.reviews) {
-    colorMap[review.id] = props.currentUserLikedComments.includes(review.id)
+    colorMap[review.id] = props.currentUserLikedComments?.includes(review.id)
   }
   toggleColor.value = colorMap
 });
